@@ -1,1 +1,5 @@
-# 2021_COO_Zeldiablo_Cordurie_Sacquard_Michelet_Kone_Becker
+Les étudiants de ce projets sont :
+- CORDURIE Lucas
+- SACQUARD Julien
+- KONE Ismael
+- MICHELET Alex
