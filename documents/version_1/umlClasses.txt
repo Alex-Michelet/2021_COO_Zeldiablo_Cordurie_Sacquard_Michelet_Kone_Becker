@@ -1,0 +1,18 @@
+@startuml
+
+class Personnage{}
+
+abstract class Case{}
+
+class Labyrinthe{}
+
+class Mur{}
+
+class Sol{}
+
+Labyrinthe "0" -> "*" Case : -cases
+
+Mur --|> Case
+Sol --|> Case
+
+@enduml
