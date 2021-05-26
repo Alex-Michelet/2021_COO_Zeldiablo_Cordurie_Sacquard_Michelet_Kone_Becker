@@ -1,5 +1,7 @@
 @startuml
 
+class Jeu{}
+
 class Personnage{}
 
 abstract class Case{}
@@ -10,9 +12,15 @@ class Mur{}
 
 class Sol{}
 
+class Passage{}
+
 Labyrinthe "0" -> "*" Case : -cases
 
 Mur --|> Case
 Sol --|> Case
+Passage --|> Case
+
+Jeu "*" -left> "1" Personnage : -aventurier
+Jeu "*" -> "*" Labyrinthe : -niveaux
 
 @enduml
