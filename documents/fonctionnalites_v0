@@ -1,0 +1,7 @@
+* Fonctionnalités version 0
+
+- Un personnage contrôlé par le joueur se déplace en suivant les points cardinaux
+- Les déplacements se font sur des cases avec un système de coordonnées
+- Il y a plusieurs types de cases, franchissable ou non, avec certains effets possibles (mur, sol, passage...)
+- Labyrinthe composé de cases, le joueur y évolue 
+- Le jeu peut se composer de plusieurs Labyrinthe que l'on atteint à l'aide de cases spéciales
