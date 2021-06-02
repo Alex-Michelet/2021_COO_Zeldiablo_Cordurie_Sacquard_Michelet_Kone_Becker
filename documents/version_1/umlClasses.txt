@@ -1,18 +1,41 @@
 @startuml
 
-class Jeu{}
+skinparam class{
+  BackgroundColor<<AFaire>> Pink
+  BorderColor<<AFaire>> Black
+}
 
-class Personnage{}
+class Jeu{
++ main(String[] args)
++ deplacerPerso()
+}
 
-abstract class Case{}
+class Personnage{
+- x : int
+- y : int 
++ Personnage(int x, int y)
++ deplacer(int x, int y)
++ getX() : int
++ getY() : int
+}
 
-class Labyrinthe{}
+abstract class Case{
+- caseX : int 
+- caseY : int 
+- franchissable : boolean
++ Case(int x, int y, boolean f)
++ getCaseX() : int 
++ getCaseY() : int
++ estFranchissable() : boolean
+}
 
-class Mur{}
+class Labyrinthe <<AFaire>>{}
 
-class Sol{}
+class Mur <<AFaire>> {}
 
-class Passage{}
+class Sol <<AFaire>>{}
+
+class Passage <<AFaire>>{}
 
 Labyrinthe "0" -> "*" Case : -cases
 
@@ -20,7 +43,7 @@ Mur --|> Case
 Sol --|> Case
 Passage --|> Case
 
-Jeu "*" -left> "1" Personnage : -aventurier
+Jeu "1" -left> "1" Personnage : -aventurier
 Jeu "*" -> "*" Labyrinthe : -niveaux
 
 @enduml
