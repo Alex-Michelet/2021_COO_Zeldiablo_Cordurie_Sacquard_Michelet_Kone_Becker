@@ -3,7 +3,7 @@ package Apps;
 public class Personnage {
     private int x, y;
 
-    public Personnage(a, o) {
+    public Personnage(int a, int o) {
         this.x = a;
         this.y = o;
     }
