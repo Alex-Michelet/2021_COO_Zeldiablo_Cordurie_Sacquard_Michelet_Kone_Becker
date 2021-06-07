@@ -40,15 +40,15 @@ public class Personnage {
             }	
 		}
         if (c.haut) {
-			this.y++;
-			if (this.x < 0) {
-                this.x = 0;
+			this.y--;
+			if (this.y < 0) {
+                this.y = 0;
             }
 		}
         if (c.bas) {
-			this.y--;
-			if (this.x < 0) {
-                this.x = 0;
+			this.y++;
+			if (this.y > LIMIT_Y) {
+                this.y = LIMIT_Y;
             }
 		}
 	}
