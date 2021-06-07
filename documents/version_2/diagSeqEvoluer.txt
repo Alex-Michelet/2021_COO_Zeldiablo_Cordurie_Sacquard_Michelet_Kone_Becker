@@ -1,11 +1,11 @@
 @startuml
 title evoluer 
 
-participant "JeuZ : jeu" as jeu
-participant "Personnage : perso" as perso
-[-> jeu : evoluer(c)
+participant "jeu : JeuZ" as jeu
+participant "perso : Personnage" as perso
+[-> jeu : evoluer(Commande c)
 activate jeu
-jeu -> perso : deplacer(c)
+jeu -> perso : deplacer(int dx, int dy)
 activate perso
 jeu <-- perso 
 deactivate perso

@@ -3,15 +3,20 @@
 skinparam class{
   BackgroundColor<<AFaire>> Pink
   BorderColor<<AFaire>> Black
+  BackgroundColor<<Nouveau>> Cyan
+  BorderColor<<Nouveau>> Blue
 }
-interface Jeu {
-+evoluer(Commande) : void
-+etreFini() : boolean
+
+interface Jeu <<Nouveau>>{
++ evoluer(Commande) : void
++ etreFini() : boolean
 }
+
 class JeuZ{
 + evoluer(Commande) : void
 + etreFini() : boolean
 + getAventurier() : Personage
++ getLabyrinthe() : Labyrinthe
 }
 
 class Personnage{
@@ -33,14 +38,31 @@ abstract class Case{
 + estFranchissable() : boolean
 }
 
-class Labyrinthe <<AFaire>>{}
-
-class Mur {
-+Sol(int, int)
+class Labyrinthe <<Nouveau>>{
+- xLong : int
+- yLong : int
++ Labyrinthe(String)
++ estAccessible(int, int) : boolean
++ getTailleX() : int
++ getTailleY() : int
++ getTableauCases() : Case[][]
 }
 
-class Sol {
-+Mur(int, int)
+class DessinZ <<Nouveau>>{
++ DessinZ(JeuZ)
++ dessiner(BufferedImage) : void
+}
+
+interface DessinJeu <<Nouveau>>{
++ dessiner(Bufferedimage) : void
+}
+
+class Mur <<Nouveau>>{
++ Sol(int, int)
+}
+
+class Sol <<Nouveau>>{
++ Mur(int, int)
 }
 
 class Passage <<AFaire>>{}
@@ -51,8 +73,11 @@ Mur --|> Case
 Sol --|> Case
 Passage --|> Case
 JeuZ ..|> Jeu
+DessinZ ..|> DessinJeu
 
+
+DessinZ "*" -> "1" JeuZ : -jeu
 JeuZ "1" -left> "1" Personnage : -aventurier
-JeuZ "*" -> "*" Labyrinthe : -niveaux
+JeuZ "*" -> "1" Labyrinthe : -niveaux
 
 @enduml

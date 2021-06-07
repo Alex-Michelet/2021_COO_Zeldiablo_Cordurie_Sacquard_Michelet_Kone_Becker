@@ -1,0 +1,35 @@
+@startuml
+
+title Sequence cas ou le personnage essaye d aller a gauche et il n y a pas de problemes
+
+participant "jeu : JeuZ" as jeu
+participant "labyrinthe : Labyrinthe" as lab
+participant "case : Sol" as case
+participant "perso : Personnage" as perso
+
+[-> jeu : evoluer(Commande c)
+activate jeu
+
+jeu -> lab : estAccessible()
+activate lab
+
+lab -> case : estFranchissable()
+activate case
+
+case --> lab : true
+deactivate case
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> perso : deplacer(-1, 0)
+activate perso
+
+perso --> jeu
+deactivate perso
+
+[<-- jeu
+deactivate jeu 
+
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+
+title Sequence cas ou le personnage essaye d aller a gauche et c est un mur
+
+participant "jeu : JeuZ" as jeu
+participant "labyrinthe : Labyrinthe" as lab
+participant "case : Mur" as case
+participant "perso : Personnage" as perso
+
+[-> jeu : evoluer(Commande c)
+activate jeu
+
+jeu -> lab : estAccessible()
+activate lab
+
+lab -> case : estFranchissable()
+activate case
+
+case --> lab : false
+deactivate case
+
+lab --> jeu : false
+deactivate lab
+
+[<-- jeu
+deactivate jeu 
+
+
+@enduml

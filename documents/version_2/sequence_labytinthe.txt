@@ -5,8 +5,7 @@ participant "l:Labyrinthe" as labyrinthe
 participant "fichier:File" as fichier
 
 create labyrinthe
-main -> labyrinthe : Labyrinthe(fichier)
-labyrinthe --> main
+main -> labyrinthe
 
 
 
