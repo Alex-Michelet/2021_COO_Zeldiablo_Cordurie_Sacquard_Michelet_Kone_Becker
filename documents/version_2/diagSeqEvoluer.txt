@@ -1,0 +1,14 @@
+@startuml
+title evoluer 
+
+participant "JeuZ : jeu" as jeu
+participant "Personnage : perso" as perso
+[-> jeu : evoluer(c)
+activate jeu
+jeu -> perso : deplacer(c)
+activate perso
+jeu <-- perso 
+deactivate perso
+[<-- jeu
+deactivate jeu
+@enduml
