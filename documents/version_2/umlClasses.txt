@@ -4,7 +4,10 @@ skinparam class{
   BackgroundColor<<AFaire>> Pink
   BorderColor<<AFaire>> Black
 }
-
+interface Jeu {
++evoluer(Commande) : void
++etreFini() : boolean
+}
 class JeuZ{
 + evoluer(Commande) : void
 + etreFini() : boolean
@@ -12,10 +15,10 @@ class JeuZ{
 }
 
 class Personnage{
-- x : int
-- y : int 
-+ Personnage(int x, int y)
-+ deplacer(int x, int y)
+- posX : int
+- posY : int 
++ Personnage(int, int)
++ deplacer(int, int)
 + getX() : int
 + getY() : int
 }
@@ -24,7 +27,7 @@ abstract class Case{
 - x : int 
 - y : int 
 - franchissable : boolean
-+ Case(int x, int y, boolean f)
++ Case(int, int, boolean)
 + getX() : int 
 + getY() : int
 + estFranchissable() : boolean
@@ -32,9 +35,13 @@ abstract class Case{
 
 class Labyrinthe <<AFaire>>{}
 
-class Mur <<AFaire>> {}
+class Mur {
++Sol(int, int)
+}
 
-class Sol <<AFaire>>{}
+class Sol {
++Mur(int, int)
+}
 
 class Passage <<AFaire>>{}
 
@@ -43,6 +50,7 @@ Labyrinthe "0" -> "*" Case : -cases
 Mur --|> Case
 Sol --|> Case
 Passage --|> Case
+JeuZ ..|> Jeu
 
 JeuZ "1" -left> "1" Personnage : -aventurier
 JeuZ "*" -> "*" Labyrinthe : -niveaux

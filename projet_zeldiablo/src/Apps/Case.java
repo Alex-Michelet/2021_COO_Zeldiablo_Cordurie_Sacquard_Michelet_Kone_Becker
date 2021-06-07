@@ -6,19 +6,19 @@ public abstract class Case {
      */
     private int x;
     private int y;
-    private boolean estFranchissable;
+    private boolean franchissable;
 
     /**
      * Construit une case
      * 
      * @param x
      * @param y
-     * @param f
+     * @param etat
      */
-    public Case(int x, int y, boolean f) {
+    public Case(int x, int y, boolean etat) {
         this.x = x;
         this.y = y;
-        this.estFranchissable = f;
+        this.franchissable = f;
     }
 
     /**
@@ -42,10 +42,10 @@ public abstract class Case {
     /**
      * estFranchissable
      * 
-     * @return estFranchissable
+     * @return franchissable
      */
     public boolean estFranchissable() {
-        return this.estFranchissable;
+        return this.franchissable;
     }
 
 }

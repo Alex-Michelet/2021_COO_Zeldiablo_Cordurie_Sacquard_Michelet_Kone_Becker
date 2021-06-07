@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import Apps.*;
-import jdk.jfr.Timestamp;
 import moteurJeu.*;
 
 public class TestPersonnage {
