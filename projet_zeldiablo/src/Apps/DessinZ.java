@@ -31,8 +31,8 @@ public class DessinZ implements DessinJeu {
 
         // on defini les dimensions de la cases par rapport a la taille de la fenetre
         // et le nombre de cases choisi
-        int lon = w / jeu.getLabyrinthe().getXLong();
-        int haut = h / jeu.getLabyrinthe().getYLong();
+        int lon = w / jeu.getLabyrinthe().getTailleX();
+        int haut = h / jeu.getLabyrinthe().getTailleY();
 
         // on recupere le personnage du jeu
         Personnage p = jeu.getAventurier();

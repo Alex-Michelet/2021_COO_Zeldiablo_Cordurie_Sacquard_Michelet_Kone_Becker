@@ -5,12 +5,14 @@ import moteurJeu.*;
 public class Principale {
 
     /**
-     * methode de lancement qui pemet de verifier rapidement l etat de l interface graphique
+     * methode de lancement qui pemet de verifier rapidement l etat de l interface
+     * graphique
      */
     public static void main(String[] args) throws Exception {
-        
+
         Personnage perso = new Personnage(0, 0);
-        JeuZ jeu = new JeuZ(perso);
+        Labyrinthe labyrinthe = new Labyrinthe("../../niveaux/lab1.txt");
+        JeuZ jeu = new JeuZ(perso, labyrinthe);
 
         DessinZ dessin = new DessinZ(jeu);
 
@@ -19,5 +21,5 @@ public class Principale {
         moteur.lancerJeu(400, 400);
 
     }
-    
+
 }

@@ -18,7 +18,7 @@ public abstract class Case {
     public Case(int x, int y, boolean etat) {
         this.x = x;
         this.y = y;
-        this.franchissable = f;
+        this.franchissable = etat;
     }
 
     /**
