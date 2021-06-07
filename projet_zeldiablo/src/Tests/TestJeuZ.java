@@ -14,7 +14,7 @@ public class TestJeuZ {
     public void testCreaJeuZ() {
         // prepa des donnees 
         Personnage p = new Personnage(1,1);
-        Labyrinthe l = new Labyrinthe("../../Niveaux/lab1.txt");
+        Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
 
         // verif des donnees
@@ -29,11 +29,14 @@ public class TestJeuZ {
     public void testEvoluer() {
         // prepa des donnees
         Personnage p = new Personnage(1,1);
-        Labyrinthe l = new Labyrinthe("../../niveaux/lab1.txt");
+        Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();
+        c.bas = true;
+
         //methode teste 
-        j.evoluer(c.bas);
+        j.evoluer(c);
+
         //verif des donnees
         assertEquals("x devrait etre à 1", 1, j.getAventurier().getX());
         assertEquals("y devrait etre à 2", 2, j.getAventurier().getY());
@@ -46,11 +49,13 @@ public class TestJeuZ {
     public void testEvoluerMur() {
         //prepa des donnees 
         Personnage p = new Personnage(1,1);
-        Labyrinthe l = new Labyrinthe("../../niveaux/lab1.txt");
+        Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();
+        c.gauche = true;
         //methode teste 
-        j.evoluer(c.gauche);
+        j.evoluer(c);
+
         //verif des donnees
         assertEquals("x devrait rester à 1", 1, j.getAventurier().getX());
         assertEquals("y devrait etre à 1", 1, j.getAventurier().getY());
