@@ -1,6 +1,5 @@
 package Apps;
 
-import moteurJeu.Commande;
 
 public class Personnage {
     /**
