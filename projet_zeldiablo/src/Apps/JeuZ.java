@@ -16,12 +16,18 @@ public class JeuZ implements Jeu{
      * ce constructeur lance une erreur si le personnage donne
      * n est pas instancie
      */
-    public JeuZ(Personnage p){
+    public JeuZ(Personnage p, Labyrinthe l){
         if(p != null){
             this.aventurier = p;
         }
         else{
             throw new Error("Un jeu DOIT connaitre un personnage");
+        }
+        if(l != null){
+            this.labyrinthe = l;
+        }
+        else{
+            throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
     }
 
@@ -36,21 +42,21 @@ public class JeuZ implements Jeu{
 
         // on verifie que l aventurier puisse bien aller a la case souhaitee
         if (commande.gauche) {
-			if (xPerso > 0) {
+			if (xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)) {
                 this.aventurier.deplacer(-1, 0);
             }
 		}
-        if (commande.droite) {
+        if (commande.droite && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
 			if (xPerso < this.labyrinthe.getTailleX()) {
                 this.aventurier.deplacer(1, 0);
             }	
 		}
         if (commande.haut) {
-			if (yPerso > 0) {
+			if (yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)) {
                 this.aventurier.deplacer(0, -1);
             }
 		}
-        if (commande.bas) {
+        if (commande.bas && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
 			if (yPerso < this.labyrinthe.getTailleY()) {
                 this.aventurier.deplacer(0, 1);
             }

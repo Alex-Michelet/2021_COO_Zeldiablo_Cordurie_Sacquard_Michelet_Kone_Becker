@@ -32,26 +32,12 @@ public class TestPersonnage {
         Personnage p = new Personnage(2, 2);
 
         //methode teste
-        p.deplacer(c.gauche);
+        p.deplacer(3, 1);
 
         //verif
-        assertEquals("L abscisse devrait etre de 1", 1, p.getX());
+        assertEquals("L abscisse devrait etre de 5", 5, p.getX());
+        assertEquals("L ordonnee devrait etre de 3", 3, p.getY());
         
-    }
-
-    /**
-     * Test qui permet de verifier si le personnage ne peux pas se deplacer en dehors de l environnement 
-     */
-    @Test 
-    public void testDeplacementPersoDehors() {
-        //prepa des donnee
-        Personnage p = new Personnage(0, 0);
-
-        //methode teste
-        p.deplacer(c.gauche);
-
-        //verif
-        assertEquals("L abscisse devrait rester à 0", 0, p.getX());
     }
     
 
