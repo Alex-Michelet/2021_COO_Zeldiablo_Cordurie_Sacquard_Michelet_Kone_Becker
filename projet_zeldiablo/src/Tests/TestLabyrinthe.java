@@ -16,8 +16,8 @@ public class TestLabyrinthe {
         Labyrinthe l = new Labyrinthe("../../Niveaux/lab1.txt");
 
         //verification des donnees
-        assertEquals("La case devrait etre un mur", false, l.estAccessible(0, 0));
-        assertEquals("La case devrait etre un sol", false, l.estAccessible(1, 1));
+        assertEquals("La case devrait etre un mur donc inaccessible", false, l.estAccessible(0, 0));
+        assertEquals("La case devrait etre un sol donc accessible", true, l.estAccessible(1, 1));
     }
     
 }
