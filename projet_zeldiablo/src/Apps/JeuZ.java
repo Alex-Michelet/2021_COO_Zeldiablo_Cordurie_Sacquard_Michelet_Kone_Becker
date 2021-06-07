@@ -8,6 +8,7 @@ public class JeuZ implements Jeu{
      * un jeu connait un aventurier
      */
     private Personnage aventurier;
+    private Labyrinthe labyrinthe;
 
     /**
      * constructeur parametre qui permet de creer un jeu 
@@ -29,18 +30,31 @@ public class JeuZ implements Jeu{
      * @param commande = direction du deplacement
      */
     public void evoluer(Commande commande){
-        if(commande.bas){
-            this.aventurier.deplacer(commande);
-        }
-        else if(commande.haut){
-            this.aventurier.deplacer(commande);
-        }
-        else if(commande.droite){
-            this.aventurier.deplacer(commande);
-        }
-        else if(commande.gauche){
-            this.aventurier.deplacer(commande);
-        }
+        // on recupere les coordonnees de l aventurier
+        int xPerso = this.aventurier.getX();
+        int yPerso = this.aventurier.getY();
+
+        // on verifie que l aventurier puisse bien aller a la case souhaitee
+        if (commande.gauche) {
+			if (xPerso > 0) {
+                this.aventurier.deplacer(-1, 0);
+            }
+		}
+        if (commande.droite) {
+			if (xPerso < this.labyrinthe.getTailleX()) {
+                this.aventurier.deplacer(1, 0);
+            }	
+		}
+        if (commande.haut) {
+			if (yPerso > 0) {
+                this.aventurier.deplacer(0, -1);
+            }
+		}
+        if (commande.bas) {
+			if (yPerso < this.labyrinthe.getTailleY()) {
+                this.aventurier.deplacer(0, 1);
+            }
+		}
     }
 
     /**
@@ -58,6 +72,14 @@ public class JeuZ implements Jeu{
      */
     public Personnage getAventurier(){
         return(this.aventurier);
+    }
+
+    /**
+     * getter labyrinthe
+     * @return
+     */
+    public Labyrinthe getLabyrinthe(){
+        return(this.labyrinthe);
     }
 
 }
