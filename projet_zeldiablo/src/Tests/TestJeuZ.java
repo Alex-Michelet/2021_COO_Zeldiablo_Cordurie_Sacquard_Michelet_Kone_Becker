@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import moteurJeu.Commande;
 
-public class testJeuZ {
+public class TestJeuZ {
     /**
      * test de la construction d'un jeu
      */
@@ -29,7 +29,7 @@ public class testJeuZ {
     public void testEvoluer() {
         // prepa des donnees
         Personnage p = new Personnage(1,1);
-        Labyrinthe l = new Labyrinthe("../../Niveaux/lab1.txt");
+        Labyrinthe l = new Labyrinthe("../../niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();
         //methode teste 
@@ -37,6 +37,24 @@ public class testJeuZ {
         //verif des donnees
         assertEquals("x devrait etre à 1", 1, j.getAventurier().getX());
         assertEquals("y devrait etre à 2", 2, j.getAventurier().getY());
+    }
+
+    /**
+     * test deplacement sur un mur
+     */
+    @Test 
+    public void testEvoluerMur() {
+        //prepa des donnees 
+        Personnage p = new Personnage(1,1);
+        Labyrinthe l = new Labyrinthe("../../niveaux/lab1.txt");
+        JeuZ j = new JeuZ(p, l);
+        Commande c = new Commande();
+        //methode teste 
+        j.evoluer(c.gauche);
+        //verif des donnees
+        assertEquals("x devrait rester à 1", 1, j.getAventurier().getX());
+        assertEquals("y devrait etre à 1", 1, j.getAventurier().getY());
+
     }
 
 }
