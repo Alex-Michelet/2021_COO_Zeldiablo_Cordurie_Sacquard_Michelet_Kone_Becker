@@ -6,7 +6,7 @@ public class Personnage {
     /**
      * coordonnees d'un personnage
      */
-    private int x, y;
+    private int posX, posY;
 
     /**
      * Constructeur d'un personnage avec ses coordonnees
@@ -15,8 +15,8 @@ public class Personnage {
      * @param o ordonnee
      */
     public Personnage(int a, int o) {
-        this.x = a;
-        this.y = o;
+        this.posX = a;
+        this.posY = o;
     }
 
     /**
@@ -25,8 +25,8 @@ public class Personnage {
      * @param c la chaine permettant de deplacer le personnage (N,S, E ou O)
      */
     public void deplacer(int x, int y) {
-        this.x += x;
-        this.y += y;
+        this.posX += x;
+        this.posY += y;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Personnage {
      * @return coordonnee x
      */
     public int getX() {
-        return this.x;
+        return this.posX;
     }
 
     /**
@@ -44,6 +44,6 @@ public class Personnage {
      * @return coordonnee y
      */
     public int getY() {
-        return this.y;
+        return this.posY;
     }
 }
