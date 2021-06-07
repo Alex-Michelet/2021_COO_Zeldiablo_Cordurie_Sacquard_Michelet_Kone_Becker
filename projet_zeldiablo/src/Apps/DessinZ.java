@@ -29,10 +29,26 @@ public class DessinZ implements DessinJeu {
         int w = image.getWidth();
         int h = image.getHeight();
 
+        Labyrinthe labyrinthe = jeu.getLabyrinthe();
         // on defini les dimensions de la cases par rapport a la taille de la fenetre
         // et le nombre de cases choisi
-        int lon = w / jeu.getLabyrinthe().getTailleX();
-        int haut = h / jeu.getLabyrinthe().getTailleY();
+        int lon = w / labyrinthe.getTailleX();
+        int haut = h / labyrinthe.getTailleY();
+
+        Case tab[][] = labyrinthe.getTableauCases();
+        for (int i = 0; i < lon; i++) {
+            for (int j = 0; j < haut; j++) {
+                if (tab[j][i] instanceof Mur) {
+                    g.setColor(Color.RED);
+                    g.fillRect(i * lon, j * haut, lon, haut);
+                } else if (tab[j][i] instanceof Sol) {
+                    g.setColor(Color.GREEN);
+                    g.fillRect(i * lon, j * haut, lon, haut);
+                } else {
+                    System.out.println("Case non reconnue");
+                }
+            }
+        }
 
         // on recupere le personnage du jeu
         Personnage p = jeu.getAventurier();
