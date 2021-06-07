@@ -1,6 +1,6 @@
 package Apps;
 
-public class Jeu{
+public class Jouer{
 
     /**
      * un jeu connait un aventurier
@@ -13,7 +13,7 @@ public class Jeu{
      * ce constructeur lance une erreur si le personnage donne
      * n est pas instancie
      */
-    public Jeu(Personnage p){
+    public Jouer(Personnage p){
         if(p != null){
             this.aventurier = p;
         }
