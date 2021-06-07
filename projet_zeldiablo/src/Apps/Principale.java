@@ -11,8 +11,7 @@ public class Principale {
     public static void main(String[] args) throws Exception {
 
         Personnage perso = new Personnage(3, 19);
-        Labyrinthe labyrinthe = new Labyrinthe(
-                "/home/lucas/Bureau/2021_COO_Zeldiablo_Cordurie_Sacquard_Michelet_Kone_Becker/projet_zeldiablo/niveaux/lab1.txt");
+        Labyrinthe labyrinthe = new Labyrinthe("niveaux/lab1.txt");
         JeuZ jeu = new JeuZ(perso, labyrinthe);
 
         DessinZ dessin = new DessinZ(jeu);
