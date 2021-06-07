@@ -37,7 +37,9 @@ public class Labyrinthe {
             j = 0;
             char c;
 
-            br.reset();
+            br.close();
+            br = new BufferedReader(new FileReader(nomFichier));
+            
             while ((line = br.readLine()) != null) { // On parcourt le fichier pour creer les cases correspondantes
                 for (int i = 0; i < line.length(); i++) {
                     c = line.charAt(i);
@@ -54,6 +56,7 @@ public class Labyrinthe {
             System.out.println("File not found Exception");
         } catch (IOException ioe) {
             System.out.println("IO Exception");
+            ioe.printStackTrace();
         }
     }
 

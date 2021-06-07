@@ -5,6 +5,9 @@ import Apps.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import java.io.*;
+
+
 public class TestLabyrinthe {
 
     /**
@@ -13,7 +16,7 @@ public class TestLabyrinthe {
     @Test
     public void testCreaLabyrinthe(){
         //prepa des donnees
-        Labyrinthe l = new Labyrinthe("../../Niveaux/lab1.txt");
+        Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
 
         //verification des donnees
         assertEquals("La case devrait etre un mur donc inaccessible", false, l.estAccessible(0, 0));
