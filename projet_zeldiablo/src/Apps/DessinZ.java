@@ -23,7 +23,6 @@ public class DessinZ implements DessinJeu {
      */
     public void dessiner(BufferedImage image) {
         Graphics2D g = (Graphics2D) image.getGraphics();
-        g.setColor(Color.BLUE);
 
         // on recupere les dimensions de la fenetre
         int w = image.getWidth();
@@ -56,6 +55,7 @@ public class DessinZ implements DessinJeu {
         // on affiche le personnage en prenant soin de modifier les coordonnees pour s
         // adapter
         // a la taille des cases du jeu
+        g.setColor(Color.BLUE);
         g.fillArc(p.getX() * lon, p.getY() * haut, lon, haut, 0, 360);
     }
 
