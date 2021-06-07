@@ -1,0 +1,50 @@
+@startuml
+
+skinparam class{
+  BackgroundColor<<AFaire>> Pink
+  BorderColor<<AFaire>> Black
+}
+
+class JeuZ{
++ evoluer(Commande) : void
++ etreFini() : boolean
++ getAventurier() : Personage
+}
+
+class Personnage{
+- x : int
+- y : int 
++ Personnage(int x, int y)
++ deplacer(int x, int y)
++ getX() : int
++ getY() : int
+}
+
+abstract class Case{
+- x : int 
+- y : int 
+- franchissable : boolean
++ Case(int x, int y, boolean f)
++ getX() : int 
++ getY() : int
++ estFranchissable() : boolean
+}
+
+class Labyrinthe <<AFaire>>{}
+
+class Mur <<AFaire>> {}
+
+class Sol <<AFaire>>{}
+
+class Passage <<AFaire>>{}
+
+Labyrinthe "0" -> "*" Case : -cases
+
+Mur --|> Case
+Sol --|> Case
+Passage --|> Case
+
+JeuZ "1" -left> "1" Personnage : -aventurier
+JeuZ "*" -> "*" Labyrinthe : -niveaux
+
+@enduml

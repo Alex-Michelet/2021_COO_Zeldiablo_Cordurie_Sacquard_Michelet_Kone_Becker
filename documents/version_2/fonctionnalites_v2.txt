@@ -1,0 +1,29 @@
+* fonctionnalités version 2
+
+_____________________________________________________________________________
+
+Retour sur les fonctionnalités non abouties de la version précédente
+
+- fonctionnalite 1 : Définition d'un labyrinthe
+- descriptif : definir les différentes cases du labyrinthe
+- critères de validation
+    - critere 1 : instancier un labyrinthe simple
+
+- fonctionnalite 2 : Gestion des types de cases
+- descriptif : savoir faire la différence entre case franchissable ou non
+- criteres de validation : 
+    - critere 1 : les cases ne depassent pas du plateau
+    - critere 2 : les cases ont des coordonnées
+    - critere 3 : les cases ont un type particulier (mur, sol, passage)
+
+_____________________________________________________________________________
+
+- fonctionnalite 3 : Amélioration des déplacements du personnage
+- descriptif : déplacements case par case et bien centré 
+- criteres de validation : 
+    - critere 1 : déplacements de case en case
+    - criiere 2 : personnage toujours au centre d'une case
+    - critere 3 : déplacements bloqués ou autorisés en fonction du type de case
+
+
+    
