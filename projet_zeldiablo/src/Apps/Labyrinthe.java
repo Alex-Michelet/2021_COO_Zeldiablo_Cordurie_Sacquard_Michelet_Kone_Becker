@@ -65,4 +65,8 @@ public class Labyrinthe {
     public Case[][] getTableauCases() {
         return this.tab;
     }
+
+    public boolean estAccessible(int x, int y) {
+        return (tab[y][x].estFranchissable());
+    }
 }
