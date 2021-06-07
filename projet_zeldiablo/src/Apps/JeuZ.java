@@ -46,8 +46,8 @@ public class JeuZ implements Jeu{
                 this.aventurier.deplacer(-1, 0);
             }
 		}
-        if (commande.droite && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
-			if (xPerso < this.labyrinthe.getTailleX()) {
+        if (commande.droite) {
+			if (xPerso < this.labyrinthe.getTailleX() && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
                 this.aventurier.deplacer(1, 0);
             }	
 		}
@@ -56,8 +56,8 @@ public class JeuZ implements Jeu{
                 this.aventurier.deplacer(0, -1);
             }
 		}
-        if (commande.bas && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
-			if (yPerso < this.labyrinthe.getTailleY()) {
+        if (commande.bas) {
+			if (yPerso < this.labyrinthe.getTailleY() && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
                 this.aventurier.deplacer(0, 1);
             }
 		}
