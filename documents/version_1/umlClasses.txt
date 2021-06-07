@@ -6,8 +6,9 @@ skinparam class{
 }
 
 class JeuZ{
-+ main(String[] args)
-+ deplacerPerso()
++ evoluer(Commande) : void
++ etreFini() : boolean
++ getAventurier() : Personage
 }
 
 class Personnage{
@@ -43,7 +44,7 @@ Mur --|> Case
 Sol --|> Case
 Passage --|> Case
 
-Jeu "1" -left> "1" Personnage : -aventurier
-Jeu "*" -> "*" Labyrinthe : -niveaux
+JeuZ "1" -left> "1" Personnage : -aventurier
+JeuZ "*" -> "*" Labyrinthe : -niveaux
 
 @enduml
