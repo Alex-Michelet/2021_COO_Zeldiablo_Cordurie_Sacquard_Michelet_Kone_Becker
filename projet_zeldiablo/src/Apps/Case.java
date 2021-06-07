@@ -1,25 +1,28 @@
+package Apps;
+
 public abstract class Case {
     // Attributs
-    private int caseX;
-    private int caseY;
+    private int x;
+    private int y;
     private boolean estFranchissable;
 
     // Constructeur
     public Case(int x, int y, boolean f) {
-        this.caseX = x;
-        this.caseY = y;
+        this.x = x;
+        this.y = y;
         this.estFranchissable = f;
     }
 
     // getters
-    public int getCaseX() {
-        return this.caseX;
+    public int getX() {
+        return this.x;
     }
 
-    public int getCaseY() {
-        return this.caseY;
+    public int getY() {
+        return this.y;
     }
 
+    // methode qui permet de savoir so la case est franchissable
     public boolean estFranchissable() {
         return this.estFranchissable;
     }
