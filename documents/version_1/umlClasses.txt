@@ -20,12 +20,12 @@ class Personnage{
 }
 
 abstract class Case{
-- caseX : int 
-- caseY : int 
+- x : int 
+- y : int 
 - franchissable : boolean
 + Case(int x, int y, boolean f)
-+ getCaseX() : int 
-+ getCaseY() : int
++ getX() : int 
++ getY() : int
 + estFranchissable() : boolean
 }
 
