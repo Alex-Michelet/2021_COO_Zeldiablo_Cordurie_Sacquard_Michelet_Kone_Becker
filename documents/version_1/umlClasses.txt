@@ -5,7 +5,7 @@ skinparam class{
   BorderColor<<AFaire>> Black
 }
 
-class Jouer{
+class JeuZ{
 + main(String[] args)
 + deplacerPerso()
 }
