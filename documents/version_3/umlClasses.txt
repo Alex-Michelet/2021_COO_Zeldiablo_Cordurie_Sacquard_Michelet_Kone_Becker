@@ -17,10 +17,18 @@ class JeuZ{
 class Personnage{
 - posX : int
 - posY : int 
+- pv : int 
+- vieMax : int 
+- mort : boolean
 + Personnage(int, int)
 + deplacer(int, int)
++ gagnerVie(int)
++ prendreDegats(int)
 + getX() : int
 + getY() : int
++ getPv() : int 
++ getVieMax() : int
++ etreMort() : boolean
 }
 
 abstract class Case{
