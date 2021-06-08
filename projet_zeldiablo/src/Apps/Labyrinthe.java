@@ -73,7 +73,7 @@ public class Labyrinthe {
      */
     public boolean estUnPiege(int a, int o) {
         boolean p;
-        if (tab[a][o] instanceof Piege) {
+        if (tab[o][a] instanceof Piege) {
             p = true;
         } else {
             p = false;

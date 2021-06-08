@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
-import java.util.Date;
 
 public class Personnage {
     /**
@@ -71,27 +70,6 @@ public class Personnage {
             if (pv == 0) {
                 this.mort = true;
             }
-
-            /*
-             * Timer t = new Timer();
-             * 
-             * t.schedule(new TimerTask() {
-             * 
-             * @Override public void run() { completeTask(); };
-             * 
-             * private void completeTask() { try { System.out.println("Invulnerable BRAVO");
-             * Thread.sleep(5 * 1000); System.out.println("attention aie aie aie etc");
-             * invincible = false; } catch (InterruptedException e) {
-             * System.out.println("probleme"); } } }, 5000);
-             */
-
-            /*
-             * TimerTask task = new TimerTask() { public void run() {
-             * System.out.println("Invulnerable BRAVO"); invincible = false; } }; Timer
-             * timer = new Timer("Timer");
-             * 
-             * long delay = 5000; timer.schedule(task, delay);
-             */
 
             TimerTask timerTask = new Cooldown();
             Timer timer = new Timer(true);

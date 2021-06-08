@@ -2,10 +2,7 @@ package Tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.lang.InterruptedException;
-import java.lang.Thread;
 import java.util.concurrent.TimeUnit;
 import Apps.*;
 
@@ -104,7 +101,7 @@ public class TestPersonnage {
         p.gagnerVie(1);
 
         // verif
-        assertEquals("la vie devrait etre de 13", 13, p.getX());
+        assertEquals("la vie devrait etre de 13", 13, p.getPv());
     }
 
     /**

@@ -60,7 +60,7 @@ public class JeuZ implements Jeu {
                 if (this.labyrinthe.getEtatPiege(xPersoActuel, yPersoActuel)) {
 
                     // on fait subir des degats au personnage
-                    this.aventurier.prendreDegats(1);
+                    this.aventurier.prendreDegats(3);
 
                     // puis on pense a desactiver le piege
                     this.labyrinthe.desactiverPiege(xPersoActuel, yPersoActuel);
