@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
+import java.util.Date;
 
 public class Personnage {
     /**
@@ -61,24 +62,7 @@ public class Personnage {
         if ((!invincible) && (!etreMort())) {
 
             invincible = true;
-            Timer t = new Timer();
-            TimerTask tt = new TimerTask() {
-                @Override
-                public void run() {
-                    completeTask();
-                };
 
-                private void completeTask() {
-                    try {
-                        System.out.println("Invulnerable BRAVO");
-                        Thread.sleep(5 * 1000);
-                        System.out.println("attention aie aie aie etc");
-                        invincible = false;
-                    } catch (InterruptedException e) {
-                        System.out.println("probleme");
-                    }
-                }
-            };
             if (pv < val) {
                 pv = 0;
             } else {
@@ -87,7 +71,31 @@ public class Personnage {
             if (pv == 0) {
                 this.mort = true;
             }
-            System.out.println("les degats sont pris : pv = " + getPv());
+
+            /*
+             * Timer t = new Timer();
+             * 
+             * t.schedule(new TimerTask() {
+             * 
+             * @Override public void run() { completeTask(); };
+             * 
+             * private void completeTask() { try { System.out.println("Invulnerable BRAVO");
+             * Thread.sleep(5 * 1000); System.out.println("attention aie aie aie etc");
+             * invincible = false; } catch (InterruptedException e) {
+             * System.out.println("probleme"); } } }, 5000);
+             */
+
+            /*
+             * TimerTask task = new TimerTask() { public void run() {
+             * System.out.println("Invulnerable BRAVO"); invincible = false; } }; Timer
+             * timer = new Timer("Timer");
+             * 
+             * long delay = 5000; timer.schedule(task, delay);
+             */
+
+            TimerTask timerTask = new Cooldown();
+            Timer timer = new Timer(true);
+            timer.schedule(timerTask, 0);
         }
     }
 
@@ -135,5 +143,27 @@ public class Personnage {
      */
     public boolean etreMort() {
         return this.mort;
+    }
+
+    /**
+     * methode qui permet de savoir si le personnage est invincible si le boolean
+     * est true
+     * 
+     * @return
+     */
+    public boolean estInvincible() {
+        return this.invincible;
+    }
+
+    class Cooldown extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            invincible = false;
+        }
     }
 }

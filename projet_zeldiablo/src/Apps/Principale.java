@@ -19,7 +19,6 @@ public class Principale {
         MoteurGraphique moteur = new MoteurGraphique(jeu, dessin);
 
         moteur.lancerJeu(400, 400);
-
     }
 
 }
