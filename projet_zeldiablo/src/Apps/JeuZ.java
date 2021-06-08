@@ -36,18 +36,8 @@ public class JeuZ implements Jeu {
      */
     public void evoluer(Commande commande) {
 
-        int xPersoAncien = this.aventurier.getX();
-        int yPersoAncien = this.aventurier.getY();
-
         // si le perso c est bien deplace on gere les pieges
         if (this.deplacerPerso(commande)) {
-
-            // on verifie si le personnage etait sur un piege avant de bouger
-            if (this.labyrinthe.estUnPiege(xPersoAncien, yPersoAncien)) {
-
-                // si c etait le cas on reactive le piege
-                this.labyrinthe.activerPiege(xPersoAncien, yPersoAncien);
-            }
 
             // on recupere les coordonnees actuelles du personnage
             int xPersoActuel = this.aventurier.getX();
@@ -56,15 +46,8 @@ public class JeuZ implements Jeu {
             // on regarde si le personnage est arrive sur un piege
             if (this.labyrinthe.estUnPiege(xPersoActuel, yPersoActuel)) {
 
-                // si on est bien sur un piege on s assure qu il est actif
-                if (this.labyrinthe.getEtatPiege(xPersoActuel, yPersoActuel)) {
-
-                    // on fait subir des degats au personnage
-                    this.aventurier.prendreDegats(3);
-
-                    // puis on pense a desactiver le piege
-                    this.labyrinthe.desactiverPiege(xPersoActuel, yPersoActuel);
-                }
+                // on fait subir des degats au personnage
+                this.aventurier.prendreDegats(3);
             }
         }
 

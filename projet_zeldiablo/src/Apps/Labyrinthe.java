@@ -47,7 +47,7 @@ public class Labyrinthe {
                     } else if (c == 'M') {
                         tab[j][i] = new Mur(i, j);
                     } else if (c == 'P') {
-                        tab[j][i] = new Piege(i, j, true);
+                        tab[j][i] = new Piege(i, j);
                     }
                 }
                 j++;
@@ -61,9 +61,6 @@ public class Labyrinthe {
         }
     }
 
-    /**
-     * EstUnpiege ActiverPiege DesactiverPiger getEtatPiege
-     */
     /**
      * estUnPiege Verifie si une case est un piege
      * 
@@ -79,26 +76,6 @@ public class Labyrinthe {
             p = false;
         }
         return p;
-    }
-
-    /**
-     * activerPiege active un piege
-     */
-    public void activerPiege(int abs, int ord) {
-        if (this.estUnPiege(abs, ord)) {
-            Piege p = (Piege) tab[ord][abs];
-            p.amorcer();
-        }
-    }
-
-    /**
-     * desactiverPiege active un piege
-     */
-    public void desactiverPiege(int abs, int ord) {
-        if (this.estUnPiege(abs, ord)) {
-            Piege p = (Piege) tab[ord][abs];
-            p.desamorcer();
-        }
     }
 
     /**
@@ -137,14 +114,5 @@ public class Labyrinthe {
 
     public boolean estAccessible(int x, int y) {
         return (tab[y][x].estFranchissable());
-    }
-
-    public boolean getEtatPiege(int x, int y) {
-        boolean res = false;
-        if (this.estUnPiege(x, y)) {
-            Piege p = (Piege) tab[y][x];
-            res = p.getEtatPiege();
-        }
-        return res;
     }
 }
