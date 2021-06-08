@@ -1,0 +1,72 @@
+@startuml
+
+title Sequence cas ou le personnage essaye d aller a droite en partant d un piege inactif
+
+participant "jeu : JeuZ" as jeu
+participant "labyrinthe : Labyrinthe" as lab
+participant "perso : Personnage" as perso
+participant "piege : Piege" as piege
+participant "sol : Sol" as sol
+
+[-> jeu : evoluer(Commande c)
+activate jeu
+
+jeu -> perso : getX()
+activate perso
+
+perso --> jeu : 2
+deactivate perso
+
+jeu -> perso : getY()
+activate perso
+
+perso --> jeu : 2
+deactivate perso
+
+jeu -> lab : estAccessible(3, 2)
+activate lab
+
+lab -> sol : estFranchissable()
+activate sol
+
+sol --> lab : true
+deactivate sol
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> perso : deplacer(1, 0)
+activate perso
+
+perso --> jeu
+deactivate perso
+
+jeu -> lab : estUnPiege(2, 2)
+activate lab
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> lab : activerPiege(2, 2)
+activate lab
+
+lab -> piege : amorcer()
+activate piege
+
+piege --> lab
+deactivate piege
+
+lab --> jeu 
+deactivate lab
+
+jeu -> lab : estUnPiege(3, 2)
+activate lab
+
+lab --> jeu : false
+deactivate lab
+
+[<-- jeu
+deactivate jeu 
+
+
+@enduml
