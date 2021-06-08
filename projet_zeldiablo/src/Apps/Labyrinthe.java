@@ -24,7 +24,7 @@ public class Labyrinthe {
             int j = 0;// Iterateur
 
             br.mark(0);
-            while ((line = br.readLine()) != null) { // On parcourt le fichier pour connaître la taille du labyrinthe
+            while ((line = br.readLine()) != null) { // On parcourt le fichier pour connaÃ®tre la taille du labyrinthe
                 // Longueur de la ligne
                 this.xLong = line.length();
                 // Nombre de ligne
@@ -58,6 +58,46 @@ public class Labyrinthe {
         } catch (IOException ioe) {
             System.out.println("IO Exception");
             ioe.printStackTrace();
+        }
+    }
+
+    /**
+     * EstUnpiege ActiverPiege DesactiverPiger getEtatPiege
+     */
+    /**
+     * estUnPiege Verifie si une case est un piege
+     * 
+     * @param a
+     * @param o
+     * @return p
+     */
+    public boolean estUnPiege(int a, int o) {
+        boolean p;
+        if (tab[a][o] instanceof Piege) {
+            p = true;
+        } else {
+            p = false;
+        }
+        return p;
+    }
+
+    /**
+     * activerPiege active un piege
+     */
+    public void activerPiege(int abs, int ord) {
+        if (this.estUnPiege(abs, ord)) {
+            Piege p = (Piege) tab[ord][abs];
+            p.amorcer();
+        }
+    }
+
+    /**
+     * desactiverPiege active un piege
+     */
+    public void desactiverPiege(int abs, int ord) {
+        if (this.estUnPiege(abs, ord)) {
+            Piege p = (Piege) tab[ord][abs];
+            p.desamorcer();
         }
     }
 
@@ -97,5 +137,14 @@ public class Labyrinthe {
 
     public boolean estAccessible(int x, int y) {
         return (tab[y][x].estFranchissable());
+    }
+
+    public boolean getEtatPiege(int x, int y) {
+        boolean res = false;
+        if (this.estUnPiege(x, y)) {
+            Piege p = (Piege) tab[y][x];
+            res = p.getEtatPiege();
+        }
+        return res;
     }
 }

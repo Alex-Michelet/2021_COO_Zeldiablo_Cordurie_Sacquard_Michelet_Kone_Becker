@@ -1,7 +1,7 @@
 package Apps;
 
 public class Piege extends Case {
-    private boolean estAmorce;
+    private boolean estAmorce; // Verifie si le piege est amorce
 
     /**
      * constructeur d une case piege qui fait prendre des degats lorsque le
@@ -22,6 +22,20 @@ public class Piege extends Case {
      */
     public boolean getEtatPiege() {
         return this.estAmorce;
+    }
+
+    /**
+     * amorce passe estAmorce a true
+     */
+    public void amorcer() {
+        this.estAmorce = true;
+    }
+
+    /**
+     * desamorce passe estAmorce a false
+     */
+    public void desamorcer() {
+        this.estAmorce = false;
     }
 
 }
