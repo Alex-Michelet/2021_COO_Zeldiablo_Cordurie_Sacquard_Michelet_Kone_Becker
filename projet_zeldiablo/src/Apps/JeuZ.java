@@ -71,6 +71,11 @@ public class JeuZ implements Jeu{
 
     }
     
+    /**
+     * methode qui permet de deplacer le personnage
+     * @param commande = commande utilisateur
+     * @return vrai que si le deplacement a eu lieu
+     */
     public boolean deplacerPerso(Commande commande){
 
         boolean res = false;
