@@ -1,0 +1,23 @@
+* fonctionnalités version 4
+
+_____________________________________________________________________________
+
+Retour sur les fonctionnalités non abouties de la version précédente
+
+(optionnel)
+- fonctionnalite 1 : Correctif des déplacements
+- descriptif : modification des keyListeners pour rendre les déplacements moins incontrolables et empecher un bug de collision :
+- critères de validation
+    - critere 1 : cooldown entre chaque envoie de commande
+    - critere 2 : bug de déplamement résolu
+
+_____________________________________________________________________________
+
+    
+- fonctionnalite 2 : Ajout de monstres 
+- descriptif : 
+    - critere 1 : interface entite
+    - critere 1 : Classe abstraite monstre
+    - critere 2 : Classe Troll
+    - critere 3 : deplacement aleatoire
+    - critere 4 : interaction avec le personnage (deplacement)
