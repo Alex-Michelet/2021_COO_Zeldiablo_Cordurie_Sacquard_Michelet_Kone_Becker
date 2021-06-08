@@ -15,9 +15,16 @@ _____________________________________________________________________________
 
     
 - fonctionnalite 2 : Ajout de monstres 
-- descriptif : 
+- descriptif : monstres se deplacant aleatoirement et pouvant attaquer, etre tuer
     - critere 1 : interface entite
-    - critere 1 : Classe abstraite monstre
-    - critere 2 : Classe Troll
-    - critere 3 : deplacement aleatoire
-    - critere 4 : interaction avec le personnage (deplacement)
+    - critere 2 : Classe abstraite monstre
+    - critere 3 : Classe Troll
+    - critere 4 : deplacement aleatoire
+    - critere 5 : interaction avec le personnage (deplacement)
+
+    - fonctionnalite 3 : Ajout d'armes
+- descriptif : differentes armes avec leurs distances et attaques
+    - critere 1 : classe abstraite arme
+    - critere 2 : Classe lance
+    - critere 3 : Classe epee
+

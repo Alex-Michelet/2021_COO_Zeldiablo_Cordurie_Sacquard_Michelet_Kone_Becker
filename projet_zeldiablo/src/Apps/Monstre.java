@@ -24,7 +24,9 @@ public abstract class Monstre implements Entite {
     }
 
     public void attaquer(Entite victime) {
-        victime.prendreDegats(ptsAttaque);
+        if (!estMort()) {
+            victime.prendreDegats(ptsAttaque);
+        }
     }
 
     public void prendreDegats(int dgt) {
