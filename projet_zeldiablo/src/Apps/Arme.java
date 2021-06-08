@@ -22,7 +22,7 @@ public abstract class Arme {
      * @param e
      */
     public void attaquer(Entite e) {
-        e.subirDegats(this.degat);
+        e.prendreDegats(this.degat);
     }
 
 }
