@@ -1,0 +1,83 @@
+@startuml
+
+skinparam class{
+  BackgroundColor<<AFaire>> Pink
+  BorderColor<<AFaire>> Black
+  BackgroundColor<<Nouveau>> Cyan
+  BorderColor<<Nouveau>> Blue
+}
+
+interface Jeu <<Nouveau>>{
++ evoluer(Commande) : void
++ etreFini() : boolean
+}
+
+class JeuZ{
++ evoluer(Commande) : void
++ etreFini() : boolean
++ getAventurier() : Personage
++ getLabyrinthe() : Labyrinthe
+}
+
+class Personnage{
+- posX : int
+- posY : int 
++ Personnage(int, int)
++ deplacer(int, int)
++ getX() : int
++ getY() : int
+}
+
+abstract class Case{
+- x : int 
+- y : int 
+- franchissable : boolean
++ Case(int, int, boolean)
++ getX() : int 
++ getY() : int
++ estFranchissable() : boolean
+}
+
+class Labyrinthe <<Nouveau>>{
+- xLong : int
+- yLong : int
++ Labyrinthe(String)
++ estAccessible(int, int) : boolean
++ getTailleX() : int
++ getTailleY() : int
++ getTableauCases() : Case[][]
+}
+
+class DessinZ <<Nouveau>>{
++ DessinZ(JeuZ)
++ dessiner(BufferedImage) : void
+}
+
+interface DessinJeu <<Nouveau>>{
++ dessiner(Bufferedimage) : void
+}
+
+class Mur <<Nouveau>>{
++ Sol(int, int)
+}
+
+class Sol <<Nouveau>>{
++ Mur(int, int)
+}
+
+class Passage <<AFaire>>{}
+
+Labyrinthe "0" -> "*" Case : -cases
+
+Mur --|> Case
+Sol --|> Case
+Passage --|> Case
+JeuZ ..|> Jeu
+DessinZ ..|> DessinJeu
+
+
+DessinZ "*" -> "1" JeuZ : -jeu
+JeuZ "1" -left> "1" Personnage : -aventurier
+JeuZ "*" -> "1" Labyrinthe : -niveaux
+
+@enduml

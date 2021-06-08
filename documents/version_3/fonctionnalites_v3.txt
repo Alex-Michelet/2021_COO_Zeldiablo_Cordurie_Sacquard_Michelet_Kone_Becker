@@ -1,0 +1,35 @@
+* fonctionnalités version 3
+
+_____________________________________________________________________________
+
+Retour sur les fonctionnalités non abouties de la version précédente
+
+- fonctionnalite 1 : Correctif des déplacements
+- descriptif : modification des keyListeners pour rendre les déplacements moins incontrolables et empecher un bug de collision :
+- critères de validation
+    - critere 1 : cooldown entre chaque envoie de commande
+    - critere 2 : bug de déplamement résolu
+
+_____________________________________________________________________________
+
+    
+- fonctionnalite 2 : Vie du personnage
+- descriptif : le personnage : 
+    - critere 1 : le personnage a des points de vie
+    - critere 2 : il peut en perdre 
+    - critere 3 : et en gagner
+    
+- fonctionnalite 3 : Nouvelle case piégé
+- descriptif : Une case infligeant des dégats lorsque le personnage passe dessus
+- criteres de validation : 
+    - critere 1 : la case inflige des dégats
+    
+- fonctionalite 3 : Temps d'invunérabilité
+- descriptif : modification de la methode permettant au joueur de prendre des dégats afin que ceux-ci ne puissent arriver que toutes les x secondes
+    - critere 1 : le personnage prend des degats
+    - critere 2 : il devient invinsible durant un temps
+    - critere 3 : il peut de nouveau etre blessé
+    
+    
+
+    
