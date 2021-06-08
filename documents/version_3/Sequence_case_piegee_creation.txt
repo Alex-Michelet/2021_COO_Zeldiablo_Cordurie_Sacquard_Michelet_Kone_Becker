@@ -1,0 +1,11 @@
+@startuml
+
+title Creation d un case piege
+
+participant "l : Labyrinthe" as lab
+participant "piege : Piege" as piege
+
+create piege
+lab -> piege
+
+@enduml

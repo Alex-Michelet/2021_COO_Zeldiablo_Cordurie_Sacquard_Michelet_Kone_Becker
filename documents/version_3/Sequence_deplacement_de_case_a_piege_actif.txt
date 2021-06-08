@@ -1,0 +1,89 @@
+@startuml
+
+title Sequence cas ou le personnage essaye d aller a gauche et il y a un piege actif en (2,2)
+
+participant "jeu : JeuZ" as jeu
+participant "labyrinthe : Labyrinthe" as lab
+participant "perso : Personnage" as perso
+participant "piege : Piege" as piege
+
+[-> jeu : evoluer(Commande c)
+activate jeu
+
+jeu -> perso : getX()
+activate perso
+
+perso --> jeu : 3
+deactivate perso
+
+jeu -> perso : getY()
+activate perso
+
+perso --> jeu : 2
+deactivate perso
+
+jeu -> lab : estAccessible(2, 2)
+activate lab
+
+lab -> piege : estFranchissable()
+activate piege
+
+piege --> lab : true
+deactivate piege
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> perso : deplacer(-1, 0)
+activate perso
+
+perso --> jeu
+deactivate perso
+
+jeu -> lab : estUnPiege(3, 2)
+activate lab
+
+lab --> jeu : false
+deactivate lab
+
+jeu -> lab : estUnPiege(2, 2)
+activate lab
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> lab : piegeEstActif(2, 2)
+activate lab
+
+lab -> piege : getEtatPiege()
+activate piege
+
+piege --> lab : true
+deactivate piege
+
+lab --> jeu : true
+deactivate lab
+
+jeu -> perso : prendreDegats(1)
+activate perso
+
+perso --> jeu
+deactivate perso
+
+jeu -> lab : desactiverPiege(2, 2)
+activate lab
+
+lab -> piege : desarmorcer()
+activate piege
+
+piege --> lab
+deactivate piege
+
+lab --> jeu 
+deactivate lab
+
+[<-- jeu
+deactivate jeu 
+
+
+@enduml

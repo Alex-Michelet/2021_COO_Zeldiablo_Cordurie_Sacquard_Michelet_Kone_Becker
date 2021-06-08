@@ -7,11 +7,6 @@ skinparam class{
   BorderColor<<Nouveau>> Blue
 }
 
-interface Jeu <<Nouveau>>{
-+ evoluer(Commande) : void
-+ etreFini() : boolean
-}
-
 class JeuZ{
 + evoluer(Commande) : void
 + etreFini() : boolean
@@ -38,7 +33,7 @@ abstract class Case{
 + estFranchissable() : boolean
 }
 
-class Labyrinthe <<Nouveau>>{
+class Labyrinthe{
 - xLong : int
 - yLong : int
 + Labyrinthe(String)
@@ -48,32 +43,35 @@ class Labyrinthe <<Nouveau>>{
 + getTableauCases() : Case[][]
 }
 
-class DessinZ <<Nouveau>>{
+class DessinZ{
 + DessinZ(JeuZ)
 + dessiner(BufferedImage) : void
 }
 
-interface DessinJeu <<Nouveau>>{
-+ dessiner(Bufferedimage) : void
-}
-
-class Mur <<Nouveau>>{
+class Mur {
 + Sol(int, int)
 }
 
-class Sol <<Nouveau>>{
+class Sol {
 + Mur(int, int)
 }
 
 class Passage <<AFaire>>{}
 
+class Piege<<Nouveau>>{
+- estAmorce : boolean
++ Piege(int, int)
++ getEtatPiege() : boolean
++ amorcer() : void
++ desarmorcer() : void
+}
+
 Labyrinthe "0" -> "*" Case : -cases
 
 Mur --|> Case
 Sol --|> Case
+Piege --|> Case
 Passage --|> Case
-JeuZ ..|> Jeu
-DessinZ ..|> DessinJeu
 
 
 DessinZ "*" -> "1" JeuZ : -jeu
