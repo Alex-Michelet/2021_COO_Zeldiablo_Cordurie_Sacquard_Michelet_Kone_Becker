@@ -98,13 +98,13 @@ public class JeuZ implements Jeu {
     }
 
     /**
-     * methode qui permet de savoir si le jeu est fini pour le moment il ne s arrete
-     * pas
+     * methode qui permet de savoir si le jeu est fini 
+     * le jeu s arrete si le personnage meurt
      * 
      * @return vrai que si le jeu est fini
      */
     public boolean etreFini() {
-        return (false);
+        return (this.aventurier.etreMort());
     }
 
     /**
