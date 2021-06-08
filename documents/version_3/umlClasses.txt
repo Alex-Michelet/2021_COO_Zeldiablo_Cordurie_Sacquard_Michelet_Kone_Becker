@@ -9,6 +9,7 @@ skinparam class{
 
 class JeuZ{
 + evoluer(Commande) : void
++ deplacerPerso(Commande) : void
 + etreFini() : boolean
 + getAventurier() : Personage
 + getLabyrinthe() : Labyrinthe
@@ -46,6 +47,10 @@ class Labyrinthe{
 - yLong : int
 + Labyrinthe(String)
 + estAccessible(int, int) : boolean
++ activerPiege(int, int) : void
++ estUnPiege(int, int) : boolean
++ desactiverPiege(int, int) : void
++ getEtatPiege(int, int) : boolean
 + getTailleX() : int
 + getTailleY() : int
 + getTableauCases() : Case[][]
