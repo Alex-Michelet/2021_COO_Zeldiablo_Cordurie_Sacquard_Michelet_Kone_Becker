@@ -5,16 +5,16 @@ import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
 
-public class Personnage {
+public class Personnage implements Entite {
     /**
      * coordonnees d'un personnage
      */
 
-    private int posX, posY, pv, vieMax;
+    private int posX, posY, pv, vieMax, degats;
     private boolean mort, invincible;
 
     /**
-     * Constructeur d'un personnage avec ses coordonnees
+     * Constructeur d'un personnage initialisation des attributs
      * 
      * @param a abscisse
      * @param o ordonnee
@@ -26,6 +26,7 @@ public class Personnage {
         this.pv = 15;
         this.vieMax = 15;
         this.mort = false;
+        this.degats = 1;
     }
 
     /**
@@ -76,6 +77,15 @@ public class Personnage {
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
         }
+    }
+
+    /**
+     * methode qui permet d attaquer une entite
+     * 
+     * @param victime
+     */
+    public void attaquer(Entite victime) {
+        victime.prendreDegats(this.degats);
     }
 
     /**
@@ -134,6 +144,9 @@ public class Personnage {
         return this.invincible;
     }
 
+    /**
+     * timer pour l'invincibilite 
+     */
     class Cooldown extends TimerTask {
         @Override
         public void run() {
