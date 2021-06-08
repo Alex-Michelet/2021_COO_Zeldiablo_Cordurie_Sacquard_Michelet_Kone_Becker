@@ -24,7 +24,7 @@ _____________________________________________________________________________
 - criteres de validation : 
     - critere 1 : la case inflige des dégats
     
-- fonctionalite 3 : Temps d'invunérabilité
+- fonctionalite 4 : Temps d'invunérabilité
 - descriptif : modification de la methode permettant au joueur de prendre des dégats afin que ceux-ci ne puissent arriver que toutes les x secondes
     - critere 1 : le personnage prend des degats
     - critere 2 : il devient invinsible durant un temps
