@@ -58,8 +58,13 @@ public class DessinZ implements DessinJeu {
         // on affiche le personnage en prenant soin de modifier les coordonnees pour s
         // adapter
         // a la taille des cases du jeu
-        g.setColor(Color.BLUE);
+        if (p.estInvincible()) {
+            g.setColor(Color.PINK);
+        } else {
+            g.setColor(Color.BLUE);
+        }
         g.fillArc(p.getX() * lon, p.getY() * haut, lon, haut, 0, 360);
+
     }
 
 }
