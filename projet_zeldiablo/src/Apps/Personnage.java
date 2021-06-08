@@ -14,7 +14,7 @@ public class Personnage implements Entite {
     private boolean mort, invincible;
 
     /**
-     * Constructeur d'un personnage avec ses coordonnees
+     * Constructeur d'un personnage initialisation des attributs
      * 
      * @param a abscisse
      * @param o ordonnee
@@ -79,6 +79,11 @@ public class Personnage implements Entite {
         }
     }
 
+    /**
+     * methode qui permet d attaquer une entite
+     * 
+     * @param victime
+     */
     public void attaquer(Entite victime) {
         victime.prendreDegats(this.degats);
     }
@@ -139,6 +144,9 @@ public class Personnage implements Entite {
         return this.invincible;
     }
 
+    /**
+     * timer pour l'invincibilite 
+     */
     class Cooldown extends TimerTask {
         @Override
         public void run() {
