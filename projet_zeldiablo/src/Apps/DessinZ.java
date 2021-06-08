@@ -72,8 +72,8 @@ public class DessinZ implements DessinJeu {
 
         ArrayList<Monstre> list = jeu.getListeMonstre();
         for (int i = 0; i < list.size(); i++) {
-            int xMonstre = list.get(i).getPosX();
-            int yMonstre = list.get(i).getPosY();
+            int xMonstre = list.get(i).getX();
+            int yMonstre = list.get(i).getY();
             g.setColor(Color.MAGENTA);
             g.fillArc(xMonstre * lon, yMonstre * haut, lon, haut, 0, 360);
         }

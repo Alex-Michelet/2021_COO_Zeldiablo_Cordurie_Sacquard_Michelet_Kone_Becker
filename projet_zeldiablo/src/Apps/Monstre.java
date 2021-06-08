@@ -20,18 +20,29 @@ public abstract class Monstre extends Entite {
     }
 
 
+    /**
+     * methode qui permet d attaque une un victime
+     * @param victime = victime a attaquer
+     */
     public void attaquer(Entite victime) {
-        if (!estMort()) {
-            victime.prendreDegats(ptsAttaque);
+        if (!this.etreMort()) {
+            victime.prendreDegats(this.ad);
         }
     }
 
+    /**
+     * methode qui permet a un monstre de subir des degats
+     * @param dgt = nombre de pv a retirer
+     */
     public void prendreDegats(int dgt) {
         int val = Math.abs(dgt);
+
         if (this.getPv() < val) {
             this.setPv(0);
-        } else {
-            this.setPv(-val);
+            this.setMort(true);
+        } 
+        else {
+            this.setPv(this.getPv() - val);
         }
     }
 

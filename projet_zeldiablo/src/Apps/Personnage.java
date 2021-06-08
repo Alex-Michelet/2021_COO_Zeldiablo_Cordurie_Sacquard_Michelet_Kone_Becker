@@ -34,11 +34,11 @@ public class Personnage extends Entite {
      * @param vie
      */
     public void gagnerVie(int vie) {
-        if (!this.etreMort) {
+        if (!this.etreMort()) {
             if (this.getPv() + vie > this.vieMax) {
                 this.setPv(this.vieMax);
             } else {
-                this.setPv(this.getPv + Math.abs(vie));
+                this.setPv(this.getPv() + Math.abs(vie));
             }
         }
     }
@@ -61,7 +61,7 @@ public class Personnage extends Entite {
                 this.setPv(this.getPv() - val);
             }
             if (this.getPv() == 0) {
-                this.setMort = true;
+                this.setMort(true);
             }
 
             TimerTask timerTask = new Cooldown();
