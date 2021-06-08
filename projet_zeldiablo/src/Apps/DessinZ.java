@@ -43,6 +43,9 @@ public class DessinZ implements DessinJeu {
                 } else if (tab[j][i] instanceof Sol) {
                     g.setColor(Color.GREEN);
                     g.fillRect(i * lon, j * haut, lon, haut);
+                } else if (tab[j][i] instanceof Piege) {
+                    g.setColor(Color.BLACK);
+                    g.fillRect(i * lon, j * haut, lon, haut);
                 } else {
                     System.out.println("Case non reconnue");
                 }
