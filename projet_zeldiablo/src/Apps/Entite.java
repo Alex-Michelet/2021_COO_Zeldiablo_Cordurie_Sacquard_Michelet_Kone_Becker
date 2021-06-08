@@ -76,4 +76,16 @@ public abstract class Entite {
         return this.mort;
     }
 
+    /**
+     * methode qui permet d'incrementer les pv de l entite 
+     *
+     * @param vie
+     */
+    public void setPv(int vie) {
+        this.pv = vie;
+    }
+
+    public void setMort(boolean etat) {
+        this.mort = etat;
+    }
 }

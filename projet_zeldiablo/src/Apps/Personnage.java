@@ -5,7 +5,7 @@ import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
 
-public class Personnage implements Entite {
+public class Personnage extends Entite {
     /**
      * coordonnees d'un personnage
      */
@@ -34,8 +34,12 @@ public class Personnage implements Entite {
      * @param vie
      */
     public void gagnerVie(int vie) {
-        if (!mort ) {
-            this.pv += Math.abs(vie);
+        if (!this.etreMort) {
+            if (this.getPv() + vie > this.vieMax) {
+                this.setPv(this.vieMax);
+            } else {
+                this.setPv(this.getPv + Math.abs(vie));
+            }
         }
     }
 
@@ -51,13 +55,13 @@ public class Personnage implements Entite {
 
             invincible = true;
 
-            if (pv < val) {
-                pv = 0;
+            if (this.getPv() < val) {
+                this.setPv(0);
             } else {
-                pv -= val;
+                this.setPv(this.getPv() - val);
             }
-            if (pv == 0) {
-                this.mort = true;
+            if (this.getPv() == 0) {
+                this.setMort = true;
             }
 
             TimerTask timerTask = new Cooldown();
@@ -72,7 +76,7 @@ public class Personnage implements Entite {
      * @param victime
      */
     public void attaquer(Entite victime) {
-        if (!mort) {
+        if (!this.etreMort()) {
             if (this.arme != null) {
                 this.arme.attaquer(victime);
             } else {

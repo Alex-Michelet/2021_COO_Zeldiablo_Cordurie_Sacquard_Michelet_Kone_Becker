@@ -1,27 +1,24 @@
 package Apps;
 
-public abstract class Monstre implements Entite {
+public abstract class Monstre extends Entite {
     /**
      * attributs du monstre
      */
-    private int posX, posY, vie, ptsAttaque;
-    private boolean mort;
+    private int ad;
 
     /**
      * Constructeur d'un personnage avec ses coordonnees
      * 
      * @param a   abscisse
      * @param o   ordonnee
-     * @param pv  points de vie
+     * @param vie  points de vie
      * @param atk points d'attaque
      */
-    public Monstre(int a, int o, int pv, int atk) {
-        this.posX = a;
-        this.posY = o;
-        this.vie = pv;
-        this.ptsAttaque = atk;
-        this.mort = false;
+    public Monstre(int a, int o, int vie, int atk) {
+        super(a, o, vie);
+        this.ad = atk;
     }
+
 
     public void attaquer(Entite victime) {
         if (!estMort()) {
@@ -31,42 +28,11 @@ public abstract class Monstre implements Entite {
 
     public void prendreDegats(int dgt) {
         int val = Math.abs(dgt);
-        if (vie < val) {
-            vie = 0;
+        if (this.getPv() < val) {
+            this.setPv(0);
         } else {
-            vie -= val;
+            this.setPv(-val);
         }
-    }
-
-    /**
-     * deplacer le monstre dans une direction
-     * 
-     * @param x coordonnee x de deplacement (relatif)
-     * @param y coordonnee y de deplacement (relatif)
-     */
-    public void deplacer(int x, int y) {
-        if (!mort) {
-            this.posX += x;
-            this.posY += y;
-        }
-    }
-
-    /**
-     * methode qui permet d'obtenir la coordonnee x du monstre
-     * 
-     * @return coordonnee x
-     */
-    public int getPosX() {
-        return posX;
-    }
-
-    /**
-     * methode qui permet d'obtenir la coordonnee y du monstre
-     * 
-     * @return coordonnee y
-     */
-    public int getPosY() {
-        return posY;
     }
 
     /**
@@ -74,27 +40,7 @@ public abstract class Monstre implements Entite {
      * 
      * @return points d'attaque
      */
-    public int getPtsAttaque() {
-        return ptsAttaque;
+    public int getAd() {
+        return ad;
     }
-
-    /**
-     * methode qui permet d'obtenir la vie du monstre
-     * 
-     * @return vie
-     */
-    public int getVie() {
-        return vie;
-    }
-
-    /**
-     * methode qui permet de savoir si le monstre est mort (le boolean est true) ou
-     * vivant (false)
-     * 
-     * @return boolean
-     */
-    public boolean estMort() {
-        return mort;
-    }
-
 }
