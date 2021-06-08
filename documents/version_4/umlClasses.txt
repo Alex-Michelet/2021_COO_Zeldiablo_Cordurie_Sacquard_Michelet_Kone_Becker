@@ -86,13 +86,28 @@ abstract class Monstre <<Nouveau>>{
 }
 
 class Troll <<Nouveau>>{
-+ Troll(int, int)
++ Troll()
 }
 
 interface Entite <<Nouveau>>{
 + attaquer(Entite) : void
 + prendreDegats(int) : void
 + deplacer(int, int) : void
+}
+
+abstract class Arme <<Nouveau>>{
+- degats : int
+- portee : int
++ Arme(int, int)
++ attaquer(Entite)
+}
+
+class Epee <<Nouveau>>{
++ Epee()
+}
+
+class Lance<<Nouveau>>{
++ Lance()
 }
 
 Labyrinthe "0" -> "*" Case : -cases
@@ -103,6 +118,9 @@ Piege --|> Case
 
 Troll --|> Monstre
 
+Epee --|> Arme
+Lance --|> Arme
+
 Personnage ..|> Entite
 Monstre ..|> Entite
 
@@ -111,5 +129,7 @@ DessinZ "*" -> "1" JeuZ : -jeu
 JeuZ "*" -left> "1" Personnage : -aventurier
 JeuZ "*" -> "1" Labyrinthe : -niveaux
 JeuZ "*" -> "*" Monstre : -ennemis
+
+Personnage "0..1" -left> "0..1" Arme : arme
 
 @enduml

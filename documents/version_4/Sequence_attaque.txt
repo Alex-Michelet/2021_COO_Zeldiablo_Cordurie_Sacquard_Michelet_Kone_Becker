@@ -1,6 +1,6 @@
 @startuml
 
-title diagramme sequence personnage attaque monstre (le personnage fait 5 de degats)
+title diagramme sequence personnage attaque monstre (le personnage fait 5 de degats et le monstre est assez proche)
 
 participant "jeu : JeuZ" as jeu
 participant "perso : Personnage" as perso
@@ -8,6 +8,8 @@ participant "monstre : Troll" as monstre
 
 [-> jeu : evoluer(commande)
 activate jeu
+
+jeu -> jeu : calculerDistance(aventurier, monstre)
 
 jeu -> perso : attaquer(monstre)
 activate perso
