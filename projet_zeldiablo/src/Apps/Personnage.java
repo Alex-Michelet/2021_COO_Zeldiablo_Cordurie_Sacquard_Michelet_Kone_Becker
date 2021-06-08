@@ -10,35 +10,22 @@ public class Personnage implements Entite {
      * coordonnees d'un personnage
      */
 
-    private int posX, posY, pv, vieMax, degats;
-    private boolean mort, invincible;
+    private int vieMax;
+    private boolean invincible;
+    private Arme arme;
 
     /**
      * Constructeur d'un personnage initialisation des attributs
      * 
      * @param a abscisse
      * @param o ordonnee
+     * @param vie vie
      */
-    public Personnage(int a, int o) {
-        this.posX = a;
-        this.posY = o;
+    public Personnage(int a, int o, int vie) {
+        super(a, o, vie);
         this.invincible = false;
-        this.pv = 15;
-        this.vieMax = 15;
-        this.mort = false;
-        this.degats = 1;
-    }
-
-    /**
-     * deplacer le personnage dans une direction
-     * 
-     * @param c la chaine permettant de deplacer le personnage (N,S, E ou O)
-     */
-    public void deplacer(int x, int y) {
-        if (!mort) {
-            this.posX += x;
-            this.posY += y;
-        }
+        this.vieMax = vie;
+        this.arme = null;
     }
 
     /**
@@ -47,7 +34,7 @@ public class Personnage implements Entite {
      * @param vie
      */
     public void gagnerVie(int vie) {
-        if (!mort) {
+        if (!mort ) {
             this.pv += Math.abs(vie);
         }
     }
@@ -85,34 +72,13 @@ public class Personnage implements Entite {
      * @param victime
      */
     public void attaquer(Entite victime) {
-        victime.prendreDegats(this.degats);
-    }
-
-    /**
-     * methode qui permet d'obtenir la coordonnee x du personnage
-     * 
-     * @return coordonnee x
-     */
-    public int getX() {
-        return this.posX;
-    }
-
-    /**
-     * methode qui permet d'obtenir la coordonnee y du personnage
-     * 
-     * @return coordonnee y
-     */
-    public int getY() {
-        return this.posY;
-    }
-
-    /**
-     * methode qui permet d'obtenir la vie actuelle du personnage
-     * 
-     * @return pv
-     */
-    public int getPv() {
-        return this.pv;
+        if (!mort) {
+            if (this.arme != null) {
+                this.arme.attaquer(victime);
+            } else {
+                victime.prendreDegats(1);
+            }
+        }
     }
 
     /**
@@ -122,16 +88,6 @@ public class Personnage implements Entite {
      */
     public int getVieMax() {
         return this.vieMax;
-    }
-
-    /**
-     * methode qui permet de savoir si le personnage est mort si le boolean est true
-     * et vivant si il est false
-     * 
-     * @return
-     */
-    public boolean etreMort() {
-        return this.mort;
     }
 
     /**
