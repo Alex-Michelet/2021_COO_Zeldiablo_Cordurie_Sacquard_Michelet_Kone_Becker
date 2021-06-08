@@ -52,9 +52,10 @@ public class Personnage {
     }
 
     /**
-     * methode qui decremente les pv actuelles de vie
+     * methode qui decremente les pv actuels en prenant en compte l'etat du monstre
+     * (invincibile, vivant...)
      * 
-     * @param deg
+     * @param deg nombre de pv perdu
      */
     public void prendreDegats(int deg) {
         int val = Math.abs(deg);
