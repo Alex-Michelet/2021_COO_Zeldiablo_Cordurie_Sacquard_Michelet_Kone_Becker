@@ -5,15 +5,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
+import java.util.ArrayList;
 
 public class JeuZ implements Jeu {
 
     /**
-     * un jeu connait un aventurier
+     * un jeu connait un aventurier et un labyrinthe boolean actionEnCours pour
+     * limiter le nombre de deplacement par seconde
      */
     private Personnage aventurier;
     private Labyrinthe labyrinthe;
     private boolean actionEnCours;
+    private ArrayList<Monstre> listDeMonstres;
 
     /**
      * constructeur parametre qui permet de creer un jeu
@@ -33,6 +36,9 @@ public class JeuZ implements Jeu {
             throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
         actionEnCours = false;
+        listDeMonstres = new ArrayList<Monstre>();
+        listDeMonstres.add(new Troll(14, 5));
+        listDeMonstres.add(new Troll(11, 5));
     }
 
     /**
@@ -42,6 +48,18 @@ public class JeuZ implements Jeu {
      */
     public void evoluer(Commande commande) {
         if (!actionEnCours) {
+            for (int i = 0; i < listDeMonstres.size(); i++) {
+                int x = (int) Math.ceil(Math.random() * 4);
+                if (x == 1) {
+                    listDeMonstres.get(i).deplacer(0, 1);
+                } else if (x == 2) {
+                    listDeMonstres.get(i).deplacer(0, -1);
+                } else if (x == 3) {
+                    listDeMonstres.get(i).deplacer(-1, 0);
+                } else if (x == 4) {
+                    listDeMonstres.get(i).deplacer(1, 0);
+                }
+            }
             actionEnCours = true;
             // si le perso c est bien deplace on gere les pieges
             if (this.deplacerPerso(commande)) {
@@ -130,6 +148,10 @@ public class JeuZ implements Jeu {
      */
     public Labyrinthe getLabyrinthe() {
         return (this.labyrinthe);
+    }
+
+    public ArrayList<Monstre> getListeMonstre() {
+        return listDeMonstres;
     }
 
     class CooldownAction extends TimerTask {

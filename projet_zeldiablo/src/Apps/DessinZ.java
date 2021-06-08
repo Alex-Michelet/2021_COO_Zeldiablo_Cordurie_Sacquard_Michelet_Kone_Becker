@@ -2,6 +2,7 @@ package Apps;
 
 import moteurJeu.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
@@ -68,6 +69,14 @@ public class DessinZ implements DessinJeu {
             }
         }
         g.fillArc(p.getX() * lon, p.getY() * haut, lon, haut, 0, 360);
+
+        ArrayList<Monstre> list = jeu.getListeMonstre();
+        for (int i = 0; i < list.size(); i++) {
+            int xMonstre = list.get(i).getPosX();
+            int yMonstre = list.get(i).getPosY();
+            g.setColor(Color.MAGENTA);
+            g.fillArc(xMonstre * lon, yMonstre * haut, lon, haut, 0, 360);
+        }
 
     }
 
