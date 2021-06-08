@@ -1,0 +1,27 @@
+@startuml
+
+title diagramme sequence personnage attaque monstre (le personnage fait 5 de degats)
+
+participant "jeu : JeuZ" as jeu
+participant "perso : Personnage" as perso
+participant "monstre : Troll" as monstre
+
+[-> jeu : evoluer(commande)
+activate jeu
+
+jeu -> perso : attaquer(monstre)
+activate perso
+
+perso -> monstre : prendreDegats(5)
+activate monstre
+
+monstre --> perso
+deactivate monstre
+
+perso --> jeu
+deactivate perso
+
+jeu -->[
+deactivate jeu
+
+@enduml

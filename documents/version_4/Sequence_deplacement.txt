@@ -1,0 +1,23 @@
+@startuml
+
+title diagramme sequence deplacement d un monstre sur la droite (le deplacement est aleatoire)
+
+participant "jeu : JeuZ" as jeu
+participant "m : Monstre" as monstre
+
+
+[-> jeu : evoluer(Commande)
+activate jeu
+
+jeu -> jeu : deplacement du personnage du jeu
+
+jeu -> monstre : deplacer(1, 0)
+activate monstre
+
+monstre --> jeu
+deactivate monstre
+
+jeu -->[
+deactivate jeu
+
+@enduml

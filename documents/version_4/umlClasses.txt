@@ -9,7 +9,7 @@ skinparam class{
 
 class JeuZ{
 + evoluer(Commande) : void
-+ deplacerPerso(Commande) : void
++ deplacerPerso(Commande) : boolean
 + etreFini() : boolean
 + getAventurier() : Personage
 + getLabyrinthe() : Labyrinthe
@@ -21,10 +21,10 @@ class Personnage{
 - pv : int 
 - vieMax : int 
 - mort : boolean
-+ Personnage(int, int)
-+ deplacer(int, int)
-+ gagnerVie(int)
-+ prendreDegats(int)
++ Personnage(int, int) : void
++ deplacer(int, int) : void
++ gagnerVie(int) : void
++ prendreDegats(int) : void
 + getX() : int
 + getY() : int
 + getPv() : int 
@@ -66,11 +66,33 @@ class Sol {
 + Mur(int, int)
 }
 
-class Passage <<AFaire>>{}
-
 class Piege{
-- estAmorce : boolean
 + Piege(int, int)
+}
+
+abstract class Monstre <<Nouveau>>{
+- posX : int
+- posY : int
+- vie : int
+- ptsAttaque : int
++ Monstre(int, int, int, int)
++ attaquer(Personnage) : void
++ subirDegats(int) : void
++ deplacer(int, int) : void
++ getPosX() : int
++ getPosY() : int
++ getVie() : int
++ getAttaque() : int
+}
+
+class Troll <<Nouveau>>{
++ Troll(int, int)
+}
+
+interface Entite <<Nouveau>>{
++ attaquer(Entite) : void
++ prendreDegats(int) : void
++ deplacer(int, int) : void
 }
 
 Labyrinthe "0" -> "*" Case : -cases
@@ -78,11 +100,16 @@ Labyrinthe "0" -> "*" Case : -cases
 Mur --|> Case
 Sol --|> Case
 Piege --|> Case
-Passage --|> Case
 
+Troll --|> Monstre
+
+Personnage ..|> Entite
+Monstre ..|> Entite
 
 DessinZ "*" -> "1" JeuZ : -jeu
-JeuZ "1" -left> "1" Personnage : -aventurier
+
+JeuZ "*" -left> "1" Personnage : -aventurier
 JeuZ "*" -> "1" Labyrinthe : -niveaux
+JeuZ "*" -> "*" Monstre : -ennemis
 
 @enduml
