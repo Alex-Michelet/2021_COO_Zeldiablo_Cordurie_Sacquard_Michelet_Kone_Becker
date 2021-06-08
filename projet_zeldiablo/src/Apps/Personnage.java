@@ -1,12 +1,18 @@
 package Apps;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.lang.InterruptedException;
+import java.lang.Thread;
 
 public class Personnage {
     /**
      * coordonnees d'un personnage
      */
+
     private int posX, posY, pv, vieMax;
-    private boolean mort;
+    private boolean mort, invincible;
+
     /**
      * Constructeur d'un personnage avec ses coordonnees
      * 
@@ -16,6 +22,7 @@ public class Personnage {
     public Personnage(int a, int o) {
         this.posX = a;
         this.posY = o;
+        this.invincible = false;
         this.pv = 15;
         this.vieMax = 15;
         this.mort = false;
@@ -40,20 +47,47 @@ public class Personnage {
      */
     public void gagnerVie(int vie) {
         if (!mort) {
-            this.pv+=Math.abs(vie);
+            this.pv += Math.abs(vie);
         }
     }
 
     /**
      * methode qui decremente les pv actuelles de vie
-     * @param vie
+     * 
+     * @param deg
      */
-    public void perdreVie(int vie) {
-        if (!mort) {
-            this.pv-=Math.abs(vie);
-            if (this.pv <= 0) {
+    public void prendreDegats(int deg) {
+        int val = Math.abs(deg);
+        if ((!invincible) && (!etreMort())) {
+
+            invincible = true;
+            Timer t = new Timer();
+            TimerTask tt = new TimerTask() {
+                @Override
+                public void run() {
+                    completeTask();
+                };
+
+                private void completeTask() {
+                    try {
+                        System.out.println("Invulnerable BRAVO");
+                        Thread.sleep(5 * 1000);
+                        System.out.println("attention aie aie aie etc");
+                        invincible = false;
+                    } catch (InterruptedException e) {
+                        System.out.println("probleme");
+                    }
+                }
+            };
+            if (pv < val) {
+                pv = 0;
+            } else {
+                pv -= val;
+            }
+            if (pv == 0) {
                 this.mort = true;
             }
+            System.out.println("les degats sont pris : pv = " + getPv());
         }
     }
 
@@ -94,7 +128,9 @@ public class Personnage {
     }
 
     /**
-     * methode qui permet de savoir si le personnage est mort si le boolean est true et vivant si il est false 
+     * methode qui permet de savoir si le personnage est mort si le boolean est true
+     * et vivant si il est false
+     * 
      * @return
      */
     public boolean etreMort() {
