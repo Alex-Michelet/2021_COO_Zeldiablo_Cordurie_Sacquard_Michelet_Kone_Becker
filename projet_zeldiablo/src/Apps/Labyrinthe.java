@@ -38,7 +38,7 @@ public class Labyrinthe {
 
             br.close();
             br = new BufferedReader(new FileReader(nomFichier));
-            
+
             while ((line = br.readLine()) != null) { // On parcourt le fichier pour creer les cases correspondantes
                 for (int i = 0; i < line.length(); i++) {
                     c = line.charAt(i);
@@ -46,6 +46,8 @@ public class Labyrinthe {
                         tab[j][i] = new Sol(i, j);
                     } else if (c == 'M') {
                         tab[j][i] = new Mur(i, j);
+                    } else if (c == 'P') {
+                        tab[j][i] = new Piege(i, j, true);
                     }
                 }
                 j++;
