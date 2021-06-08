@@ -1,6 +1,10 @@
 package Apps;
 
 import moteurJeu.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.lang.InterruptedException;
+import java.lang.Thread;
 
 public class JeuZ implements Jeu {
 
@@ -9,6 +13,7 @@ public class JeuZ implements Jeu {
      */
     private Personnage aventurier;
     private Labyrinthe labyrinthe;
+    private boolean actionEnCours;
 
     /**
      * constructeur parametre qui permet de creer un jeu
@@ -27,6 +32,7 @@ public class JeuZ implements Jeu {
         } else {
             throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
+        actionEnCours = false;
     }
 
     /**
@@ -35,22 +41,26 @@ public class JeuZ implements Jeu {
      * @param commande = direction du deplacement
      */
     public void evoluer(Commande commande) {
+        if (!actionEnCours) {
+            actionEnCours = true;
+            // si le perso c est bien deplace on gere les pieges
+            if (this.deplacerPerso(commande)) {
 
-        // si le perso c est bien deplace on gere les pieges
-        if (this.deplacerPerso(commande)) {
+                // on recupere les coordonnees actuelles du personnage
+                int xPersoActuel = this.aventurier.getX();
+                int yPersoActuel = this.aventurier.getY();
 
-            // on recupere les coordonnees actuelles du personnage
-            int xPersoActuel = this.aventurier.getX();
-            int yPersoActuel = this.aventurier.getY();
+                // on regarde si le personnage est arrive sur un piege
+                if (this.labyrinthe.estUnPiege(xPersoActuel, yPersoActuel)) {
 
-            // on regarde si le personnage est arrive sur un piege
-            if (this.labyrinthe.estUnPiege(xPersoActuel, yPersoActuel)) {
-
-                // on fait subir des degats au personnage
-                this.aventurier.prendreDegats(3);
+                    // on fait subir des degats au personnage
+                    this.aventurier.prendreDegats(3);
+                }
             }
+            TimerTask timerTask = new CooldownAction();
+            Timer timer = new Timer(true);
+            timer.schedule(timerTask, 0);
         }
-
     }
 
     /**
@@ -72,18 +82,15 @@ public class JeuZ implements Jeu {
             if (xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)) {
                 this.aventurier.deplacer(-1, 0);
             }
-        }
-        if (commande.droite) {
+        } else if (commande.droite) {
             if (xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
                 this.aventurier.deplacer(1, 0);
             }
-        }
-        if (commande.haut) {
+        } else if (commande.haut) {
             if (yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)) {
                 this.aventurier.deplacer(0, -1);
             }
-        }
-        if (commande.bas) {
+        } else if (commande.bas) {
             if (yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
                 this.aventurier.deplacer(0, 1);
             }
@@ -98,8 +105,8 @@ public class JeuZ implements Jeu {
     }
 
     /**
-     * methode qui permet de savoir si le jeu est fini 
-     * le jeu s arrete si le personnage meurt
+     * methode qui permet de savoir si le jeu est fini le jeu s arrete si le
+     * personnage meurt
      * 
      * @return vrai que si le jeu est fini
      */
@@ -125,4 +132,15 @@ public class JeuZ implements Jeu {
         return (this.labyrinthe);
     }
 
+    class CooldownAction extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            actionEnCours = false;
+        }
+    }
 }
