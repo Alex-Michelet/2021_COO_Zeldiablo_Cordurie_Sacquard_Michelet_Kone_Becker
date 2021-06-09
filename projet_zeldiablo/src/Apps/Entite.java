@@ -17,6 +17,7 @@ public abstract class Entite {
      * @param victime
      */
     public abstract void attaquer(Entite victime);
+
     public abstract int getPortee();
 
     /**
@@ -58,13 +59,25 @@ public abstract class Entite {
         return this.posY;
     }
 
-     /**
+    /**
      * methode qui permet d'obtenir la vie actuelle du personnage
      * 
      * @return pv
      */
     public int getPv() {
         return this.pv;
+    }
+
+    /**
+     * getDistance retourne la distance entre un monstre et le joueur
+     * 
+     * @param monstre
+     * @return
+     */
+    public int getDistance(Entite entite) {
+        int distanceX = Math.abs(this.getX() - entite.getX());
+        int distanceY = Math.abs(this.getY() - entite.getY());
+        return (distanceX + distanceY);
     }
 
     /**
@@ -78,7 +91,7 @@ public abstract class Entite {
     }
 
     /**
-     * methode qui permet d'incrementer les pv de l entite 
+     * methode qui permet d'incrementer les pv de l entite
      *
      * @param vie
      */
