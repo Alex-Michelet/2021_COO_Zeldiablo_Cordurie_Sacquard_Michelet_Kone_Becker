@@ -93,6 +93,7 @@ public class Personnage extends Entite {
     public void prendreArme(Arme a) {
         if (this.arme == null) {
             this.arme = a;
+            this.arme.setPerso(this);
         }
     } 
 
@@ -105,6 +106,7 @@ public class Personnage extends Entite {
         Arme res = null;
         if (this.arme != null) {
             res = this.arme;
+            this.arme.setPerso(null);
             this.arme = null;
         }
         return res;
@@ -128,6 +130,13 @@ public class Personnage extends Entite {
         return this.invincible;
     }
 
+    public int getPortee() {
+        int res = 1;
+        if (this.arme != null) {
+            res = this.arme.getPortee();
+        } 
+        return res;
+    }
     /**
      * timer pour l'invincibilite 
      */

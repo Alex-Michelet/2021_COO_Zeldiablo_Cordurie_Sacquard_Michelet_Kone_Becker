@@ -27,9 +27,12 @@ public abstract class Arme {
         e.prendreDegats(this.degat);
     }
 
-    
+
     public void setPerso(Personnage p) {
         this.perso = p;
     }
 
+    public int getPortee() {
+        return this.portee;
+    }
 }

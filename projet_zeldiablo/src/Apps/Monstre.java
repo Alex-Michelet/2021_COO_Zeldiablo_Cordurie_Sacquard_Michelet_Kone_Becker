@@ -54,4 +54,8 @@ public abstract class Monstre extends Entite {
     public int getAd() {
         return ad;
     }
+
+    public int getPortee() {
+        return 1;
+    }
 }
