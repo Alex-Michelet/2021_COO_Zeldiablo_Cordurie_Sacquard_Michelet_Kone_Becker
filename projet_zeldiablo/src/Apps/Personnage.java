@@ -34,11 +34,11 @@ public class Personnage extends Entite {
      * @param vie
      */
     public void gagnerVie(int vie) {
-        if (!this.etreMort) {
+        if (!this.etreMort()) {
             if (this.getPv() + vie > this.vieMax) {
                 this.setPv(this.vieMax);
             } else {
-                this.setPv(this.getPv + Math.abs(vie));
+                this.setPv(this.getPv() + Math.abs(vie));
             }
         }
     }
@@ -61,7 +61,7 @@ public class Personnage extends Entite {
                 this.setPv(this.getPv() - val);
             }
             if (this.getPv() == 0) {
-                this.setMort = true;
+                this.setMort(true);
             }
 
             TimerTask timerTask = new Cooldown();
@@ -85,6 +85,29 @@ public class Personnage extends Entite {
         }
     }
 
+    /**
+     * methode qui permet de prendre une arme 
+     * 
+     * @param a
+     */
+    public void prendreArme(Arme a) {
+        if (this.arme == null) {
+            this.arme = a;
+        }
+    } 
+
+    /**
+     * methode qui repose l arme 
+     * 
+     * @return l arme que le personnage possede si il en a une ou null
+     */
+    public Arme poserArme() {
+        Arme res = null;
+        if (this.arme != null) {
+            res = this.arme;
+        }
+        return res;
+    }
     /**
      * methode qui permet d'obtenir la vie maximal du personnage
      * 
