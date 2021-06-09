@@ -105,6 +105,7 @@ public class Personnage extends Entite {
         Arme res = null;
         if (this.arme != null) {
             res = this.arme;
+            this.arme = null;
         }
         return res;
     }
