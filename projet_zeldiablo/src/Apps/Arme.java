@@ -3,6 +3,7 @@ package Apps;
 public abstract class Arme {
     int degat;
     int portee;
+    Personnage perso;
 
     /**
      * Constructeur d une arme un arme fait des degats et a une porte d attaque
@@ -13,6 +14,7 @@ public abstract class Arme {
     public Arme(int d, int p) {
         this.degat = d;
         this.portee = p;
+        this.perso = null;
     }
 
     /**
@@ -23,6 +25,11 @@ public abstract class Arme {
      */
     public void attaquer(Entite e) {
         e.prendreDegats(this.degat);
+    }
+
+    
+    public void setPerso(Personnage p) {
+        this.perso = p;
     }
 
 }
