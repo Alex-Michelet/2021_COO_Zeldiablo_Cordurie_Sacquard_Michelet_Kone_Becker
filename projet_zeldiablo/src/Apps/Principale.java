@@ -10,7 +10,7 @@ public class Principale {
      */
     public static void main(String[] args) throws Exception {
 
-        Personnage perso = new Personnage(3, 5);
+        Personnage perso = new Personnage(3, 5, 15);
         Labyrinthe labyrinthe = new Labyrinthe("niveaux/lab1.txt");
         JeuZ jeu = new JeuZ(perso, labyrinthe);
 
@@ -18,7 +18,7 @@ public class Principale {
 
         MoteurGraphique moteur = new MoteurGraphique(jeu, dessin);
 
-        moteur.lancerJeu(400, 400);
+        moteur.lancerJeu(600, 600);
     }
 
 }

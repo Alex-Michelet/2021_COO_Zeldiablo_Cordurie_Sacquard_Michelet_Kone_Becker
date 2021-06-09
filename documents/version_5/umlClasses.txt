@@ -16,9 +16,20 @@ class JeuZ{
 }
 
 class Personnage{
+- posX : int
+- posY : int 
+- pv : int 
 - vieMax : int 
+- mort : boolean
 + Personnage(int, int) : void
++ deplacer(int, int) : void
++ gagnerVie(int) : void
++ prendreDegats(int) : void
++ getX() : int
++ getY() : int
++ getPv() : int 
 + getVieMax() : int
++ etreMort() : boolean
 }
 
 abstract class Case{
@@ -60,8 +71,17 @@ class Piege{
 }
 
 abstract class Monstre <<Nouveau>>{
+- posX : int
+- posY : int
+- vie : int
 - ptsAttaque : int
 + Monstre(int, int, int, int)
++ attaquer(Personnage) : void
++ subirDegats(int) : void
++ deplacer(int, int) : void
++ getPosX() : int
++ getPosY() : int
++ getVie() : int
 + getAttaque() : int
 }
 
@@ -69,18 +89,10 @@ class Troll <<Nouveau>>{
 + Troll()
 }
 
-abstract class Entite <<Nouveau>>{
-- posX : int
-- posY : int
-- pv : int
-- mort : boolean
-+ abstract attaquer(Entite) : void
-+ abstract prendreDegats(int) : void
+interface Entite <<Nouveau>>{
++ attaquer(Entite) : void
++ prendreDegats(int) : void
 + deplacer(int, int) : void
-+ getX() : int
-+ getY() : int
-+ getPv() : int
-+ etreMort() : boolean
 }
 
 abstract class Arme <<Nouveau>>{
@@ -109,14 +121,14 @@ Troll --|> Monstre
 Epee --|> Arme
 Lance --|> Arme
 
-Personnage --|> Entite
-Monstre --|> Entite
-
-JeuZ "*" -left> "1" Personnage : -aventurier
-JeuZ "*" -down> "1" Labyrinthe : -niveaux
-JeuZ "*" -right> "*" Monstre : -ennemis
+Personnage ..|> Entite
+Monstre ..|> Entite
 
 DessinZ "*" -> "1" JeuZ : -jeu
+
+JeuZ "*" -left> "1" Personnage : -aventurier
+JeuZ "*" -> "1" Labyrinthe : -niveaux
+JeuZ "*" -> "*" Monstre : -ennemis
 
 Personnage "0..1" -left> "0..1" Arme : arme
 
