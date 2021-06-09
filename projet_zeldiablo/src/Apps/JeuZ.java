@@ -47,6 +47,7 @@ public class JeuZ implements Jeu {
      * @param commande = direction du deplacement
      */
     public void evoluer(Commande commande) {
+
         if (!actionEnCours) {
             for (int i = 0; i < listDeMonstres.size(); i++) {
                 int x = (int) Math.ceil(Math.random() * 4);
@@ -61,6 +62,17 @@ public class JeuZ implements Jeu {
                 }
             }
             actionEnCours = true;
+
+            // si on tente de prendre une arme, on va essayer de prendre une arme sur la case actuelle
+            if(commande.prendreArme){
+                this.tentePrendreArme(this.aventurier.getX(), this.aventurier.getY());
+            }
+
+            // si on tente d attaquer, on va essayer d attaquer les entites a portee
+            if(commande.attaquer){
+                this.tenteAttaquePerso();
+            }
+
             // si le perso c est bien deplace on gere les pieges
             if (this.deplacerPerso(commande)) {
 
@@ -120,6 +132,47 @@ public class JeuZ implements Jeu {
         }
 
         return (res);
+    }
+
+    /**
+     * methode qui permet de tenter de prendre une arme par le joueur
+     * @param x = abscisse de la case sur la quelle on tente de prendre une arme
+     * @param y = ordonnee de la case sur la quelle on tente de prendre une arme
+     */
+    public void tentePrendreArme(int x, int y){
+        // on essaye de prendre une arme sur la case du labyrinthe
+        this.aventurier.prendreArme(this.labyrinthe.getArmeCase(x, y));
+        
+    }
+
+    /**
+     * methode qui permet d attaquer les entite proches du personnage
+     */
+    public void tenteAttaquePerso(){
+        // on essaye d attaquer les entites proches
+        for(int i = 0; i < this.listDeMonstres.size(); i++){
+            if(this.aventurier.estDistant(this.listDeMonstres.get(i) < this.aventurier.getPortee())){
+                this.aventurier.attaquer(this.listDeMonstres.get(i));
+            }
+        }
+    }
+
+    /**
+     * methode qui permet de savoir si une entite arrive sur un piege
+     * @param e = entite a verifier
+     */
+    public void arriveSurUnPiege(Entite e){
+
+        // on recupere les coordonnees de l entite
+        int xEntite = e.getX();
+        int yEntite = e.getY();
+
+        // on regarde si la case est un piege
+        if(this.labyrinthe.estUnPiege(xEntite, yEntite)){
+            // si c est le cas l entite prend des degats
+            e.prendreDegats(3);
+        }
+
     }
 
     /**
