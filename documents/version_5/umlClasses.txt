@@ -8,38 +8,45 @@ skinparam class{
 }
 
 class JeuZ{
+- actionEnCour : boolean
++ JeuZ(Personnage, Labyrinthe)
 + evoluer(Commande) : void
 + deplacerPerso(Commande) : boolean
++ deplacerMonstres() : void
++ tentePrendreArme(int, int) : void
++ tenteAttaquePerso() : void
++ arriveSurUnPiege(Entite) : void
 + etreFini() : boolean
 + getAventurier() : Personage
 + getLabyrinthe() : Labyrinthe
++ getListeMonstre() : ArrayList<Monstre>
 }
 
 class Personnage{
-- posX : int
-- posY : int 
-- pv : int 
 - vieMax : int 
-- mort : boolean
-+ Personnage(int, int) : void
-+ deplacer(int, int) : void
+- invincible : boolean
++ Personnage(int, int, int) : void
++ getVieMax() : int
++ prendreArme(Arme) : void
++ poserArme() : Arme
++ getPortee() : int
 + gagnerVie(int) : void
 + prendreDegats(int) : void
-+ getX() : int
-+ getY() : int
-+ getPv() : int 
-+ getVieMax() : int
-+ etreMort() : boolean
++ attaquer(Entite) : void
++ estInvincible : boolean
 }
 
 abstract class Case{
 - x : int 
 - y : int 
 - franchissable : boolean
-+ Case(int, int, boolean)
++ Case(int, int, boolean, Arme)
 + getX() : int 
 + getY() : int
 + estFranchissable() : boolean
++ setArme(Arme) : void
++ retirerArme() : void
++ getArme() : Arme
 }
 
 class Labyrinthe{
@@ -51,6 +58,7 @@ class Labyrinthe{
 + getTailleX() : int
 + getTailleY() : int
 + getTableauCases() : Case[][]
++ getArmeCase(int, int) : Arme
 }
 
 class DessinZ{
@@ -63,51 +71,63 @@ class Mur {
 }
 
 class Sol {
-+ Mur(int, int)
++ Mur(int, int, Arme)
 }
 
 class Piege{
 + Piege(int, int)
 }
 
-abstract class Monstre <<Nouveau>>{
-- posX : int
-- posY : int
-- vie : int
-- ptsAttaque : int
+abstract class Monstre{
+- ad : int
 + Monstre(int, int, int, int)
-+ attaquer(Personnage) : void
-+ subirDegats(int) : void
-+ deplacer(int, int) : void
-+ getPosX() : int
-+ getPosY() : int
-+ getVie() : int
-+ getAttaque() : int
++ attaquer(Entite) : void
++ prendreDegats(int) : void
++ getAd() : int
++ getPortee() : int
 }
 
-class Troll <<Nouveau>>{
+class Troll {
 + Troll()
 }
 
-interface Entite <<Nouveau>>{
-+ attaquer(Entite) : void
-+ prendreDegats(int) : void
+abstract class Entite {
+- posX : int
+- posY : int
+- pv : int
+- mort : boolean
++ abstract attaquer(Entite) : void
++ abstract prendreDegats(int) : void
 + deplacer(int, int) : void
++ getX() : int
++ getY() : int
++ getPv() : int
++ abstract getPortee() : int
++ etreMort() : boolean
++ abstract getPortee() : int
++ getDistance(Entite) : int
 }
 
-abstract class Arme <<Nouveau>>{
+abstract class Arme {
 - degats : int
 - portee : int
 + Arme(int, int)
-+ attaquer(Entite)
++ attaquer(Entite) : void
++ setPerso(Personnage) : void
++ getPortee() : int
 }
 
-class Epee <<Nouveau>>{
+class Epee {
 + Epee()
 }
 
-class Lance<<Nouveau>>{
+class Lance{
 + Lance()
+}
+
+class Ceste <<Nouveau>>{
++ Ceste()
++ attaquer(Entite) : void
 }
 
 Labyrinthe "0" -> "*" Case : -cases
@@ -120,16 +140,21 @@ Troll --|> Monstre
 
 Epee --|> Arme
 Lance --|> Arme
+Ceste --|> Arme
 
-Personnage ..|> Entite
-Monstre ..|> Entite
+Personnage --|> Entite
+Monstre --|> Entite
+
+JeuZ "*" -left> "1" Personnage : -aventurier
+JeuZ "*" -down> "1" Labyrinthe : -niveaux
+JeuZ "*" -right> "*" Monstre : -ennemis
 
 DessinZ "*" -> "1" JeuZ : -jeu
 
-JeuZ "*" -left> "1" Personnage : -aventurier
-JeuZ "*" -> "1" Labyrinthe : -niveaux
-JeuZ "*" -> "*" Monstre : -ennemis
+Personnage "0..1" -left> "0..1" Arme : -arme
 
-Personnage "0..1" -left> "0..1" Arme : arme
+Arme "*" -> "1" Personnage : -perso
+
+Case "*" -> "1" Arme : -weapon
 
 @enduml

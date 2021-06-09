@@ -1,0 +1,42 @@
+@startuml
+
+title diagramme sequence simplifie attaque d un personnage arme d un epee
+
+participant "jeu : JeuZ" as jeu
+participant "perso : Personnage" as perso
+participant "epee : Epee" as epee
+participant "troll : Troll" as troll
+
+[-> jeu : evoluer(commande)
+activate jeu
+
+jeu -> perso: getDistance(troll)
+activate perso
+
+perso --> jeu : 1
+deactivate perso
+
+jeu -> perso : attaquer(troll)
+activate perso
+
+perso -> epee : attaquer(troll)
+activate epee
+
+epee -> troll : prendreDregats(3)
+activate troll
+
+troll --> epee
+deactivate troll
+
+epee --> perso
+deactivate epee
+
+perso --> jeu
+deactivate perso
+
+jeu -->[
+deactivate jeu
+
+
+
+@enduml
