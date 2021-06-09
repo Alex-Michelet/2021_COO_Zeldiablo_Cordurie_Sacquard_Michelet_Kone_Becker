@@ -170,16 +170,9 @@ public class JeuZ implements Jeu {
      * @return
      */
     public int getDistance(Monstre monstre) {
-        int distanceX = this.xPerso - monstre.getX();
-        if (distanceX < 0) {
-            distanceX = -(distanceX);
-        }
-        int distanceY = (this.yPerso - monstre.getY());
-        if (distanceY < 0) {
-            distanceY = -(distanceY);
-        }
-        int distance = (distanceX + distanceY);
-        return (distance);
+        int distanceX = Math.abs(this.aventurier.getX() - monstre.getX());
+        int distanceY = Math.abs(this.aventurier.getY() - monstre.getY());
+        return (distanceX + distanceY);
     }
 
     /**
