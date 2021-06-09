@@ -7,6 +7,7 @@ public abstract class Case {
     private int x;
     private int y;
     private boolean franchissable;
+    private Arme weapon;
 
     /**
      * Construit une case
@@ -15,10 +16,27 @@ public abstract class Case {
      * @param y
      * @param etat
      */
-    public Case(int x, int y, boolean etat) {
+    public Case(int x, int y, boolean etat, Arme arme) {
         this.x = x;
         this.y = y;
         this.franchissable = etat;
+        this.weapon = arme;
+    }
+
+    /**
+     * permet de mettre une arme sur une case 
+     * 
+     * @param arme
+     */
+    public void setArme(Arme arme) {
+        this.weapon = arme;
+    }
+
+    /**
+     * permet de retirer l arme de la case 
+     */
+    public void retirerArme() {
+        this.weapon = null;
     }
 
     /**
@@ -37,6 +55,15 @@ public abstract class Case {
      */
     public int getY() {
         return this.y;
+    }
+
+    /**
+     * getArme
+     * 
+     * @return l arme
+     */
+    public Arme getArme() {
+        return this.weapon;
     }
 
     /**
