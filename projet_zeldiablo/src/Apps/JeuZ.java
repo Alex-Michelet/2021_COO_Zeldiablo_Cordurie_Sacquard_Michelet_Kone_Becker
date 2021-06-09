@@ -196,7 +196,7 @@ public class JeuZ implements Jeu {
     public void tenteAttaquePerso() {
         // on essaye d attaquer les entites proches
         for (int i = 0; i < this.listDeMonstres.size(); i++) {
-            if (this.aventurier.estDistant(this.listDeMonstres.get(i)) <= this.aventurier.getPortee()) {
+            if (this.aventurier.getDistance(this.listDeMonstres.get(i)) <= this.aventurier.getPortee()) {
                 this.aventurier.attaquer(this.listDeMonstres.get(i));
             }
         }
