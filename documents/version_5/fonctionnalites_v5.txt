@@ -1,0 +1,25 @@
+* fonctionnalités version 5
+
+_____________________________________________________________________________
+
+Retour sur les fonctionnalités non abouties de la version précédente
+
+- fonctionnalite 1 : Correctif des déplacements des monstres
+- descriptif : collisons et deplacements coherents:
+- critères de validation
+    - critere 1 : les monstres ne passent pas les murs (Troll), ne sortent pas du labyrynthe et ne vont pas sur la case du joueur
+    - critere 2 : les deplacements sont moins rapides
+
+_____________________________________________________________________________
+
+    
+- fonctionnalite 2 : nouvelle arme
+- descriptif : arme equivalente au poing mais avec change de gagner Pv
+    - critere 1 : drainage de pv
+
+- fonctionnalite 3 : gestion de l'inventaire
+- descriptif : prendre et poser des armes
+    - critere 1 : un seule arme recuperee a la fois
+    - critere 2 : les armes sont prises et posees au sol
+    - critere 3 : commande pour ramasser/poser et attaquer
+

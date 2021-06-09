@@ -1,0 +1,135 @@
+@startuml
+
+skinparam class{
+  BackgroundColor<<AFaire>> Pink
+  BorderColor<<AFaire>> Black
+  BackgroundColor<<Nouveau>> Cyan
+  BorderColor<<Nouveau>> Blue
+}
+
+class JeuZ{
++ evoluer(Commande) : void
++ deplacerPerso(Commande) : boolean
++ etreFini() : boolean
++ getAventurier() : Personage
++ getLabyrinthe() : Labyrinthe
+}
+
+class Personnage{
+- posX : int
+- posY : int 
+- pv : int 
+- vieMax : int 
+- mort : boolean
++ Personnage(int, int) : void
++ deplacer(int, int) : void
++ gagnerVie(int) : void
++ prendreDegats(int) : void
++ getX() : int
++ getY() : int
++ getPv() : int 
++ getVieMax() : int
++ etreMort() : boolean
+}
+
+abstract class Case{
+- x : int 
+- y : int 
+- franchissable : boolean
++ Case(int, int, boolean)
++ getX() : int 
++ getY() : int
++ estFranchissable() : boolean
+}
+
+class Labyrinthe{
+- xLong : int
+- yLong : int
++ Labyrinthe(String)
++ estAccessible(int, int) : boolean
++ estUnPiege(int, int) : boolean
++ getTailleX() : int
++ getTailleY() : int
++ getTableauCases() : Case[][]
+}
+
+class DessinZ{
++ DessinZ(JeuZ)
++ dessiner(BufferedImage) : void
+}
+
+class Mur {
++ Sol(int, int)
+}
+
+class Sol {
++ Mur(int, int)
+}
+
+class Piege{
++ Piege(int, int)
+}
+
+abstract class Monstre <<Nouveau>>{
+- posX : int
+- posY : int
+- vie : int
+- ptsAttaque : int
++ Monstre(int, int, int, int)
++ attaquer(Personnage) : void
++ subirDegats(int) : void
++ deplacer(int, int) : void
++ getPosX() : int
++ getPosY() : int
++ getVie() : int
++ getAttaque() : int
+}
+
+class Troll <<Nouveau>>{
++ Troll()
+}
+
+interface Entite <<Nouveau>>{
++ attaquer(Entite) : void
++ prendreDegats(int) : void
++ deplacer(int, int) : void
+}
+
+abstract class Arme <<Nouveau>>{
+- degats : int
+- portee : int
++ Arme(int, int)
++ attaquer(Entite)
+}
+
+class Epee <<Nouveau>>{
++ Epee()
+}
+
+class Lance<<Nouveau>>{
++ Lance()
+}
+
+Labyrinthe "0" -> "*" Case : -cases
+
+Mur --|> Case
+Sol --|> Case
+Piege --|> Case
+
+Troll --|> Monstre
+
+Epee --|> Arme
+Lance --|> Arme
+
+Personnage ..|> Entite
+Monstre ..|> Entite
+
+DessinZ "*" -> "1" JeuZ : -jeu
+
+JeuZ "*" -left> "1" Personnage : -aventurier
+JeuZ "*" -> "1" Labyrinthe : -niveaux
+JeuZ "*" -> "*" Monstre : -ennemis
+
+Personnage "0..1" -left> "0..1" Arme : arme
+
+@enduml
