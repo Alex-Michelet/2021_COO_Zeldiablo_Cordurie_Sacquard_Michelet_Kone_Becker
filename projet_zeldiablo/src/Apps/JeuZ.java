@@ -178,9 +178,29 @@ public class JeuZ implements Jeu {
     }
 
     /**
+     * getDistance retourne la distance entre un monstre et le joueur
+     * 
+     * @param monstre
+     * @return
+     */
+    public int getDistance(Monstre monstre) {
+        int distanceX = this.xPerso - monstre.getX();
+        if (distanceX < 0) {
+            distanceX = -(distanceX);
+        }
+        int distanceY = (this.yPerso - monstre.getY());
+        if (distanceY < 0) {
+            distanceY = -(distanceY);
+        }
+        int distance = (distanceX + distanceY);
+        return (distance);
+    }
+
+    /**
      * methode qui permet de tenter de prendre une arme par le joueur
      * 
      * @param x = abscisse de la case sur la quelle on tente de prendre une arme
+     * 
      * @param y = ordonnee de la case sur la quelle on tente de prendre une arme
      */
     public void tentePrendreArme(int x, int y) {
@@ -196,7 +216,7 @@ public class JeuZ implements Jeu {
         // on essaye d attaquer les entites proches
         for (int i = 0; i < this.listDeMonstres.size(); i++) {
             if (this.aventurier.estDistant(this.listDeMonstres.get(i) <= this.aventurier.getPortee())) {
-                this.aventurier.attaquer(this.listDeMonstres.get(i));
+=                this.aventurier.attaquer(this.listDeMonstres.get(i));
             }
         }
     }
