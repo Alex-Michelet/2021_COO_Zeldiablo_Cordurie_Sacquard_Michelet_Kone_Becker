@@ -58,18 +58,22 @@ public class JeuZ implements Jeu {
             if (commande.prendreArme) {
                 this.tentePrendreArme(this.aventurier.getX(), this.aventurier.getY());
             }
-
             // si on tente d attaquer, on va essayer d attaquer les entites a portee
             if (commande.attaquer) {
                 this.tenteAttaquePerso();
             }
-
             // si le perso c est bien deplace on gere les pieges
             if (this.deplacerPerso(commande)) {
-
                 // on recupere les coordonnees actuelles du personnage
                 this.arriveSurUnPiege(this.aventurier);
             }
+
+            for (int i = 0; i < listDeMonstres.size(); i++) {
+                if (listDeMonstres.get(i).etreMort()) {
+                    listDeMonstres.remove(i);
+                }
+            }
+
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
@@ -122,7 +126,6 @@ public class JeuZ implements Jeu {
      * @return vrai que si le deplacement a eu lieu
      */
     public boolean deplacerPerso(Commande commande) {
-
         boolean res = false;
 
         // on recupere les coordonnees de l aventurier
@@ -134,43 +137,49 @@ public class JeuZ implements Jeu {
         if (commande.gauche) {
             if (xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)) {
                 for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso - 1 != listDeMonstres.get(i).getX() || yPerso != listDeMonstres.get(i).getY()))
+                    if ((xPerso - 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY()))
                         ok = false;
                 }
-                if (ok)
+                if (ok) {
                     this.aventurier.deplacer(-1, 0);
+                }
             }
         } else if (commande.droite) {
             if (xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
                 for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso + 1 != listDeMonstres.get(i).getX() || yPerso != listDeMonstres.get(i).getY()))
+                    if ((xPerso + 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY()))
                         ok = false;
                 }
-                if (ok)
+                if (ok) {
                     this.aventurier.deplacer(1, 0);
+                }
             }
         } else if (commande.haut) {
             if (yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)) {
                 for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso != listDeMonstres.get(i).getX() || yPerso - 1 != listDeMonstres.get(i).getY()))
+                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso - 1 == listDeMonstres.get(i).getY()))
                         ok = false;
                 }
-                if (ok)
+                if (ok) {
                     this.aventurier.deplacer(0, -1);
+                }
             }
         } else if (commande.bas) {
             if (yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
                 for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso != listDeMonstres.get(i).getX() || yPerso + 1 != listDeMonstres.get(i).getY()))
+                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso + 1 == listDeMonstres.get(i).getY()))
                         ok = false;
                 }
-                if (ok)
+                if (ok) {
                     this.aventurier.deplacer(0, 1);
+                }
             }
         }
 
         // on verifie que le deplacement a bien eu lieu
-        if (xPerso != this.aventurier.getX() || yPerso != this.aventurier.getY()) {
+        if (xPerso != this.aventurier.getX() || yPerso != this.aventurier.getY())
+
+        {
             res = true;
         }
 
@@ -187,7 +196,6 @@ public class JeuZ implements Jeu {
     public void tentePrendreArme(int x, int y) {
         // on essaye de prendre une arme sur la case du labyrinthe
         this.aventurier.prendreArme(this.labyrinthe.getArmeCase(x, y));
-
     }
 
     /**
@@ -257,7 +265,7 @@ public class JeuZ implements Jeu {
         @Override
         public void run() {
             try {
-                Thread.sleep(50);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

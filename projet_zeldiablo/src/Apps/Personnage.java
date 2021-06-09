@@ -17,8 +17,8 @@ public class Personnage extends Entite {
     /**
      * Constructeur d'un personnage initialisation des attributs
      * 
-     * @param a abscisse
-     * @param o ordonnee
+     * @param a   abscisse
+     * @param o   ordonnee
      * @param vie vie
      */
     public Personnage(int a, int o, int vie) {
@@ -86,19 +86,19 @@ public class Personnage extends Entite {
     }
 
     /**
-     * methode qui permet de prendre une arme 
+     * methode qui permet de prendre une arme
      * 
      * @param a
      */
     public void prendreArme(Arme a) {
-        if (this.arme == null) {
+        if (this.arme == null && a != null) {
             this.arme = a;
             this.arme.setPerso(this);
         }
-    } 
+    }
 
     /**
-     * methode qui repose l arme 
+     * methode qui repose l arme
      * 
      * @return l arme que le personnage possede si il en a une ou null
      */
@@ -111,6 +111,7 @@ public class Personnage extends Entite {
         }
         return res;
     }
+
     /**
      * methode qui permet d'obtenir la vie maximal du personnage
      * 
@@ -134,11 +135,12 @@ public class Personnage extends Entite {
         int res = 1;
         if (this.arme != null) {
             res = this.arme.getPortee();
-        } 
+        }
         return res;
     }
+
     /**
-     * timer pour l'invincibilite 
+     * timer pour l'invincibilite
      */
     class Cooldown extends TimerTask {
         @Override
