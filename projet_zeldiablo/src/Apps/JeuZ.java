@@ -38,7 +38,7 @@ public class JeuZ implements Jeu {
         actionEnCours = false;
         listDeMonstres = new ArrayList<Monstre>();
         listDeMonstres.add(new Troll(14, 5));
-        listDeMonstres.add(new Troll(11, 5));
+        listDeMonstres.add(new Troll(1, 18));
     }
 
     /**
@@ -48,18 +48,7 @@ public class JeuZ implements Jeu {
      */
     public void evoluer(Commande commande) {
         if (!actionEnCours) {
-            for (int i = 0; i < listDeMonstres.size(); i++) {
-                int x = (int) Math.ceil(Math.random() * 4);
-                if (x == 1) {
-                    listDeMonstres.get(i).deplacer(0, 1);
-                } else if (x == 2) {
-                    listDeMonstres.get(i).deplacer(0, -1);
-                } else if (x == 3) {
-                    listDeMonstres.get(i).deplacer(-1, 0);
-                } else if (x == 4) {
-                    listDeMonstres.get(i).deplacer(1, 0);
-                }
-            }
+            this.deplacerMonstres();
             actionEnCours = true;
             // si le perso c est bien deplace on gere les pieges
             if (this.deplacerPerso(commande)) {
@@ -78,6 +67,45 @@ public class JeuZ implements Jeu {
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
+        }
+    }
+
+    public void deplacerMonstres() {
+
+        for (int i = 0; i < listDeMonstres.size(); i++) {
+            int x = (int) Math.ceil(Math.random() * 4);
+
+            // on recupere les coordonnees de l aventurier
+            int xMonstre = listDeMonstres.get(i).getX();
+            int yMonstre = listDeMonstres.get(i).getY();
+
+            int xPerso = this.aventurier.getX();
+            int yPerso = this.aventurier.getY();
+
+            // on verifie que l aventurier puisse bien aller a la case souhaitee
+            if (x == 1) {
+                if (xMonstre > 0 && this.labyrinthe.estAccessible(xMonstre - 1, yMonstre)
+                        && ((xMonstre - 1 != xPerso || yMonstre != yPerso))) {
+                    listDeMonstres.get(i).deplacer(-1, 0);
+                }
+            } else if (x == 2) {
+                if (xMonstre < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xMonstre + 1, yMonstre)
+                        && ((xMonstre + 1 != xPerso || yMonstre != yPerso))) {
+                    listDeMonstres.get(i).deplacer(1, 0);
+                }
+            } else if (x == 3) {
+                if (yMonstre > 0 && this.labyrinthe.estAccessible(xMonstre, yMonstre - 1)
+                        && ((xMonstre != xPerso || yMonstre - 1 != yPerso))) {
+                    listDeMonstres.get(i).deplacer(0, -1);
+                }
+            } else if (x == 4) {
+                if (yMonstre < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xMonstre, yMonstre + 1)
+                        && ((xMonstre != xPerso || yMonstre + 1 != yPerso))) {
+                    listDeMonstres.get(i).deplacer(0, 1);
+                }
+            } else {
+                ;
+            }
         }
     }
 
@@ -158,7 +186,7 @@ public class JeuZ implements Jeu {
         @Override
         public void run() {
             try {
-                Thread.sleep(200);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
