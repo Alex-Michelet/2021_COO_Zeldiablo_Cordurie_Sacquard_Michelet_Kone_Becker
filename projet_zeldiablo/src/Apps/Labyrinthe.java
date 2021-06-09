@@ -110,6 +110,10 @@ public class Labyrinthe {
         return this.tab;
     }
 
+
+    public Arme getArmeCase(int x, int y) {
+        return (tab[y][x].getArme());
+    }
     /**
      * getTailleX
      * 
