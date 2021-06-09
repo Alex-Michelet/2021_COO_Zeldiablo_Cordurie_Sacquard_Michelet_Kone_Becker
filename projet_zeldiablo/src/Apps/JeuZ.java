@@ -123,6 +123,25 @@ public class JeuZ implements Jeu {
     }
 
     /**
+     * getDistance retourne la distance entre un monstre et le joueur
+     * 
+     * @param monstre
+     * @return
+     */
+    public int getDistance(Monstre monstre) {
+        int distanceX = this.xPerso - monstre.getX();
+        if (distanceX < 0) {
+            distanceX = -(distanceX);
+        }
+        int distanceY = (this.yPerso - monstre.getY());
+        if (distanceY < 0) {
+            distanceY = -(distanceY);
+        }
+        int distance = (distanceX + distanceY);
+        return (distance);
+    }
+
+    /**
      * methode qui permet de savoir si le jeu est fini le jeu s arrete si le
      * personnage meurt
      * 
