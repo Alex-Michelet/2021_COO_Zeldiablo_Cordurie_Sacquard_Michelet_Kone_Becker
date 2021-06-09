@@ -13,7 +13,7 @@ public class TestJeuZ {
     @Test 
     public void testCreaJeuZ() {
         // prepa des donnees 
-        Personnage p = new Personnage(1,1);
+        Personnage p = new Personnage(1,1, 15);
         Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
 
@@ -28,7 +28,7 @@ public class TestJeuZ {
     @Test 
     public void testEvoluer() {
         // prepa des donnees
-        Personnage p = new Personnage(1,1);
+        Personnage p = new Personnage(1,1, 15);
         Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();
@@ -48,7 +48,7 @@ public class TestJeuZ {
     @Test 
     public void testEvoluerMur() {
         //prepa des donnees 
-        Personnage p = new Personnage(1,1);
+        Personnage p = new Personnage(1,1, 15);
         Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();

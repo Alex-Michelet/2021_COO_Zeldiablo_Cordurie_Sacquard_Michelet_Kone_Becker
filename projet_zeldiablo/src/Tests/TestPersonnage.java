@@ -15,7 +15,7 @@ public class TestPersonnage {
     public void testCreaPerso() {
 
         // prepa des donnees
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
 
         // verification
         assertEquals("L abscisse devrait etre de 2", 2, p.getX());
@@ -28,7 +28,7 @@ public class TestPersonnage {
     @Test
     public void testPrendreDegatsEtInvincible() {
         // prepa des donnee
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
 
         // methode teste
         p.prendreDegats(3);// les degats sont pris
@@ -74,7 +74,7 @@ public class TestPersonnage {
     @Test
     public void testPrendreDegatsInvincible() {
         // prepa des donnee
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
 
         // methode teste
         p.prendreDegats(3);
@@ -94,7 +94,7 @@ public class TestPersonnage {
     @Test
     public void testGagnerVie() {
         // prepa des donnee
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
         p.prendreDegats(3);
 
         // methode teste
@@ -111,7 +111,7 @@ public class TestPersonnage {
     public void testDeplacer() {
 
         // prepa des donnee
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
 
         // methode teste
         p.deplacer(3, 1);
@@ -129,7 +129,7 @@ public class TestPersonnage {
     @Test
     public void testDeplacerPersoMort() {
         // prepa des donnee
-        Personnage p = new Personnage(2, 2);
+        Personnage p = new Personnage(2, 2, 15);
         p.prendreDegats(15);
 
         // methode teste
