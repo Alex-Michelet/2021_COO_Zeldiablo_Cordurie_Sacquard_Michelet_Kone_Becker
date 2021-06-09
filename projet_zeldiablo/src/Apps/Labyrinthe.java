@@ -43,11 +43,15 @@ public class Labyrinthe {
                 for (int i = 0; i < line.length(); i++) {
                     c = line.charAt(i);
                     if (c == 'S') {
-                        tab[j][i] = new Sol(i, j);
+                        tab[j][i] = new Sol(i, j, null);
                     } else if (c == 'M') {
                         tab[j][i] = new Mur(i, j);
                     } else if (c == 'P') {
                         tab[j][i] = new Piege(i, j);
+                    } else if (c == 'E') {
+                        tab[j][i] = new Sol(i, j, new Epee());
+                    } else if (c == 'L') {
+                        tab[j][i] = new Sol(i, j, new Lance());
                     }
                 }
                 j++;
