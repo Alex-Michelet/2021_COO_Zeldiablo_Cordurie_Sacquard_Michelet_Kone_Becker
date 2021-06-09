@@ -36,8 +36,8 @@ public class DessinZ implements DessinJeu {
         int haut = h / labyrinthe.getTailleY();
 
         Case tab[][] = labyrinthe.getTableauCases();
-        for (int i = 0; i < lon; i++) {
-            for (int j = 0; j < haut; j++) {
+        for (int i = 0; i < labyrinthe.getTailleX(); i++) {
+            for (int j = 0; j < labyrinthe.getTailleY(); j++) {
                 if (tab[j][i] instanceof Mur) {
                     g.setColor(Color.RED);
                     g.fillRect(i * lon, j * haut, lon, haut);
