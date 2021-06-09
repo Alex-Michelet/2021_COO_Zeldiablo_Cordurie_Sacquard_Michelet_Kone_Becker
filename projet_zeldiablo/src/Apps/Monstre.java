@@ -11,7 +11,7 @@ public abstract class Monstre extends Entite {
      * 
      * @param a   abscisse
      * @param o   ordonnee
-     * @param vie  points de vie
+     * @param vie points de vie
      * @param atk points d'attaque
      */
     public Monstre(int a, int o, int vie, int atk) {
@@ -19,19 +19,30 @@ public abstract class Monstre extends Entite {
         this.ad = atk;
     }
 
-
+    /**
+     * methode qui permet d attaque une un victime
+     * 
+     * @param victime = victime a attaquer
+     */
     public void attaquer(Entite victime) {
-        if (!estMort()) {
-            victime.prendreDegats(ptsAttaque);
+        if (!this.etreMort()) {
+            victime.prendreDegats(this.ad);
         }
     }
 
+    /**
+     * methode qui permet a un monstre de subir des degats
+     * 
+     * @param dgt = nombre de pv a retirer
+     */
     public void prendreDegats(int dgt) {
         int val = Math.abs(dgt);
+
         if (this.getPv() < val) {
             this.setPv(0);
+            this.setMort(true);
         } else {
-            this.setPv(-val);
+            this.setPv(this.getPv() - val);
         }
     }
 
