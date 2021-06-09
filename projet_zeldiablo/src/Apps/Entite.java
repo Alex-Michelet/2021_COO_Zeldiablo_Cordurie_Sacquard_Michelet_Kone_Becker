@@ -17,6 +17,7 @@ public abstract class Entite {
      * @param victime
      */
     public abstract void attaquer(Entite victime);
+    public abstract int getPortee();
 
     /**
      * methode qui decremente les pv actuels en prenant en compte l'etat du monstre
