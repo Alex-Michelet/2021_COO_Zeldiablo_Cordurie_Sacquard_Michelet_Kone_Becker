@@ -7,8 +7,8 @@ public class Sol extends Case {
      * @param x = abscisse de la case
      * @param y = ordonnee de la case
      */
-    public Sol(int x, int y){
-        super(x, y, true);
+    public Sol(int x, int y, Arme arme){
+        super(x, y, true, arme);
     }
     
 }

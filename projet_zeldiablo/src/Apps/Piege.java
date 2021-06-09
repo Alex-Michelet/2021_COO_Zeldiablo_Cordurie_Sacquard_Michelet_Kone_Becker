@@ -10,7 +10,7 @@ public class Piege extends Case {
      * @param y = ordonnee de la case
      */
     public Piege(int x, int y) {
-        super(x, y, true);
+        super(x, y, true, null);
     }
 
 }

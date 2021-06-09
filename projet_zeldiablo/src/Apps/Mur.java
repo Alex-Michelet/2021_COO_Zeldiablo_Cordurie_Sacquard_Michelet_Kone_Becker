@@ -8,7 +8,7 @@ public class Mur extends Case {
      * @param y = ordonnee de la case
      */
     public Mur(int x, int y){
-        super(x, y, false);
+        super(x, y, false, null);
     }
     
 }
