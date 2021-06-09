@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class JeuZ implements Jeu {
 
     /**
-     * un jeu connait un aventurier et un labyrinthe boolean actionEnCours pour
-     * limiter le nombre de deplacement par seconde
+     * un jeu connait un aventurier, une liste de monstres, un labyrinthe et un
+     * boolean actionEnCours pour limiter le nombre de deplacements par seconde
      */
     private Personnage aventurier;
     private Labyrinthe labyrinthe;
@@ -23,6 +23,7 @@ public class JeuZ implements Jeu {
      * 
      * @param p = personnage qui sera l aventurier du jeu ce constructeur lance une
      *          erreur si le personnage donne n est pas instancie
+     * @param l = le labyrinthe dans lequel evolue les personnages et les monstres
      */
     public JeuZ(Personnage p, Labyrinthe l) {
         if (p != null) {
@@ -42,9 +43,9 @@ public class JeuZ implements Jeu {
     }
 
     /**
-     * methode qui permet de faire evoluer le personnage
+     * methode qui permet de faire evoluer le personnage et les monstres
      * 
-     * @param commande = direction du deplacement
+     * @param commande = direction du deplacement pour le personnage
      */
     public void evoluer(Commande commande) {
 
@@ -52,13 +53,14 @@ public class JeuZ implements Jeu {
             this.deplacerMonstres();
             actionEnCours = true;
 
-            // si on tente de prendre une arme, on va essayer de prendre une arme sur la case actuelle
-            if(commande.prendreArme){
+            // si on tente de prendre une arme, on va essayer de prendre une arme sur la
+            // case actuelle
+            if (commande.prendreArme) {
                 this.tentePrendreArme(this.aventurier.getX(), this.aventurier.getY());
             }
 
             // si on tente d attaquer, on va essayer d attaquer les entites a portee
-            if(commande.attaquer){
+            if (commande.attaquer) {
                 this.tenteAttaquePerso();
             }
 
@@ -66,15 +68,7 @@ public class JeuZ implements Jeu {
             if (this.deplacerPerso(commande)) {
 
                 // on recupere les coordonnees actuelles du personnage
-                int xPersoActuel = this.aventurier.getX();
-                int yPersoActuel = this.aventurier.getY();
-
-                // on regarde si le personnage est arrive sur un piege
-                if (this.labyrinthe.estUnPiege(xPersoActuel, yPersoActuel)) {
-
-                    // on fait subir des degats au personnage
-                    this.aventurier.prendreDegats(3);
-                }
+                this.arriveSurUnPiege(this.aventurier);
             }
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
@@ -136,21 +130,42 @@ public class JeuZ implements Jeu {
         int yPerso = this.aventurier.getY();
 
         // on verifie que l aventurier puisse bien aller a la case souhaitee
+        boolean ok = true;
         if (commande.gauche) {
             if (xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)) {
-                this.aventurier.deplacer(-1, 0);
+                for (int i = 0; i < listDeMonstres.size(); i++) {
+                    if ((xPerso - 1 != listDeMonstres.get(i).getX() || yPerso != listDeMonstres.get(i).getY()))
+                        ok = false;
+                }
+                if (ok)
+                    this.aventurier.deplacer(-1, 0);
             }
         } else if (commande.droite) {
             if (xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
-                this.aventurier.deplacer(1, 0);
+                for (int i = 0; i < listDeMonstres.size(); i++) {
+                    if ((xPerso + 1 != listDeMonstres.get(i).getX() || yPerso != listDeMonstres.get(i).getY()))
+                        ok = false;
+                }
+                if (ok)
+                    this.aventurier.deplacer(1, 0);
             }
         } else if (commande.haut) {
             if (yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)) {
-                this.aventurier.deplacer(0, -1);
+                for (int i = 0; i < listDeMonstres.size(); i++) {
+                    if ((xPerso != listDeMonstres.get(i).getX() || yPerso - 1 != listDeMonstres.get(i).getY()))
+                        ok = false;
+                }
+                if (ok)
+                    this.aventurier.deplacer(0, -1);
             }
         } else if (commande.bas) {
             if (yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
-                this.aventurier.deplacer(0, 1);
+                for (int i = 0; i < listDeMonstres.size(); i++) {
+                    if ((xPerso != listDeMonstres.get(i).getX() || yPerso + 1 != listDeMonstres.get(i).getY()))
+                        ok = false;
+                }
+                if (ok)
+                    this.aventurier.deplacer(0, 1);
             }
         }
 
@@ -164,22 +179,23 @@ public class JeuZ implements Jeu {
 
     /**
      * methode qui permet de tenter de prendre une arme par le joueur
+     * 
      * @param x = abscisse de la case sur la quelle on tente de prendre une arme
      * @param y = ordonnee de la case sur la quelle on tente de prendre une arme
      */
-    public void tentePrendreArme(int x, int y){
+    public void tentePrendreArme(int x, int y) {
         // on essaye de prendre une arme sur la case du labyrinthe
         this.aventurier.prendreArme(this.labyrinthe.getArmeCase(x, y));
-        
+
     }
 
     /**
      * methode qui permet d attaquer les entite proches du personnage
      */
-    public void tenteAttaquePerso(){
+    public void tenteAttaquePerso() {
         // on essaye d attaquer les entites proches
-        for(int i = 0; i < this.listDeMonstres.size(); i++){
-            if(this.aventurier.estDistant(this.listDeMonstres.get(i) < this.aventurier.getPortee())){
+        for (int i = 0; i < this.listDeMonstres.size(); i++) {
+            if (this.aventurier.estDistant(this.listDeMonstres.get(i) <= this.aventurier.getPortee())) {
                 this.aventurier.attaquer(this.listDeMonstres.get(i));
             }
         }
@@ -187,16 +203,17 @@ public class JeuZ implements Jeu {
 
     /**
      * methode qui permet de savoir si une entite arrive sur un piege
+     * 
      * @param e = entite a verifier
      */
-    public void arriveSurUnPiege(Entite e){
+    public void arriveSurUnPiege(Entite e) {
 
         // on recupere les coordonnees de l entite
         int xEntite = e.getX();
         int yEntite = e.getY();
 
         // on regarde si la case est un piege
-        if(this.labyrinthe.estUnPiege(xEntite, yEntite)){
+        if (this.labyrinthe.estUnPiege(xEntite, yEntite)) {
             // si c est le cas l entite prend des degats
             e.prendreDegats(3);
         }
