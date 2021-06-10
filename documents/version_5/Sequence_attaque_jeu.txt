@@ -1,6 +1,6 @@
 @startuml
 
-title diagramme sequence simplifie attaque d un personnage arme d un epee
+title diagramme sequence simplifie attaque d un personnage arme d une epee
 
 participant "jeu : JeuZ" as jeu
 participant "perso : Personnage" as perso

@@ -1,6 +1,6 @@
 @startuml
 
-title diagramme sequence simplifie personnage (aux positions (2,2)) essaye de deposer un arme (il est sur la meme case)
+title diagramme sequence simplifie personnage (aux positions (2,2)) essaye de deposer un arme sur une case vide
 
 participant "jeu : JeuZ" as jeu
 participant "perso : Personnage" as perso
@@ -10,6 +10,18 @@ participant "sol : Sol" as sol
 
 [-> jeu : evoluer(commande)
 activate jeu
+
+jeu -> lab : getArmeCase(2, 2)
+activate lab
+
+lab -> sol : getArme()
+activate sol
+
+sol --> lab : null
+deactivate sol
+
+lab --> jeu : null
+deactivate lab
 
 jeu -> perso : deposerArme()
 activate perso
