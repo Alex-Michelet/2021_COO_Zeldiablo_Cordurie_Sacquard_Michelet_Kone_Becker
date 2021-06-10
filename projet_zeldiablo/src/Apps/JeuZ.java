@@ -56,7 +56,7 @@ public class JeuZ implements Jeu {
             // si on tente de prendre une arme, on va essayer de prendre une arme sur la
             // case actuelle
             if (commande.prendreArme) {
-                this.tentePrendreArme(this.aventurier.getX(), this.aventurier.getY());
+                this.tentePrendreArme();
             }
             // si on tente d attaquer, on va essayer d attaquer les entites a portee
             if (commande.attaquer) {
@@ -200,14 +200,11 @@ public class JeuZ implements Jeu {
 
     /**
      * methode qui permet de tenter de prendre une arme par le joueur
-     * 
-     * @param x = abscisse de la case sur la quelle on tente de prendre une arme
-     * 
-     * @param y = ordonnee de la case sur la quelle on tente de prendre une arme
      */
-    public void tentePrendreArme(int x, int y) {
+    public void tentePrendreArme() {
 
-        System.out.println("TentePrendreArme activee");
+        int x = this.aventurier.getX();
+        int y = this.aventurier.getY();
 
         // si le personnage n a pas d arme on lui donne directement l arme qu il y a sur
         // la case
@@ -220,6 +217,7 @@ public class JeuZ implements Jeu {
             if (a != null) {
                 this.aventurier.prendreArme(a);
                 this.labyrinthe.retirerArmeCase(x, y);
+                System.out.println("Arme prise avec succes");
             }
         } else {
 
@@ -236,9 +234,11 @@ public class JeuZ implements Jeu {
                 this.aventurier.prendreArme(aLab);
                 this.labyrinthe.retirerArmeCase(x, y);
                 this.labyrinthe.ajouterArmeCase(aPerso, x, y);
+                System.out.println("Arme switchee avec succes");
             } else {
                 // si il n y a pas d arme le personnage repose son arme
                 this.labyrinthe.ajouterArmeCase(this.aventurier.poserArme(), x, y);
+                System.out.println("Arme depose avec succes");
             }
         }
     }
