@@ -16,6 +16,7 @@ public class JeuZ implements Jeu {
     private Personnage aventurier;
     private Labyrinthe labyrinthe;
     private boolean actionEnCours;
+    private boolean actionDeMonstre;
     private ArrayList<Monstre> listDeMonstres;
 
     /**
@@ -37,6 +38,7 @@ public class JeuZ implements Jeu {
             throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
         actionEnCours = false;
+        actionDeMonstre = false;
         listDeMonstres = new ArrayList<Monstre>();
         listDeMonstres.add(new Troll(14, 5));
         listDeMonstres.add(new Troll(1, 18));
@@ -50,9 +52,7 @@ public class JeuZ implements Jeu {
     public void evoluer(Commande commande) {
 
         if (!actionEnCours) {
-            this.deplacerMonstres();
             actionEnCours = true;
-
             // si on tente de prendre une arme, on va essayer de prendre une arme sur la
             // case actuelle
             if (commande.prendreArme) {
@@ -72,12 +72,24 @@ public class JeuZ implements Jeu {
                 if (listDeMonstres.get(i).etreMort()) {
                     listDeMonstres.remove(i);
                 }
+                if (listDeMonstres.get(i).getDistance(this.aventurier) == 1) {
+                    listDeMonstres.get(i).attaquer(this.aventurier);
+                }
             }
 
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
+
         }
+        if (!actionDeMonstre) {
+            actionDeMonstre = true;
+            this.deplacerMonstres();
+        }
+
+        TimerTask timerTaskMonstre = new CooldownActionMonstre();
+        Timer timerMonstre = new Timer(true);
+        timerMonstre.schedule(timerTaskMonstre, 0);
     }
 
     public void deplacerMonstres() {
@@ -270,6 +282,18 @@ public class JeuZ implements Jeu {
                 e.printStackTrace();
             }
             actionEnCours = false;
+        }
+    }
+
+    class CooldownActionMonstre extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            actionDeMonstre = false;
         }
     }
 }
