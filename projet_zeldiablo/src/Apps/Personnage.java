@@ -76,13 +76,19 @@ public class Personnage extends Entite {
      * @param victime
      */
     public void attaquer(Entite victime) {
-        if (!this.etreMort()) {
-            if (this.arme != null) {
-                this.arme.attaquer(victime);
-            } else {
-                victime.prendreDegats(1);
+
+        // si le personnage est a portee on peut peut etre attaquer
+        if(this.getDistance(victime) <= this.getPortee()){
+            
+            if (!this.etreMort()) {
+                if (this.arme != null) {
+                    this.arme.attaquer(victime);
+                } else {
+                    victime.prendreDegats(1);
+                }
             }
         }
+
     }
 
     /**

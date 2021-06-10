@@ -34,6 +34,7 @@ class Personnage{
 + prendreDegats(int) : void
 + attaquer(Entite) : void
 + estInvincible : boolean
++ getArme() : Arme
 }
 
 abstract class Case{
@@ -59,6 +60,8 @@ class Labyrinthe{
 + getTailleY() : int
 + getTableauCases() : Case[][]
 + getArmeCase(int, int) : Arme
++ ajouterArmeCase(Arme, int, int) : void
++ retirerArmeCase(int, int) : void
 }
 
 class DessinZ{
