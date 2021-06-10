@@ -123,4 +123,23 @@ public class Labyrinthe {
     public boolean estAccessible(int x, int y) {
         return (tab[y][x].estFranchissable());
     }
+
+    /**
+     * methode qui permet de retirer une arme de la case du labyrinthe
+     * @param x = abscisse de la case
+     * @param y = ordonnee de la case
+     */
+    public void retirerArmeCase(int x, int y){
+        this.tab[y][x].retirerArme();
+    }
+
+    /**
+     * methode qui permet d ajouter une arme sur l une des cases du labyrinthe
+     * @param arme = arme a poser
+     * @param x = abscisse de la case
+     * @param y = ordonnee de la case
+     */
+    public void ajouterArmeCase(Arme arme, int x, int y){
+        this.tab[y][x].setArme(arme);
+    }
 }
