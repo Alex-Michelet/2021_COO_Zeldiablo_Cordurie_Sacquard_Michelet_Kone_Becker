@@ -81,16 +81,8 @@ public class JeuZ implements Jeu {
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
-
-        }
-        if (!actionDeMonstre) {
-            actionDeMonstre = true;
             this.deplacerMonstres();
         }
-
-        TimerTask timerTaskMonstre = new CooldownActionMonstre();
-        Timer timerMonstre = new Timer(true);
-        timerMonstre.schedule(timerTaskMonstre, 0);
     }
 
     public void deplacerMonstres() {
@@ -319,15 +311,11 @@ public class JeuZ implements Jeu {
         }
     }
 
-    class CooldownActionMonstre extends TimerTask {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            actionDeMonstre = false;
-        }
-    }
+    /*
+     * class CooldownActionMonstre extends TimerTask {
+     * 
+     * @Override public void run() { try { Thread.sleep(5000); } catch
+     * (InterruptedException e) { e.printStackTrace(); } actionDeMonstre = false; }
+     * }
+     */
 }

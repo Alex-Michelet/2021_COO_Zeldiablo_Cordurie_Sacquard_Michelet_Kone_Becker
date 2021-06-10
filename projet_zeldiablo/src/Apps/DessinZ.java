@@ -20,6 +20,7 @@ public class DessinZ implements DessinJeu {
      */
     public DessinZ(JeuZ j) {
         jeu = j;
+
     }
 
     /**
