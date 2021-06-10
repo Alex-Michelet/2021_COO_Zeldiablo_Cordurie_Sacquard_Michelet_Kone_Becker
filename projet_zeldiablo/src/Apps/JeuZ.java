@@ -40,8 +40,9 @@ public class JeuZ implements Jeu {
         actionEnCours = false;
         actionDeMonstre = false;
         listDeMonstres = new ArrayList<Monstre>();
-        listDeMonstres.add(new Troll(14, 5));
+        listDeMonstres.add(new Troll(18, 2));
         listDeMonstres.add(new Troll(1, 18));
+        listDeMonstres.add(new Troll(1, 2));
     }
 
     /**
