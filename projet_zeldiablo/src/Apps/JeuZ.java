@@ -69,11 +69,11 @@ public class JeuZ implements Jeu {
             }
 
             for (int i = 0; i < listDeMonstres.size(); i++) {
-                if (listDeMonstres.get(i).etreMort()) {
-                    listDeMonstres.remove(i);
-                }
                 if (listDeMonstres.get(i).getDistance(this.aventurier) == 1) {
                     listDeMonstres.get(i).attaquer(this.aventurier);
+                }
+                if (listDeMonstres.get(i).etreMort()) {
+                    listDeMonstres.remove(i);
                 }
             }
 
@@ -209,18 +209,19 @@ public class JeuZ implements Jeu {
 
         System.out.println("TentePrendreArme activee");
 
-        // si le personnage n a pas d arme on lui donne directement l arme qu il y a sur la case 
-        if(this.aventurier.getArme() == null){
+        // si le personnage n a pas d arme on lui donne directement l arme qu il y a sur
+        // la case
+        if (this.aventurier.getArme() == null) {
 
             Arme a = this.labyrinthe.getArmeCase(x, y);
 
-            // si il y avait bel et bien une arme on la donne au perso et on l enleve de la case
-            if(a != null){
+            // si il y avait bel et bien une arme on la donne au perso et on l enleve de la
+            // case
+            if (a != null) {
                 this.aventurier.prendreArme(a);
                 this.labyrinthe.retirerArmeCase(x, y);
             }
-        }
-        else{
+        } else {
 
             // si le personnage a deja une arme
             // soit il la pose par terre soit il switch avec celle de la case sur la quelle
@@ -228,14 +229,14 @@ public class JeuZ implements Jeu {
 
             Arme aLab = this.labyrinthe.getArmeCase(x, y);
 
-            // si il y a bel et bien une arme sur la case on swicth l arme du perso et de la case
-            if(aLab != null){
+            // si il y a bel et bien une arme sur la case on swicth l arme du perso et de la
+            // case
+            if (aLab != null) {
                 Arme aPerso = this.aventurier.poserArme();
                 this.aventurier.prendreArme(aLab);
                 this.labyrinthe.retirerArmeCase(x, y);
                 this.labyrinthe.ajouterArmeCase(aPerso, x, y);
-            }
-            else{
+            } else {
                 // si il n y a pas d arme le personnage repose son arme
                 this.labyrinthe.ajouterArmeCase(this.aventurier.poserArme(), x, y);
             }

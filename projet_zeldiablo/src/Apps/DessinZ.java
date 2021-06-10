@@ -2,9 +2,12 @@ package Apps;
 
 import moteurJeu.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import javax.imageio.ImageIO;
 
 public class DessinZ implements DessinJeu {
 
@@ -41,14 +44,20 @@ public class DessinZ implements DessinJeu {
                 if (tab[j][i] instanceof Mur) {
                     g.setColor(Color.RED);
                     g.fillRect(i * lon, j * haut, lon, haut);
+                    try {
+                        BufferedImage mur = ImageIO.read(new File("sprites/wall.png"));
+                        g.drawImage(mur, i * lon, j * haut, lon, haut, null);
+                    } catch (IOException ioe) {
+                        System.out.println("IO Exception");
+                    }
                 } else if (tab[j][i] instanceof Sol) {
                     g.setColor(Color.GREEN);
                     g.fillRect(i * lon, j * haut, lon, haut);
 
                     // de plus si il y a une arme sur le sol on l affiche
-                    if(tab[j][i].getArme() != null){
+                    if (tab[j][i].getArme() != null) {
                         g.setColor(Color.LIGHT_GRAY);
-                        g.fillRect(i*lon + lon/2, j*haut + haut/2, lon - lon/4, haut - haut/4);
+                        g.fillRect(i * lon + lon / 2, j * haut + haut / 2, lon - lon / 4, haut - haut / 4);
                     }
                 } else if (tab[j][i] instanceof Piege) {
                     g.setColor(Color.BLACK);
