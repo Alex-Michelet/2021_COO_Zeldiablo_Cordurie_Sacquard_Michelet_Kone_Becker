@@ -140,6 +140,14 @@ public class Personnage extends Entite {
     }
 
     /**
+     * getter de l arme
+     * @return
+     */
+    public Arme getArme(){
+        return(this.arme);
+    }
+
+    /**
      * timer pour l'invincibilite
      */
     class Cooldown extends TimerTask {

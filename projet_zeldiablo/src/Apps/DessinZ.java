@@ -44,6 +44,12 @@ public class DessinZ implements DessinJeu {
                 } else if (tab[j][i] instanceof Sol) {
                     g.setColor(Color.GREEN);
                     g.fillRect(i * lon, j * haut, lon, haut);
+
+                    // de plus si il y a une arme sur le sol on l affiche
+                    if(tab[j][i].getArme() != null){
+                        g.setColor(Color.LIGHT_GRAY);
+                        g.fillRect(i*lon + lon/2, j*haut + haut/2, lon - lon/4, haut - haut/4);
+                    }
                 } else if (tab[j][i] instanceof Piege) {
                     g.setColor(Color.BLACK);
                     g.fillRect(i * lon, j * haut, lon, haut);

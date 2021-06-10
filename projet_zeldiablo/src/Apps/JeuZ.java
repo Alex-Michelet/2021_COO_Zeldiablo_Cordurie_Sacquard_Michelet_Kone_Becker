@@ -194,8 +194,40 @@ public class JeuZ implements Jeu {
      * @param y = ordonnee de la case sur la quelle on tente de prendre une arme
      */
     public void tentePrendreArme(int x, int y) {
-        // on essaye de prendre une arme sur la case du labyrinthe
-        this.aventurier.prendreArme(this.labyrinthe.getArmeCase(x, y));
+
+        System.out.println("TentePrendreArme activee");
+
+        // si le personnage n a pas d arme on lui donne directement l arme qu il y a sur la case 
+        if(this.aventurier.getArme() == null){
+
+            Arme a = this.labyrinthe.getArmeCase(x, y);
+
+            // si il y avait bel et bien une arme on la donne au perso et on l enleve de la case
+            if(a != null){
+                this.aventurier.prendreArme(a);
+                this.labyrinthe.retirerArmeCase(x, y);
+            }
+        }
+        else{
+
+            // si le personnage a deja une arme
+            // soit il la pose par terre soit il switch avec celle de la case sur la quelle
+            // il est
+
+            Arme aLab = this.labyrinthe.getArmeCase(x, y);
+
+            // si il y a bel et bien une arme sur la case on swicth l arme du perso et de la case
+            if(aLab != null){
+                Arme aPerso = this.aventurier.poserArme();
+                this.aventurier.prendreArme(aLab);
+                this.labyrinthe.retirerArmeCase(x, y);
+                this.labyrinthe.ajouterArmeCase(aPerso, x, y);
+            }
+            else{
+                // si il n y a pas d arme le personnage repose son arme
+                this.labyrinthe.ajouterArmeCase(this.aventurier.poserArme(), x, y);
+            }
+        }
     }
 
     /**
