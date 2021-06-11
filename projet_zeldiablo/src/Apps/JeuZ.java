@@ -47,6 +47,7 @@ public class JeuZ implements Jeu {
         listDeMonstres.add(new Troll(18, 2));
         listDeMonstres.add(new Troll(1, 18));
         listDeMonstres.add(new Troll(1, 2));
+        listDeMonstres.add(new Troll(12, 16));
     }
 
     /**
