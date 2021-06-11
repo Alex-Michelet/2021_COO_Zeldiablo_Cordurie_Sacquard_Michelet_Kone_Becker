@@ -6,20 +6,21 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 
 /**
- * classe qui extends la classe abstraite entite et qui represente le personnage 
+ * classe qui extends la classe abstraite entite et qui represente le personnage
  */
 public class Personnage extends Entite {
 
     /**
      * attributs d un personnage
      */
-    private int vieMax; // la vie maximale du personnage 
+    private int vieMax; // la vie maximale du personnage
     private boolean invincible; // boolean true si le personnage est invincible et false si il ne l est pas
     private Arme arme; // l arme du pesronnage null si il n en possede pas
+    private final int invincibleCoolDown = 5000;
 
     /**
-     * Constructeur d'un personnage initialisation des attributs
-     * invincible a false vieMax a vie et arme a null
+     * Constructeur d'un personnage initialisation des attributs invincible a false
+     * vieMax a vie et arme a null
      * 
      * @param a   abscisse
      * @param o   ordonnee
@@ -82,8 +83,8 @@ public class Personnage extends Entite {
     public void attaquer(Entite victime) {
 
         // si le personnage est a portee on peut peut etre attaquer
-        if(this.getDistance(victime) <= this.getPortee()){
-            
+        if (this.getDistance(victime) <= this.getPortee()) {
+
             if (!this.etreMort()) {
                 if (this.arme != null) {
                     this.arme.attaquer(victime);
@@ -108,7 +109,7 @@ public class Personnage extends Entite {
     }
 
     /**
-     * methode qui repose l arme si le personnage en possede une 
+     * methode qui repose l arme si le personnage en possede une
      * 
      * @return l arme que le personnage possede si il en a une ou null
      */
@@ -142,7 +143,7 @@ public class Personnage extends Entite {
     }
 
     /**
-     * methode qui permet d'obtenir la portee du personnage 
+     * methode qui permet d'obtenir la portee du personnage
      * 
      * @return la portee du personnage
      */
@@ -159,18 +160,18 @@ public class Personnage extends Entite {
      * 
      * @return
      */
-    public Arme getArme(){
-        return(this.arme);
+    public Arme getArme() {
+        return (this.arme);
     }
 
     /**
-     * timer pour l'invincibilite
+     * cooldown pour l'invincibilite
      */
     class Cooldown extends TimerTask {
         @Override
         public void run() {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(invincibleCoolDown);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

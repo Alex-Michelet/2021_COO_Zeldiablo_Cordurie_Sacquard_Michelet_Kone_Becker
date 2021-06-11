@@ -2,6 +2,7 @@ package Apps;
 
 import moteurJeu.*;
 
+/** Classe principale, lance le jeu */
 public class Principale {
 
     /**
