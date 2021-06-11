@@ -1,3 +1,8 @@
+/**
+ * Classe Arme
+ * classe abstraite qui creee des armes
+ * en decoulera plusieurs types d arme
+ */
 package Apps;
 
 public abstract class Arme {
@@ -26,7 +31,6 @@ public abstract class Arme {
     public void attaquer(Entite e) {
         e.prendreDegats(this.degat);
     }
-
 
     public void setPerso(Personnage p) {
         this.perso = p;
