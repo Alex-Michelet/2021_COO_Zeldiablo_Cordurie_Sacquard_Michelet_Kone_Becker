@@ -5,17 +5,21 @@ import java.util.TimerTask;
 import java.lang.InterruptedException;
 import java.lang.Thread;
 
+/**
+ * classe qui extends la classe abstraite entite et qui represente le personnage 
+ */
 public class Personnage extends Entite {
-    /**
-     * coordonnees d'un personnage
-     */
 
-    private int vieMax;
-    private boolean invincible;
-    private Arme arme;
+    /**
+     * attributs d un personnage
+     */
+    private int vieMax; // la vie maximale du personnage 
+    private boolean invincible; // boolean true si le personnage est invincible et false si il ne l est pas
+    private Arme arme; // l arme du pesronnage null si il n en possede pas
 
     /**
      * Constructeur d'un personnage initialisation des attributs
+     * invincible a false vieMax a vie et arme a null
      * 
      * @param a   abscisse
      * @param o   ordonnee
@@ -92,9 +96,9 @@ public class Personnage extends Entite {
     }
 
     /**
-     * methode qui permet de prendre une arme
+     * methode qui permet de prendre une arme et qui donne un proprietaire a l arme
      * 
-     * @param a
+     * @param a arme a ramasser
      */
     public void prendreArme(Arme a) {
         if (this.arme == null && a != null) {
@@ -104,7 +108,7 @@ public class Personnage extends Entite {
     }
 
     /**
-     * methode qui repose l arme
+     * methode qui repose l arme si le personnage en possede une 
      * 
      * @return l arme que le personnage possede si il en a une ou null
      */
@@ -131,12 +135,17 @@ public class Personnage extends Entite {
      * methode qui permet de savoir si le personnage est invincible si le boolean
      * est true
      * 
-     * @return
+     * @return true si le personnage est invincible false sinon
      */
     public boolean estInvincible() {
         return this.invincible;
     }
 
+    /**
+     * methode qui permet d'obtenir la portee du personnage 
+     * 
+     * @return la portee du personnage
+     */
     public int getPortee() {
         int res = 1;
         if (this.arme != null) {
@@ -147,6 +156,7 @@ public class Personnage extends Entite {
 
     /**
      * getter de l arme
+     * 
      * @return
      */
     public Arme getArme(){

@@ -1,9 +1,23 @@
 package Apps;
 
+/**
+ * classe abstraite qui represente une entite
+ */
 public abstract class Entite {
+    /**
+     * attributs d une entite ses coordonnees, les pv, et un boolean qui determine si l entite est morte ou vivante
+     */
     private int posX, posY, pv;
     private boolean mort;
 
+    /**
+     * constructur d'une entite qui prend en parametre les coordonnees de l entite ainsi que sa vie
+     * initialise le boolean mort à false
+     * 
+     * @param x
+     * @param y
+     * @param vie
+     */
     public Entite(int x, int y, int vie) {
         this.posX = x;
         this.posY = y;
@@ -12,7 +26,7 @@ public abstract class Entite {
     }
 
     /**
-     * methode qui permet d attaquer une entite
+     * methode abstraite qui permet d attaquer une entite
      * 
      * @param victime
      */
@@ -21,15 +35,14 @@ public abstract class Entite {
     public abstract int getPortee();
 
     /**
-     * methode qui decremente les pv actuels en prenant en compte l'etat du monstre
-     * (invincibile, vivant...)
+     * methode abstraite qui permet de decrementer les pv d une entite
      * 
      * @param dgt nombre de pv perdu
      */
     public abstract void prendreDegats(int dgt);
 
     /**
-     * deplacer l entite dans une direction
+     * deplacer l entite a des coordonnees x et y
      * 
      * @param x abscisse
      * @param y ordonnee
@@ -99,6 +112,11 @@ public abstract class Entite {
         this.pv = vie;
     }
 
+    /**
+     * methode qui permet de changer l etat du boolean mort
+     * 
+     * @param etat
+     */
     public void setMort(boolean etat) {
         this.mort = etat;
     }

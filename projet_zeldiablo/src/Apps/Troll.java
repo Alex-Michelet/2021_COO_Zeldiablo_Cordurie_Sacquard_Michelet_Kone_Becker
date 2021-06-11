@@ -1,5 +1,8 @@
 package Apps;
 
+/**
+ * classe qui extends de monstre et qui creer un trolls
+ */
 public class Troll extends Monstre {
 
     /**

@@ -1,13 +1,16 @@
 package Apps;
 
+/**
+ * classe abstraite qui extends entite et qui defini un monstre
+ */
 public abstract class Monstre extends Entite {
     /**
-     * attributs du monstre
+     * attributs du monstre 
      */
-    private int ad;
+    private int ad; // degats du monstre
 
     /**
-     * Constructeur d'un personnage avec ses coordonnees
+     * Constructeur d'un monstre
      * 
      * @param a   abscisse
      * @param o   ordonnee
@@ -55,6 +58,11 @@ public abstract class Monstre extends Entite {
         return ad;
     }
 
+    /**
+     * methode qui permet d'obtenir la portee du monstre
+     * 
+     * @return la portee du monstres
+     */
     public int getPortee() {
         return 1;
     }
