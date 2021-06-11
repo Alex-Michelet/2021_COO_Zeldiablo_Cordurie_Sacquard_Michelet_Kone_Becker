@@ -33,7 +33,7 @@ class Personnage{
 + gagnerVie(int) : void
 + prendreDegats(int) : void
 + attaquer(Entite) : void
-+ estInvincible : boolean
++ estInvincible() : boolean
 + getArme() : Arme
 }
 
@@ -70,11 +70,11 @@ class DessinZ{
 }
 
 class Mur {
-+ Sol(int, int)
++ Mur(int, int)
 }
 
 class Sol {
-+ Mur(int, int, Arme)
++ Sol(int, int, Arme)
 }
 
 class Piege{
@@ -99,6 +99,7 @@ abstract class Entite {
 - posY : int
 - pv : int
 - mort : boolean
++ Entite(int, int, int)
 + abstract attaquer(Entite) : void
 + abstract prendreDegats(int) : void
 + deplacer(int, int) : void
@@ -109,6 +110,8 @@ abstract class Entite {
 + etreMort() : boolean
 + abstract getPortee() : int
 + getDistance(Entite) : int
++ setPv(int) : void
++ setMort(boolean) : void
 }
 
 abstract class Arme {
@@ -128,7 +131,7 @@ class Lance{
 + Lance()
 }
 
-class Ceste <<Nouveau>>{
+class Ceste {
 + Ceste()
 + attaquer(Entite) : void
 }
@@ -149,8 +152,8 @@ Personnage --|> Entite
 Monstre --|> Entite
 
 JeuZ "*" -left> "1" Personnage : -aventurier
-JeuZ "*" -down> "1" Labyrinthe : -niveaux
-JeuZ "*" -right> "*" Monstre : -ennemis
+JeuZ "*" -down> "1" Labyrinthe : -labyrinthe
+JeuZ "*" -right> "*" Monstre : -listeMonstres
 
 DessinZ "*" -> "1" JeuZ : -jeu
 
