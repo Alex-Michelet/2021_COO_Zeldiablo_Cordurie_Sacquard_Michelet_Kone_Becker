@@ -85,7 +85,8 @@ class Piege{
 
 abstract class Monstre{
 - ad : int
-+ Monstre(int, int, int, int)
+- portee : int
++ Monstre(int, int, int, int, int)
 + attaquer(Entite) : void
 + prendreDegats(int) : void
 + getAd() : int
@@ -93,7 +94,7 @@ abstract class Monstre{
 }
 
 class Troll {
-+ Troll()
++ Troll(int, int)
 }
 
 abstract class Entite {
