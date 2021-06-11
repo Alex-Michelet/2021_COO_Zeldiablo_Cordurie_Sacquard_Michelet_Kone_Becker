@@ -9,6 +9,7 @@ skinparam class{
 
 class JeuZ{
 - actionEnCour : boolean
+- final coolDownTime : int
 + JeuZ(Personnage, Labyrinthe)
 + evoluer(Commande) : void
 + deplacerPerso(Commande) : boolean
