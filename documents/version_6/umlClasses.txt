@@ -1,0 +1,163 @@
+@startuml
+
+skinparam class{
+  BackgroundColor<<AFaire>> Pink
+  BorderColor<<AFaire>> Black
+  BackgroundColor<<Nouveau>> Cyan
+  BorderColor<<Nouveau>> Blue
+}
+
+class JeuZ{
+- actionEnCour : boolean
++ JeuZ(Personnage, Labyrinthe)
++ evoluer(Commande) : void
++ deplacerPerso(Commande) : boolean
++ deplacerMonstres() : void
++ tentePrendreArme() : void
++ tenteAttaquePerso() : void
++ arriveSurUnPiege(Entite) : void
++ etreFini() : boolean
++ getAventurier() : Personage
++ getLabyrinthe() : Labyrinthe
++ getListeMonstre() : ArrayList<Monstre>
+}
+
+class Personnage{
+- vieMax : int 
+- invincible : boolean
++ Personnage(int, int, int) : void
++ getVieMax() : int
++ prendreArme(Arme) : void
++ poserArme() : Arme
++ getPortee() : int
++ gagnerVie(int) : void
++ prendreDegats(int) : void
++ attaquer(Entite) : void
++ estInvincible : boolean
++ getArme() : Arme
+}
+
+abstract class Case{
+- x : int 
+- y : int 
+- franchissable : boolean
++ Case(int, int, boolean, Arme)
++ getX() : int 
++ getY() : int
++ estFranchissable() : boolean
++ setArme(Arme) : void
++ retirerArme() : void
++ getArme() : Arme
+}
+
+class Labyrinthe{
+- xLong : int
+- yLong : int
++ Labyrinthe(String)
++ estAccessible(int, int) : boolean
++ estUnPiege(int, int) : boolean
++ getTailleX() : int
++ getTailleY() : int
++ getTableauCases() : Case[][]
++ getArmeCase(int, int) : Arme
++ ajouterArmeCase(Arme, int, int) : void
++ retirerArmeCase(int, int) : void
+}
+
+class DessinZ{
++ DessinZ(JeuZ)
++ dessiner(BufferedImage) : void
+}
+
+class Mur {
++ Sol(int, int)
+}
+
+class Sol {
++ Mur(int, int, Arme)
+}
+
+class Piege{
++ Piege(int, int)
+}
+
+abstract class Monstre{
+- ad : int
++ Monstre(int, int, int, int)
++ attaquer(Entite) : void
++ prendreDegats(int) : void
++ getAd() : int
++ getPortee() : int
+}
+
+class Troll {
++ Troll()
+}
+
+abstract class Entite {
+- posX : int
+- posY : int
+- pv : int
+- mort : boolean
++ abstract attaquer(Entite) : void
++ abstract prendreDegats(int) : void
++ deplacer(int, int) : void
++ getX() : int
++ getY() : int
++ getPv() : int
++ abstract getPortee() : int
++ etreMort() : boolean
++ abstract getPortee() : int
++ getDistance(Entite) : int
+}
+
+abstract class Arme {
+- degats : int
+- portee : int
++ Arme(int, int)
++ attaquer(Entite) : void
++ setPerso(Personnage) : void
++ getPortee() : int
+}
+
+class Epee {
++ Epee()
+}
+
+class Lance{
++ Lance()
+}
+
+class Ceste <<Nouveau>>{
++ Ceste()
++ attaquer(Entite) : void
+}
+
+Labyrinthe "0" -> "*" Case : -cases
+
+Mur --|> Case
+Sol --|> Case
+Piege --|> Case
+
+Troll --|> Monstre
+
+Epee --|> Arme
+Lance --|> Arme
+Ceste --|> Arme
+
+Personnage --|> Entite
+Monstre --|> Entite
+
+JeuZ "*" -left> "1" Personnage : -aventurier
+JeuZ "*" -down> "1" Labyrinthe : -niveaux
+JeuZ "*" -right> "*" Monstre : -ennemis
+
+DessinZ "*" -> "1" JeuZ : -jeu
+
+Personnage "0..1" -left> "0..1" Arme : -arme
+
+Arme "*" -> "1" Personnage : -perso
+
+Case "*" -> "1" Arme : -weapon
+
+@enduml
