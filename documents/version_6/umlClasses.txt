@@ -26,6 +26,7 @@ class JeuZ{
 class Personnage{
 - vieMax : int 
 - invincible : boolean
+- final invicibleCollDown : int
 + Personnage(int, int, int) : void
 + getVieMax() : int
 + prendreArme(Arme) : void
