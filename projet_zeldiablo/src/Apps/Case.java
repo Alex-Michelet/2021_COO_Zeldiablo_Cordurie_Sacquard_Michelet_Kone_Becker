@@ -1,8 +1,14 @@
+/**
+ * Classe Case 
+ * classe abstraite qui creee les cases du labyrinthe
+ * il en decoulera plusieurs types de cases
+ */
 package Apps;
 
 public abstract class Case {
     /**
-     * Attributs d un case position X position Y
+     * Attributs d une case : position X position Y, etat(franchissable ou non),
+     * arme si la case contient une arme
      */
     private int x;
     private int y;
@@ -24,7 +30,7 @@ public abstract class Case {
     }
 
     /**
-     * permet de mettre une arme sur une case 
+     * permet de mettre une arme sur une case
      * 
      * @param arme
      */
@@ -33,14 +39,14 @@ public abstract class Case {
     }
 
     /**
-     * permet de retirer l arme de la case 
+     * permet de retirer l arme de la case
      */
     public void retirerArme() {
         this.weapon = null;
     }
 
     /**
-     * getX
+     * getX renvois la position X
      * 
      * @return x
      */
@@ -49,7 +55,7 @@ public abstract class Case {
     }
 
     /**
-     * getY
+     * getY renvois la position Y
      * 
      * @return y
      */
@@ -58,9 +64,9 @@ public abstract class Case {
     }
 
     /**
-     * getArme
+     * getArme renvois une arme
      * 
-     * @return l arme
+     * @return weapon
      */
     public Arme getArme() {
         return this.weapon;

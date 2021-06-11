@@ -1,3 +1,8 @@
+/**
+ * Classe Labyrinthe
+ * modelise le labyrinthe dans lequel va se derouler le jeu
+ * un labyrinthe est compose de case de type sol mur arme et piege
+ */
 package Apps;
 
 import java.io.BufferedReader;
@@ -6,7 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Labyrinthe {
-    private int xLong, yLong;
+    private int xLong, yLong;// longueur des lignes en x et y
     private Case tab[][];
 
     /**
@@ -110,10 +115,10 @@ public class Labyrinthe {
         return this.tab;
     }
 
-
     public Arme getArmeCase(int x, int y) {
         return (tab[y][x].getArme());
     }
+
     /**
      * getTailleX
      * 
@@ -126,20 +131,22 @@ public class Labyrinthe {
 
     /**
      * methode qui permet de retirer une arme de la case du labyrinthe
+     * 
      * @param x = abscisse de la case
      * @param y = ordonnee de la case
      */
-    public void retirerArmeCase(int x, int y){
+    public void retirerArmeCase(int x, int y) {
         this.tab[y][x].retirerArme();
     }
 
     /**
      * methode qui permet d ajouter une arme sur l une des cases du labyrinthe
+     * 
      * @param arme = arme a poser
-     * @param x = abscisse de la case
-     * @param y = ordonnee de la case
+     * @param x    = abscisse de la case
+     * @param y    = ordonnee de la case
      */
-    public void ajouterArmeCase(Arme arme, int x, int y){
+    public void ajouterArmeCase(Arme arme, int x, int y) {
         this.tab[y][x].setArme(arme);
     }
 }
