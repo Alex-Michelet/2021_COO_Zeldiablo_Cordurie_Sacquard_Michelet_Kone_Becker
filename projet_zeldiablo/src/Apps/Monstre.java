@@ -8,6 +8,7 @@ public abstract class Monstre extends Entite {
      * attributs du monstre 
      */
     private int ad; // degats du monstre
+    private int portee; // portee du monstre
 
     /**
      * Constructeur d'un monstre
@@ -16,10 +17,12 @@ public abstract class Monstre extends Entite {
      * @param o   ordonnee
      * @param vie points de vie
      * @param atk points d'attaque
+     * @param port portee
      */
-    public Monstre(int a, int o, int vie, int atk) {
+    public Monstre(int a, int o, int vie, int atk, int port) {
         super(a, o, vie);
         this.ad = atk;
+        this.portee = port;
     }
 
     /**
@@ -64,6 +67,6 @@ public abstract class Monstre extends Entite {
      * @return la portee du monstres
      */
     public int getPortee() {
-        return 1;
+        return this.portee;
     }
 }
