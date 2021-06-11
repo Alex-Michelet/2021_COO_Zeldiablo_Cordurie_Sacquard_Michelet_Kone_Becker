@@ -7,6 +7,11 @@ import java.lang.InterruptedException;
 import java.lang.Thread;
 import java.util.ArrayList;
 
+/**
+ * Cette classe represente le jeu Zeldiablo, il possede personnage, monstres et
+ * labyrinthe. En implementant l'interface Jeu, il gere les actions se deroulant
+ * au sein du jeu.
+ */
 public class JeuZ implements Jeu {
 
     /**
@@ -16,8 +21,8 @@ public class JeuZ implements Jeu {
     private Personnage aventurier;
     private Labyrinthe labyrinthe;
     private boolean actionEnCours;
-    private boolean actionDeMonstre;
     private ArrayList<Monstre> listDeMonstres;
+    private final int coolDownTime = 250;
 
     /**
      * constructeur parametre qui permet de creer un jeu
@@ -38,7 +43,6 @@ public class JeuZ implements Jeu {
             throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
         actionEnCours = false;
-        actionDeMonstre = false;
         listDeMonstres = new ArrayList<Monstre>();
         listDeMonstres.add(new Troll(18, 2));
         listDeMonstres.add(new Troll(1, 18));
@@ -48,14 +52,20 @@ public class JeuZ implements Jeu {
     /**
      * methode qui permet de faire evoluer le personnage et les monstres
      * 
-     * @param commande = direction du deplacement pour le personnage
+     * @param commande = direction du deplacement pour le personnage ou action
+     *                 (attaque, ramassage...)
      */
     public void evoluer(Commande commande) {
-
+        /*
+         * le code ne s'execute que si actionEnCours vaut faux, auquel cas,
+         * actionEnCours vaut vrai durant un temps (coolDownTime)
+         */
         if (!actionEnCours) {
             actionEnCours = true;
-            // si on tente de prendre une arme, on va essayer de prendre une arme sur la
-            // case actuelle
+            /*
+             * si on tente de prendre une arme, on va essayer de la prendre sur la case
+             * actuelle
+             */
             if (commande.prendreArme) {
                 this.tentePrendreArme();
             }
@@ -63,28 +73,35 @@ public class JeuZ implements Jeu {
             if (commande.attaquer) {
                 this.tenteAttaquePerso();
             }
-            // si le perso c est bien deplace on gere les pieges
+            // si le perso s est bien deplace on gere les pieges
             if (this.deplacerPerso(commande)) {
-                // on recupere les coordonnees actuelles du personnage
                 this.arriveSurUnPiege(this.aventurier);
             }
 
+            // Pour chaque monstre, s'il se trouve a 1 de distance du joueur, il l'attaque
             for (int i = 0; i < listDeMonstres.size(); i++) {
                 if (listDeMonstres.get(i).getDistance(this.aventurier) == 1) {
                     listDeMonstres.get(i).attaquer(this.aventurier);
                 }
+                // Si le monstre est mort, il est retire de la liste
                 if (listDeMonstres.get(i).etreMort()) {
                     listDeMonstres.remove(i);
                 }
             }
 
+            // remet actionEnCours a false apres le temps programme (coolDownTime)
             TimerTask timerTask = new CooldownAction();
             Timer timer = new Timer(true);
             timer.schedule(timerTask, 0);
+            // les monstres se deplacent
             this.deplacerMonstres();
         }
     }
 
+    /*
+     * Methode faisant se deplacer tout les monstres encore vivants de maniere
+     * aleatoire
+     */
     public void deplacerMonstres() {
 
         for (int i = 0; i < listDeMonstres.size(); i++) {
@@ -118,8 +135,6 @@ public class JeuZ implements Jeu {
                         && ((xMonstre != xPerso || yMonstre + 1 != yPerso))) {
                     listDeMonstres.get(i).deplacer(0, 1);
                 }
-            } else {
-                ;
             }
         }
     }
@@ -192,7 +207,7 @@ public class JeuZ implements Jeu {
     }
 
     /**
-     * methode qui permet de tenter de prendre une arme par le joueur
+     * methode qui permet au joueur de tenter de prendre une arme
      */
     public void tentePrendreArme() {
 
@@ -295,27 +310,26 @@ public class JeuZ implements Jeu {
         return (this.labyrinthe);
     }
 
+    /**
+     * getter de la liste des monstres presents dans le labyrinthe. Seuls les
+     * monstres vivants sont dans la liste
+     * 
+     * @return la liste des monstres
+     */
     public ArrayList<Monstre> getListeMonstre() {
         return listDeMonstres;
     }
 
+    /** Petite classe permettant de gerer le cooldown entre chaque action */
     class CooldownAction extends TimerTask {
         @Override
         public void run() {
             try {
-                Thread.sleep(250);
+                Thread.sleep(coolDownTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             actionEnCours = false;
         }
     }
-
-    /*
-     * class CooldownActionMonstre extends TimerTask {
-     * 
-     * @Override public void run() { try { Thread.sleep(5000); } catch
-     * (InterruptedException e) { e.printStackTrace(); } actionDeMonstre = false; }
-     * }
-     */
 }

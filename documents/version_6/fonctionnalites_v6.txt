@@ -1,0 +1,3 @@
+* fonctionnalités version 6
+
+Debuggage et révision du code, vérification javadoc...

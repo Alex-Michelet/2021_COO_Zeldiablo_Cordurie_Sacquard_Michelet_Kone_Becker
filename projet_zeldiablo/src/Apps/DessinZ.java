@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
-import java.awt.Color;
 import javax.imageio.ImageIO;
 
+/**
+ * Classe DessinZ qui implemente l'interface DessinJeu. Gere tout l'aspect
+ * visuel du jeu
+ */
 public class DessinZ implements DessinJeu {
 
+    /** Attribut jeu que l'on veut dessiner */
     JeuZ jeu;
 
     /**
@@ -20,11 +24,12 @@ public class DessinZ implements DessinJeu {
      */
     public DessinZ(JeuZ j) {
         jeu = j;
-
     }
 
     /**
      * methode qui permet de dessiner le jeu
+     * 
+     * @param image
      */
     public void dessiner(BufferedImage image) {
         try {
@@ -90,11 +95,14 @@ public class DessinZ implements DessinJeu {
             // a la taille des cases du jeu
             BufferedImage hero;
             if (p.etreMort()) {
+                // g.setColor(Color.CYAN);
                 hero = ImageIO.read(new File("sprites/HeroKO.png"));
             } else {
                 if (p.estInvincible()) {
+                    // g.setColor(Color.PINK);
                     hero = ImageIO.read(new File("sprites/InvincibleHero.png"));
                 } else {
+                    // g.setColor(Color.BLUE);
                     hero = ImageIO.read(new File("sprites/Hero.png"));
                 }
             }
