@@ -28,18 +28,18 @@ public class TestJeuZ {
     @Test 
     public void testEvoluer() {
         // prepa des donnees
-        Personnage p = new Personnage(1,1, 15);
+        Personnage p = new Personnage(2,3, 15);
         Labyrinthe l = new Labyrinthe("niveaux/lab1.txt");
         JeuZ j = new JeuZ(p, l);
         Commande c = new Commande();
         c.bas = true;
 
         //methode teste 
-        j.evoluer(c);
+        j.deplacerPerso(c);
 
         //verif des donnees
-        assertEquals("x devrait etre à 1", 1, j.getAventurier().getX());
-        assertEquals("y devrait etre à 2", 2, j.getAventurier().getY());
+        assertEquals("x devrait etre à 2", 2, j.getAventurier().getX());
+        assertEquals("y devrait etre à 4", 4, j.getAventurier().getY());
     }
 
     /**
