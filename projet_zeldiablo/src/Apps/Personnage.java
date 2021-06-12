@@ -36,13 +36,16 @@ public class Personnage extends Entite {
     /**
      * methode qui incremente les pv actuelles de vie
      * 
-     * @param vie
+     * @param vie = vie a ajouter au personnage
      */
     public void gagnerVie(int vie) {
-        if (!this.etreMort()) {
-            if (this.getPv() + vie > this.vieMax) {
+
+        if (!this.etreMort()){
+
+            if(this.getPv() + vie > this.vieMax){
                 this.setPv(this.vieMax);
-            } else {
+            } 
+            else{
                 this.setPv(this.getPv() + Math.abs(vie));
             }
         }
@@ -54,17 +57,20 @@ public class Personnage extends Entite {
      * 
      * @param deg nombre de pv perdu
      */
-    public void prendreDegats(int deg) {
+    public void prendreDegats(int deg){
         int val = Math.abs(deg);
+
         if ((!invincible) && (!etreMort())) {
 
             invincible = true;
 
             if (this.getPv() < val) {
                 this.setPv(0);
-            } else {
+            } 
+            else{
                 this.setPv(this.getPv() - val);
             }
+
             if (this.getPv() == 0) {
                 this.setMort(true);
             }
