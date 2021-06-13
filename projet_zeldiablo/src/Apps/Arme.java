@@ -39,4 +39,12 @@ public abstract class Arme {
     public int getPortee() {
         return this.portee;
     }
+
+    public int getDegats(){
+        return(this.degat);
+    }
+
+    public Personnage getPersonnage(){
+        return(this.perso);
+    }
 }

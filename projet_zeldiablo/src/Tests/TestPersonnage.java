@@ -226,4 +226,31 @@ public class TestPersonnage {
 
         assertEquals("Le troll devrait avoir 1 pv", 1, troll.getPv());
     }
+
+    /**
+     * test personnage attaque troll avec un ceste
+     * il devrait gagner un PV tandis que le troll devrait en perdre 1
+     */
+    @Test
+    public void testPersoCeste(){
+        //prepa des donnees
+        Personnage p = new Personnage(1, 1, 12);
+        p.prendreDegats(2);
+        Troll troll = new Troll(1, 2);
+        Ceste c = new Ceste();
+
+        //premiere methode testee
+        c.setPerso(p);
+
+        // premiere verification
+        assertEquals("Le ceste devrait connaitre le personnage", p, c.getPersonnage());
+
+        //deuxieme methode testee
+        p.prendreArme(c);
+        p.attaquer(troll);
+
+        // deuxieme verif
+        assertEquals("Le troll devrait avoir 4 pv", 4, troll.getPv());
+        assertEquals("Le personnage devrait avoir 11 pv", 11, p.getPv());
+    }
 }

@@ -16,7 +16,7 @@ public class DessinZ implements DessinJeu {
 
     /** Attribut jeu que l'on veut dessiner */
     JeuZ jeu;
-    BufferedImage mur, piege, sol, epee, lance, persoMort, perso, persoInv, troll;
+    BufferedImage mur, piege, sol, epee, lance, ceste, persoMort, perso, persoInv, troll;
 
     /**
      * constructeur qui permet au dessin de connaitre le jeu a afficher
@@ -37,6 +37,7 @@ public class DessinZ implements DessinJeu {
             // prepa des types d armes
             this.epee = ImageIO.read(new File("sprites/sword.png"));
             this.lance = ImageIO.read(new File("sprites/mySpear2.png"));
+            this.ceste = ImageIO.read(new File("sprites/ceste.png"));
 
             // prepa etats du personnage
             this.perso = ImageIO.read(new File("sprites/Hero.png"));
@@ -107,13 +108,16 @@ public class DessinZ implements DessinJeu {
                         Arme a = labyrinthe.getArmeCase(i, j);
 
                         // si la portee est de 1 c est une epee
-                        if(a.getPortee() == 1){
+                        if(a.getPortee() == 1 && a.getDegats() == 3){
                             g.drawImage(this.epee, i * lon, j * haut, lon, haut, null);
                         }
-                        else if (a.getPortee() == 2){
+                        else if (a.getPortee() == 2 && a.getDegats() == 2){
 
                             // si la portee est de 2 c est une lance
                             g.drawImage(this.lance, i * lon, j * haut, lon, haut, null);
+                        }
+                        else if(a.getPortee() == 1 && a.getDegats() == 1){
+                            g.drawImage(this.ceste, i * lon, j * haut, lon, haut, null);
                         }
 
                         /*
@@ -155,13 +159,22 @@ public class DessinZ implements DessinJeu {
 
         for(int i = 0; i < list.size(); i++){
 
-            int xMonstre = list.get(i).getX();
-            int yMonstre = list.get(i).getY();
+            Monstre m = list.get(i);
+
+            int xMonstre = m.getX();
+            int yMonstre = m.getY();
             /*
              * g.setColor(Color.MAGENTA); g.fillArc(xMonstre * lon, yMonstre * haut, lon,
              * haut, 0, 360);
              */
-            g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
+            int portMsontre = m.getPortee();
+            int vieMonstre = m.getPv();
+            int atkMonstre = m.getAd();
+
+            // si les donnes correspondent a celle d un troll
+            if(portMsontre == 1 && vieMonstre == 5 && atkMonstre == 3){
+                g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
+            }
         }
     }
 

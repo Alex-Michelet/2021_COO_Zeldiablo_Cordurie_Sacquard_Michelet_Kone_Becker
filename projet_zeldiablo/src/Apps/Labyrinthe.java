@@ -44,19 +44,30 @@ public class Labyrinthe {
             br.close();
             br = new BufferedReader(new FileReader(nomFichier));
 
-            while ((line = br.readLine()) != null) { // On parcourt le fichier pour creer les cases correspondantes
-                for (int i = 0; i < line.length(); i++) {
+            // On parcourt le fichier pour creer les cases correspondantes
+            while ((line = br.readLine()) != null) { 
+
+                for(int i = 0; i < line.length(); i++){
+
                     c = line.charAt(i);
-                    if (c == 'S') {
+
+                    if(c == 'S'){
                         tab[j][i] = new Sol(i, j, null);
-                    } else if (c == 'M') {
+                    } 
+                    else if(c == 'M'){
                         tab[j][i] = new Mur(i, j);
-                    } else if (c == 'P') {
+                    } 
+                    else if (c == 'P'){
                         tab[j][i] = new Piege(i, j);
-                    } else if (c == 'E') {
+                    } 
+                    else if (c == 'E'){
                         tab[j][i] = new Sol(i, j, new Epee());
-                    } else if (c == 'L') {
+                    } 
+                    else if (c == 'L'){
                         tab[j][i] = new Sol(i, j, new Lance());
+                    }
+                    else if(c == 'C'){
+                        tab[j][i] = new Sol(i, j, new Ceste());
                     }
                 }
                 j++;
