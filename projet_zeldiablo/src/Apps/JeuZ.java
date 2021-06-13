@@ -26,20 +26,19 @@ public class JeuZ implements Jeu {
 
     /**
      * constructeur parametre qui permet de creer un jeu
+     * le jeu se debrouille pour placer les monstres et le personnage
      * 
-     * @param p = personnage qui sera l aventurier du jeu ce constructeur lance une
-     *          erreur si le personnage donne n est pas instancie
      * @param l = le labyrinthe dans lequel evolue les personnages et les monstres
+     * il y a une erreur si le labyrinthe n est pas instancie
      */
-    public JeuZ(Personnage p, Labyrinthe l){
+    public JeuZ(Labyrinthe l){
 
-        if(p != null){
-            this.aventurier = p;
-        } 
-        else{
-            throw new Error("Un jeu DOIT connaitre un personnage");
-        }
-
+        // on prepare la liste de monstres du labyrinthe
+        this.listDeMonstres = new ArrayList<Monstre>();
+        
+        // on s assure que le labyrinthe existe
+        // si ce n est pas le cas on fait planter toute l application
+        // pour eviter des problemes
         if(l != null){
             this.labyrinthe = l;
         } 
@@ -47,12 +46,87 @@ public class JeuZ implements Jeu {
             throw new Error("Un jeu DOIT connaitre un labyrinthe");
         }
 
+        // on essaye de placer le personage
+        this.placerPersonnage();
+
+        if(this.aventurier == null){
+            throw new Error("Le jeu n a pas pu placer son personnage");
+        }
+
+        // on place les monstres de maniere aleatoire dans le labyrinthe
+        this.placerMonstres();
+
+        // on precise qu il n y a pas encore eu d action en cour
         actionEnCours = false;
-        listDeMonstres = new ArrayList<Monstre>();
-        listDeMonstres.add(new Troll(18, 2));
-        listDeMonstres.add(new Troll(1, 18));
-        listDeMonstres.add(new Troll(1, 2));
-        listDeMonstres.add(new Troll(12, 16));
+    }
+
+    /**
+     * methodes utiles au constructeur uniquement
+     */
+
+     /**
+      * methode qui permet de placer de maniere autonome le personnage dans le labyrinthe
+      */
+    private void placerPersonnage(){
+
+        // on recupere les dimensions du labirynthe
+        int tailleX = this.labyrinthe.getTailleX();
+        int tailleY = this.labyrinthe.getTailleY();
+
+        // on prepare un boolean et un int pour arreter la boucle des que l on trouve
+        // une case libre
+        boolean fin = false;
+        int i = 0;
+
+        // on parcours les abscisses disponibles pour trouver la premiere case libre 
+        // en bas du labyrinthe
+        while(!fin && i < tailleX){
+
+            // des que l on trouve la premiere case libre en bas du labyrinthe
+            if(this.labyrinthe.estAccessible(i, tailleY - 1)){
+                fin = true;
+                this.aventurier = new Personnage(i, tailleY - 1, 15);
+            }
+
+            i++;
+        }
+        
+    }
+
+    /**
+     * methode qui permet au jeu de placer tout seul ses monstres de maniere aleatoire
+     * dans le labyrinthe du jeu
+     */
+    private void placerMonstres(){
+
+        // on recupere les dimensions du labyrinthe
+        int tailleX = this.labyrinthe.getTailleX();
+        int tailleY = this.labyrinthe.getTailleY();
+
+        //int typeMonstre;
+
+        // on essaye de placer 4 monstres dans le labyrinthe
+        for(int i = 0; i < 4; i++){
+            //on prepare des coordonnees aleatoires
+            int x = (int)(Math.random() * tailleX);
+            int y = (int)(Math.random() * tailleY);
+
+            // tant qu on ne peut pas placer de monstre on reessaye de trouver
+            // un nouvelle case pour placer le monstre
+            while(!this.labyrinthe.estAccessible(x, y)){
+                x = (int)(Math.random() * tailleX);
+                y = (int)(Math.random() * tailleY);
+            }
+
+            /*
+            // on met un type de monstre aleatoire
+            typeMonstre = (int)(Math.random() * 4);
+            */
+
+            // on ajoute ce monstre
+            this.listDeMonstres.add(new Troll(x, y));
+        }
+
     }
 
     /**
@@ -61,8 +135,8 @@ public class JeuZ implements Jeu {
      * @param commande = direction du deplacement pour le personnage ou action
      *                 (attaque, ramassage...)
      */
-    public void evoluer(Commande commande) {
-        
+    public void evoluer(Commande commande){
+
         /*
          * le code ne s'execute que si actionEnCours vaut faux, auquel cas,
          * actionEnCours vaut vrai durant un temps (coolDownTime)
@@ -114,7 +188,7 @@ public class JeuZ implements Jeu {
      * Methode faisant se deplacer tout les monstres encore vivants de maniere
      * aleatoire
      */
-    public void deplacerMonstres() {
+    public void deplacerMonstres(){
 
         for(int i = 0; i < listDeMonstres.size(); i++){
 
@@ -136,20 +210,23 @@ public class JeuZ implements Jeu {
                 }
             }
             else if(x == 2){
-                if (xMonstre < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xMonstre + 1, yMonstre)
+
+                if(xMonstre < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xMonstre + 1, yMonstre)
                         && ((xMonstre + 1 != xPerso || yMonstre != yPerso))) {
                     listDeMonstres.get(i).deplacer(1, 0);
                 }
             } 
             else if(x == 3){
-                if (yMonstre > 0 && this.labyrinthe.estAccessible(xMonstre, yMonstre - 1)
+
+                if(yMonstre > 0 && this.labyrinthe.estAccessible(xMonstre, yMonstre - 1)
                         && ((xMonstre != xPerso || yMonstre - 1 != yPerso))) {
                     listDeMonstres.get(i).deplacer(0, -1);
                 }
             } 
             else if(x == 4){
-                if (yMonstre < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xMonstre, yMonstre + 1)
-                        && ((xMonstre != xPerso || yMonstre + 1 != yPerso))) {
+
+                if(yMonstre < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xMonstre, yMonstre + 1)
+                        && ((xMonstre != xPerso || yMonstre + 1 != yPerso))){
                     listDeMonstres.get(i).deplacer(0, 1);
                 }
             }
@@ -170,60 +247,77 @@ public class JeuZ implements Jeu {
 
         // on verifie que l aventurier puisse bien aller a la case souhaitee
         boolean ok = true;
-        if (commande.gauche) {
 
-            if (xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)) {
-                for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso - 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY()))
+        if(commande.gauche){
+
+            if(xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)){
+                
+                for(int i = 0; i < listDeMonstres.size(); i++){
+
+                    if((xPerso - 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY())){
                         ok = false;
+                    }
                 }
-                if (ok) {
+
+                if(ok){
                     this.aventurier.deplacer(-1, 0);
                 }
             }
         } 
         else if(commande.droite){
 
-            if (xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)) {
-                for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso + 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY()))
+            if(xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)){
+                
+                for(int i = 0; i < listDeMonstres.size(); i++){
+
+                    if((xPerso + 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY())){
                         ok = false;
+                    }
                 }
-                if (ok) {
+
+                if(ok){
                     this.aventurier.deplacer(1, 0);
                 }
             }
         } 
         else if(commande.haut){
-            if (yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)) {
-                for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso - 1 == listDeMonstres.get(i).getY()))
+
+            if(yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)){
+                for(int i = 0; i < listDeMonstres.size(); i++){
+
+                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso - 1 == listDeMonstres.get(i).getY())){
                         ok = false;
+                    }
                 }
-                if (ok) {
+
+                if(ok){
                     this.aventurier.deplacer(0, -1);
                 }
             }
         } 
         else if(commande.bas){
 
-            if (yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)) {
-                for (int i = 0; i < listDeMonstres.size(); i++) {
-                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso + 1 == listDeMonstres.get(i).getY()))
+            if(yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)){
+
+                for(int i = 0; i < listDeMonstres.size(); i++){
+
+                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso + 1 == listDeMonstres.get(i).getY())){
                         ok = false;
+                    }
                 }
-                if (ok) {
+
+                if(ok){
                     this.aventurier.deplacer(0, 1);
                 }
             }
         }
 
         // on verifie que le deplacement a bien eu lieu
-        if (xPerso != this.aventurier.getX() || yPerso != this.aventurier.getY()){
+        if(xPerso != this.aventurier.getX() || yPerso != this.aventurier.getY()){
             res = true;
         }
 
-        return (res);
+        return(res);
     }
 
     /**
@@ -245,6 +339,7 @@ public class JeuZ implements Jeu {
             if(a != null){
                 this.aventurier.prendreArme(a);
                 this.labyrinthe.retirerArmeCase(x, y);
+                a.setPerso(this.aventurier);
                 System.out.println("Arme prise avec succes");
             }
         } 
@@ -259,15 +354,24 @@ public class JeuZ implements Jeu {
             // si il y a bel et bien une arme sur la case on swicth l arme du perso et de la
             // case
             if (aLab != null) {
+                // depose de l arme du perso
                 Arme aPerso = this.aventurier.poserArme();
+                aPerso.setPerso(null);
+
+                // recuperation de la nouvelle arme par le perso
                 this.aventurier.prendreArme(aLab);
+                aLab.setPerso(this.aventurier);
+                
+                // depose de l ancienne arme du perso sur la case du labyrinthe
                 this.labyrinthe.retirerArmeCase(x, y);
                 this.labyrinthe.ajouterArmeCase(aPerso, x, y);
                 System.out.println("Arme switchee avec succes");
             } 
             else{
                 // si il n y a pas d arme le personnage repose son arme
-                this.labyrinthe.ajouterArmeCase(this.aventurier.poserArme(), x, y);
+                Arme aPerso = this.aventurier.poserArme();
+                aPerso.setPerso(null);
+                this.labyrinthe.ajouterArmeCase(aPerso, x, y);
                 System.out.println("Arme depose avec succes");
             }
         }
@@ -308,10 +412,24 @@ public class JeuZ implements Jeu {
     /**
      * methode qui permet de savoir si le jeu est fini le jeu s arrete si le
      * personnage meurt
+     * 
+     * ou si il n y a plus de monstre et que l on atteint un bord
      * @return vrai que si le jeu est fini
      */
     public boolean etreFini() {
-        return (this.aventurier.etreMort());
+        boolean res = false;
+
+        if(this.aventurier.etreMort()){
+            res = true;
+        }
+
+        // il y a un sol au bord (12, 0)
+        if(this.listDeMonstres.size() == 0 && this.aventurier.getX() == 12 && this.aventurier.getY() == 0){
+            res = true;
+            System.out.println("Victoire");
+        }
+
+        return(res);
     }
 
     /**

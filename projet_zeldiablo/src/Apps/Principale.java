@@ -11,9 +11,8 @@ public class Principale {
      */
     public static void main(String[] args) throws Exception {
 
-        Personnage perso = new Personnage(8, 19, 15);
         Labyrinthe labyrinthe = new Labyrinthe("niveaux/lab2.txt");
-        JeuZ jeu = new JeuZ(perso, labyrinthe);
+        JeuZ jeu = new JeuZ(labyrinthe);
 
         DessinZ dessin = new DessinZ(jeu);
 
