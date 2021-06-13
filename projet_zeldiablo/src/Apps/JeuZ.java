@@ -11,6 +11,9 @@ import java.util.ArrayList;
  * Cette classe represente le jeu Zeldiablo, il possede personnage, monstres et
  * labyrinthe. En implementant l'interface Jeu, il gere les actions se deroulant
  * au sein du jeu.
+ * 
+ * les monstres sont places de maniere aleatoire dans la labyrinthe tandis que le 
+ * personnage est place dans la premiere case libre en bas du labyrinthe
  */
 public class JeuZ implements Jeu {
 
@@ -61,12 +64,46 @@ public class JeuZ implements Jeu {
     }
 
     /**
+     * constructeur parametre utile uniquement pour les tests
+     * @param p = personnage a placer manuellement dans le labyrinthe
+     * @param l = labyrinthe a tester
+     */
+    public JeuZ(Personnage p, Labyrinthe l){
+
+        // on s assure qu il y a bien un perso
+        if(p != null){
+            this.aventurier = p;
+        }
+        else{
+            throw new Error("Le jeu DOIT connaitre un peronnage");
+        }
+
+        // on s assure qu il y a bien un labyrinthe
+        if(l != null){
+            this.labyrinthe = l;
+        } 
+        else{
+            throw new Error("Un jeu DOIT connaitre un labyrinthe");
+        }
+
+        // on precise qu il n y a pas encore d action en cour
+        this.actionEnCours = false;
+
+        // on ajoute les monstres a la liste de monstres du jeu
+        listDeMonstres = new ArrayList<Monstre>();
+        listDeMonstres.add(new Troll(18, 2));
+        listDeMonstres.add(new Troll(1, 18));
+        listDeMonstres.add(new Troll(1, 2));
+        listDeMonstres.add(new Troll(12, 16));
+    }
+
+    /**
      * methodes utiles au constructeur uniquement
      */
 
-     /**
-      * methode qui permet de placer de maniere autonome le personnage dans le labyrinthe
-      */
+    /**
+     * methode qui permet de placer de maniere autonome le personnage dans le labyrinthe
+    */
     private void placerPersonnage(){
 
         // on recupere les dimensions du labirynthe
@@ -423,8 +460,8 @@ public class JeuZ implements Jeu {
             res = true;
         }
 
-        // il y a un sol au bord (12, 0)
-        if(this.listDeMonstres.size() == 0 && this.aventurier.getX() == 12 && this.aventurier.getY() == 0){
+        // on gagne si on atteint une extremite du labyrinthe
+        if(this.listDeMonstres.size() == 0 && this.aventurier.getY() == this.labyrinthe.getTailleY() - 1| this.aventurier.getY() == 0){
             res = true;
             System.out.println("Victoire");
         }
