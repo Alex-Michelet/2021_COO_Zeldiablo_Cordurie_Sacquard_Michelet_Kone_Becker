@@ -207,6 +207,7 @@ public class JeuZ implements Jeu {
                 // Si le monstre est mort, il est retire de la liste
                 if(listDeMonstres.get(i).etreMort()){
                     listDeMonstres.remove(i);
+                    System.out.println("Un monstre de moins, il en reste " + this.listDeMonstres.size());
                 }
             }
     

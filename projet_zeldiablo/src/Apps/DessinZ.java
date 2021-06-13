@@ -168,11 +168,10 @@ public class DessinZ implements DessinJeu {
              * haut, 0, 360);
              */
             int portMsontre = m.getPortee();
-            int vieMonstre = m.getPv();
             int atkMonstre = m.getAd();
 
             // si les donnes correspondent a celle d un troll
-            if(portMsontre == 1 && vieMonstre == 5 && atkMonstre == 3){
+            if(portMsontre == 1 && atkMonstre == 3){
                 g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
             }
         }
