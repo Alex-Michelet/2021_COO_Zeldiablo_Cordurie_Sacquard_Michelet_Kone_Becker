@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 
@@ -154,6 +155,11 @@ public class DessinZ implements DessinJeu {
             }
         }
 
+        // on dessine une barre de vie pour le personnage
+        int longueurBarreVie = (p.getPv() * lon)/p.getVieMax();
+        g.setColor(Color.RED);
+        g.fillRect(p.getX() * lon, (p.getY() + 1) * haut - haut/8, longueurBarreVie, haut/8);
+
         // g.fillArc(p.getX() * lon, p.getY() * haut, lon, haut, 0, 360);
 
         ArrayList<Monstre> list = jeu.getListeMonstre();
@@ -174,11 +180,22 @@ public class DessinZ implements DessinJeu {
             // si les donnes correspondent a celle d un troll on dessine un troll
             if(portMsontre == 1 && atkMonstre == 3){
                 g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
+
+                // on dessine une barre de vie pour le troll
+                longueurBarreVie = (m.getPv() * lon)/5;
+                g.setColor(Color.RED);
+                g.fillRect(m.getX() * lon, (m.getY() + 1) * haut - haut/8, longueurBarreVie, haut/8);
             }
             else if(portMsontre == 1 && atkMonstre == 1){
                 // de meme si elles correspondent a celle d un fantome
                 g.drawImage(this.fant, xMonstre * lon, yMonstre * haut, lon, haut, null);
+
+                // on dessine une barre de vie pour le fantome
+                longueurBarreVie = (m.getPv() * lon)/5;
+                g.setColor(Color.RED);
+                g.fillRect(m.getX() * lon, (m.getY() + 1) * haut - haut/8, longueurBarreVie, haut/8);
             }
+
         }
     }
 
