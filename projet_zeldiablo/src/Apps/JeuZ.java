@@ -240,10 +240,6 @@ public class JeuZ implements Jeu {
             int xMonstre = listDeMonstres.get(i).getX();
             int yMonstre = listDeMonstres.get(i).getY();
 
-            // on recupere les coordonnees de l aventurier
-            int xPerso = this.aventurier.getX();
-            int yPerso = this.aventurier.getY();
-
             // on recupere le type de monstre a gerer
             // pour savoir si il passe ou non a travers les murs
             boolean passeMur = (m.getAd() == 1 && m.getPortee() == 1);
@@ -369,7 +365,7 @@ public class JeuZ implements Jeu {
 
         // enfin on s assure que le monstre n entre pas en colision avec le personnage
         if(!res){
-            if(xMonstre + dx == this.aventurier.getX() && yMonstre + dx == this.aventurier.getY()){
+            if(xMonstre + dx == this.aventurier.getX() && yMonstre + dy == this.aventurier.getY()){
                 res = true;
             }
 
