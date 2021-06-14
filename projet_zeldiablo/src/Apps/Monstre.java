@@ -27,12 +27,16 @@ public abstract class Monstre extends Entite {
 
     /**
      * methode qui permet d attaque une un victime
+     * que si il n est pas mort et si il est a portee
      * 
      * @param victime = victime a attaquer
      */
-    public void attaquer(Entite victime) {
-        if (!this.etreMort()) {
-            victime.prendreDegats(this.ad);
+    public void attaquer(Entite victime){
+        if(this.getDistance(victime) <= this.portee){
+            if(!this.etreMort()){
+                victime.prendreDegats(this.ad);
+            }
+
         }
     }
 

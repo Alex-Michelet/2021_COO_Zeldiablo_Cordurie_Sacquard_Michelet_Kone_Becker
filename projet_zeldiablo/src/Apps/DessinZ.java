@@ -16,7 +16,7 @@ public class DessinZ implements DessinJeu {
 
     /** Attribut jeu que l'on veut dessiner */
     JeuZ jeu;
-    BufferedImage mur, piege, sol, epee, lance, ceste, persoMort, perso, persoInv, troll;
+    BufferedImage mur, piege, sol, epee, lance, ceste, persoMort, perso, persoInv, troll, fant;
 
     /**
      * constructeur qui permet au dessin de connaitre le jeu a afficher
@@ -46,6 +46,7 @@ public class DessinZ implements DessinJeu {
 
             //prepa des types de monstres
             this.troll = ImageIO.read(new File("sprites/troll.png"));
+            this.fant = ImageIO.read(new File("sprites/ghost.png"));
             
         } catch (IOException e) {
             System.out.println("Probleme pour trouver les images");
@@ -170,9 +171,13 @@ public class DessinZ implements DessinJeu {
             int portMsontre = m.getPortee();
             int atkMonstre = m.getAd();
 
-            // si les donnes correspondent a celle d un troll
+            // si les donnes correspondent a celle d un troll on dessine un troll
             if(portMsontre == 1 && atkMonstre == 3){
                 g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
+            }
+            else if(portMsontre == 1 && atkMonstre == 1){
+                // de meme si elles correspondent a celle d un fantome
+                g.drawImage(this.fant, xMonstre * lon, yMonstre * haut, lon, haut, null);
             }
         }
     }
