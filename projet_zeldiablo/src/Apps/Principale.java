@@ -11,9 +11,9 @@ public class Principale {
      */
     public static void main(String[] args) throws Exception {
 
-        // on prepare les donnees du jeu
-        Labyrinthe labyrinthe = new Labyrinthe("niveaux/lab3.txt");
-        JeuZ jeu = new JeuZ(labyrinthe);
+        // on prepare uneiquement le jeu
+        // il gere toutes ses donnees tout seul
+        JeuZ jeu = new JeuZ();
 
         // on prepare l interface graphique
         DessinZ dessin = new DessinZ(jeu);

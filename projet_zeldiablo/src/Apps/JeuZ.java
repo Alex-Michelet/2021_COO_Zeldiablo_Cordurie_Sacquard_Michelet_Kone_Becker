@@ -25,28 +25,27 @@ public class JeuZ implements Jeu {
     private Labyrinthe labyrinthe;
     private boolean actionEnCours;
     private ArrayList<Monstre> listDeMonstres;
+    private int numNiveau;
     private final int coolDownTime = 250;
 
     /**
      * constructeur parametre qui permet de creer un jeu
      * le jeu se debrouille pour placer les monstres et le personnage
-     * 
-     * @param l = le labyrinthe dans lequel evolue les personnages et les monstres
-     * il y a une erreur si le labyrinthe n est pas instancie
+     * tout comme pour creer son labyrinthe
      */
-    public JeuZ(Labyrinthe l){
+    public JeuZ(){
+
+        // on precise qu on a fait aucun niveau
+        this.numNiveau = 1;
 
         // on prepare la liste de monstres du labyrinthe
         this.listDeMonstres = new ArrayList<Monstre>();
         
-        // on s assure que le labyrinthe existe
-        // si ce n est pas le cas on fait planter toute l application
-        // pour eviter des problemes
-        if(l != null){
-            this.labyrinthe = l;
-        } 
-        else{
-            throw new Error("Un jeu DOIT connaitre un labyrinthe");
+        // on tente de faire nous meme un labyrinthe
+        this.labyrinthe = new Labyrinthe("niveaux/lab1.txt");
+
+        if(this.labyrinthe == null){
+            throw new Error("Probleme lors de la creation du labyrinthe");
         }
 
         // on essaye de placer le personage
@@ -561,14 +560,25 @@ public class JeuZ implements Jeu {
     public boolean etreFini() {
         boolean res = false;
 
+        // on termine si le hero meurt dans la bataille
         if(this.aventurier.etreMort()){
             res = true;
         }
 
         // on gagne si on atteint une extremite du labyrinthe
-        if(this.listDeMonstres.size() == 0 && this.aventurier.getY() == this.labyrinthe.getTailleY() - 1| this.aventurier.getY() == 0){
+        if(this.listDeMonstres.size() == 0 && this.aventurier.getY() == 0){
             res = true;
-            System.out.println("Victoire");
+        }
+
+        // si on a atteint la fin d un niveau et que l on peut encore en charger un on continue le jeu
+        // en chargant un nouveau niveau
+        if(res && this.numNiveau != 3){
+            res = false;
+            this.numNiveau ++;
+            String fichier = "niveaux/lab" + this.numNiveau + ".txt";
+            this.labyrinthe = new Labyrinthe(fichier);
+            this.placerPersonnage();
+            this.placerMonstres();
         }
 
         return(res);
