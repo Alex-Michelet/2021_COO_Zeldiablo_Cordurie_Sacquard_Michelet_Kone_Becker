@@ -19,7 +19,7 @@ public class Labyrinthe {
      * sol et mur Un labyrinthe lit un fichier texte et cree les cases en fonction
      * de celui ci quand il lit un S il cree un sol quand il lit un M il cree un mur
      * 
-     * @param nomFichier
+     * @param nomFichier = chemin pour acceder au fichier du labyrinthe
      */
     public Labyrinthe(String nomFichier) {
         try {
@@ -29,7 +29,8 @@ public class Labyrinthe {
             int j = 0;// Iterateur
 
             br.mark(0);
-            while ((line = br.readLine()) != null) { // On parcourt le fichier pour connaÃ®tre la taille du labyrinthe
+            // On parcourt le fichier pour connaitre la taille du labyrinthe
+            while ((line = br.readLine()) != null) { 
                 // Longueur de la ligne
                 this.xLong = line.length();
                 // Nombre de ligne
@@ -73,6 +74,7 @@ public class Labyrinthe {
                 j++;
             }
             br.close();
+
         } catch (FileNotFoundException fnfe) {
             System.out.println("File not found Exception");
         } catch (IOException ioe) {
@@ -84,9 +86,9 @@ public class Labyrinthe {
     /**
      * estUnPiege Verifie si une case est un piege
      * 
-     * @param a
-     * @param o
-     * @return p
+     * @param a = abscisse de la case
+     * @param o = ordonnee de la case
+     * @return vraiq eu si la case est un piege
      */
     public boolean estUnPiege(int a, int o) {
         boolean p;
@@ -120,24 +122,38 @@ public class Labyrinthe {
     /**
      * getTableauCase
      * 
-     * @return tab
+     * @return le tableau de cases du labyrinthe
      */
     public Case[][] getTableauCases() {
         return this.tab;
     }
 
+    /**
+     * methode qui renvoie l arme du labyrinthe
+     * @param x = abscisse de la case
+     * @param y = ordonnee de la case
+     * @return l arme potentielle qu il y a sur la case
+     */
     public Arme getArmeCase(int x, int y) {
         return (tab[y][x].getArme());
     }
 
     /**
-     * getTailleX
+     * methode qui permet de savoir si la case indiquee est accessible
+     * elle renvoie faux si les coordonnees sortent du tableau de cases
      * 
-     * @return booleen indiquant si la case du labyrinthe est franchissable
+     * @param x = abscisse de la case
+     * @param y = ordonnee de la case
+     * 
+     * @return vrai que si la case est franchissable
      */
-
     public boolean estAccessible(int x, int y) {
-        return (tab[y][x].estFranchissable());
+        boolean res = false;
+
+        if(x >= 0 && x < this.xLong && y >= 0 && y < this.yLong){
+            res = this.tab[y][x].estFranchissable();
+        }
+        return (res);
     }
 
     /**

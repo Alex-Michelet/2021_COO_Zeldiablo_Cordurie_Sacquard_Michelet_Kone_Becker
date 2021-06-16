@@ -221,128 +221,225 @@ public class JeuZ implements Jeu {
         }
     }
 
-    /*
-     * Methode faisant se deplacer tous les monstres encore vivants de maniere
-     * aleatoire
+    /**
+     * methode qui permet de faire un deplacement un peu reflechi pour les monstres
+     * si ils sont suffisemment proche du personnage il le traque 
+     * au leiu de se deplacer de maniere aleatoire
      */
     public void deplacerMonstres(){
 
-        for(int i = 0; i < listDeMonstres.size(); i++){
+        for(Monstre m : this.listDeMonstres){
 
-            // on recupere le monstre de la liste
-            Monstre m = this.listDeMonstres.get(i);
-
-            // on prepare un random pour pouvoir deplacer le monstre
-            int x = (int) Math.ceil(Math.random() * 4);
-
-            // on recupere les coordonnees du monstre
-            int xMonstre = listDeMonstres.get(i).getX();
-            int yMonstre = listDeMonstres.get(i).getY();
-
-            // on recupere le type de monstre a gerer
-            // pour savoir si il passe ou non a travers les murs
-            boolean passeMur = (m.getAd() == 1 && m.getPortee() == 1);
-
-            /**
-             * si le monstre peut passer dans les murs on 
-             * s assure juste qu il ne sors pas du labyrinthe
-             * 
-             * sinon on verifie tout
-             * 
-             * on considere que :
-             * 1 == deplacement a gauche
-             * 2 == deplacement a droite
-             * 3 == deplacement en haut
-             * 4 == deplacement en bas
-             */
-            if(passeMur){
-
-                switch(x){
-                    // deplacement a gauche
-                    case 1:
-                        // on ne se deplace que si on ne sors pas et qu on ne rentre pas dans le perso
-                        if(xMonstre > 0 && !(this.monstreEnColision(m, -1, 0))){
-                            m.deplacer(-1, 0);
-                        }
-                        break;
-
-                    // deplacement a droite
-                    case 2:
-                        if(xMonstre < this.labyrinthe.getTailleX() - 1 && !(this.monstreEnColision(m, 1, 0))){
-                            m.deplacer(1, 0);
-                        }
-                        break;
-                    
-                    // deplacement en haut
-                    case 3:
-                        if(yMonstre > 0 && !(this.monstreEnColision(m, 0, -1))){
-                            m.deplacer(0, -1);
-                        }
-                        break;
-                    
-                    //deplacement en bas
-                    case 4:
-                        if(yMonstre < this.labyrinthe.getTailleY() - 1 && !(this.monstreEnColision(m, 0, 1))){
-                            m.deplacer(0, 1);
-                        }
-                        break;
-                }
+            // si on est assez proche on traque le personnage
+            // on s assure que les monstres ne collent pas betement le perso en laissant
+            // une distance maximale
+            if(m.getDistance(this.aventurier) <= 5 && m.getDistance(this.aventurier) > 1){
+                this.deplacerTraqueMonstre(m);
             }
             else{
-
-                // on verifie que le monstre puisse bien aller a la case souhaitee
-                if(x == 1){
-    
-                    if(xMonstre > 0 && this.labyrinthe.estAccessible(xMonstre - 1, yMonstre)
-                            && !(this.monstreEnColision(m, -1, 0))){
-                        listDeMonstres.get(i).deplacer(-1, 0);
-                    }
-                }
-                else if(x == 2){
-    
-                    if(xMonstre < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xMonstre + 1, yMonstre)
-                            && !(this.monstreEnColision(m, 1, 0))) {
-                        listDeMonstres.get(i).deplacer(1, 0);
-                    }
-                } 
-                else if(x == 3){
-    
-                    if(yMonstre > 0 && this.labyrinthe.estAccessible(xMonstre, yMonstre - 1)
-                            && !(this.monstreEnColision(m, 0, -1))) {
-                        listDeMonstres.get(i).deplacer(0, -1);
-                    }
-                } 
-                else if(x == 4){
-    
-                    if(yMonstre < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xMonstre, yMonstre + 1)
-                            && !(this.monstreEnColision(m, 0, 1))){
-                        listDeMonstres.get(i).deplacer(0, 1);
-                    }
-                }
+                // sinon on bouge de maniere random
+                this.deplacerAleaMonstre(m);
             }
-
 
         }
     }
 
     /**
-     * methode privee qui permet de savoir si un monstre est en 
+     * methode qui permet de faire se deplacer le monstre
+     * indique de maniere aleatoire
+     * @param m = le monstre a deplacer
+     */
+    private void deplacerAleaMonstre(Monstre m){
+
+        // on prepare un random pour pouvoir deplacer le monstre
+        int x = (int) Math.ceil(Math.random() * 4);
+
+        // on recupere les coordonnees du monstre
+        int xMonstre = m.getX();
+        int yMonstre = m.getY();
+
+        // on recupere le type de monstre a gerer
+        // pour savoir si il passe ou non a travers les murs
+        boolean passeMur = (m.getAd() == 1 && m.getPortee() == 1);
+
+        /**
+         * si le monstre peut passer dans les murs on 
+         * s assure juste qu il ne sors pas du labyrinthe
+         * 
+         * sinon on verifie tout
+         * 
+         * on considere que :
+         * 1 == deplacement a gauche
+         * 2 == deplacement a droite
+         * 3 == deplacement en haut
+         * 4 == deplacement en bas
+         */
+        if(passeMur){
+
+            switch(x){
+                // deplacement a gauche
+                case 1:
+                    // on ne se deplace que si on ne sors pas et qu on ne rentre pas dans le perso
+                    if(xMonstre > 0 && !(this.estEnColision(m, -1, 0))){
+                        m.deplacer(-1, 0);
+                    }
+                    break;
+
+                // deplacement a droite
+                case 2:
+                    if(xMonstre < this.labyrinthe.getTailleX() - 1 && !(this.estEnColision(m, 1, 0))){
+                        m.deplacer(1, 0);
+                    }
+                    break;
+                
+                // deplacement en haut
+                case 3:
+                    if(yMonstre > 0 && !(this.estEnColision(m, 0, -1))){
+                        m.deplacer(0, -1);
+                    }
+                    break;
+                
+                //deplacement en bas
+                case 4:
+                    if(yMonstre < this.labyrinthe.getTailleY() - 1 && !(this.estEnColision(m, 0, 1))){
+                        m.deplacer(0, 1);
+                    }
+                    break;
+            }
+        }
+        else{
+
+            // on verifie que le monstre puisse bien aller a la case souhaitee
+            if(x == 1){
+
+                if(this.labyrinthe.estAccessible(xMonstre - 1, yMonstre) && !(this.estEnColision(m, -1, 0))){
+                    m.deplacer(-1, 0);
+                }
+            }
+            else if(x == 2){
+
+                if(this.labyrinthe.estAccessible(xMonstre + 1, yMonstre) && !(this.estEnColision(m, 1, 0))){
+                    m.deplacer(1, 0);
+                }
+            } 
+            else if(x == 3){
+
+                if(this.labyrinthe.estAccessible(xMonstre, yMonstre - 1) && !(this.estEnColision(m, 0, -1))){
+                    m.deplacer(0, -1);
+                }
+            } 
+            else if(x == 4){
+
+                if(this.labyrinthe.estAccessible(xMonstre, yMonstre + 1) && !(this.estEnColision(m, 0, 1))){
+                    m.deplacer(0, 1);
+                }
+            }
+        }
+    }
+
+    /**
+     * methode qui permet au monstre indique de traquer
+     * le personnage du jeu 
+     * @param m = monstre a deplacer
+     */
+    private void deplacerTraqueMonstre(Monstre m){
+
+        // on recupere les coordonnees du monstre
+        int xMonstre = m.getX();
+        int yMonstre = m.getY();
+
+        // on recupere les coord de l aventurier
+        int xPerso = this.aventurier.getX();
+        int yPerso = this.aventurier.getY();
+
+        // on recupere la distance initiale du perso et du monstre
+        int premiereDistance = m.getDistance(this.aventurier);
+
+        // on prepare un boolean pour savoir si on s est deja deplace ou non
+        boolean dejaDeplace = false;
+
+        // a partir d ici on cherche le chemin qui nous permet de nous rapprocher
+        // de l aventurier
+        // on tente d abord une approche par la gauche
+        if(this.labyrinthe.estAccessible(xMonstre - 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, -1, 0))){
+
+            // on calcule la nouvelle distance
+            int nouvXmonstre = xMonstre - 1;
+            int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+
+            // si on est plus proche on bouge
+            if(nouvDistance < premiereDistance){
+                m.deplacer(-1, 0);
+                dejaDeplace = true;
+            }
+
+        }
+
+        // on tente le deplacement a droite
+        if(this.labyrinthe.estAccessible(xMonstre + 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, 1, 0))){
+
+            // on calcule la nouvelle distance
+            int nouvXmonstre = xMonstre + 1;
+            int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+
+            // si on est plus proche on bouge
+            if(nouvDistance < premiereDistance){
+                m.deplacer(1, 0);
+                dejaDeplace = true;
+            }
+
+        }
+
+        // on tente le deplacement en haut
+        if(this.labyrinthe.estAccessible(xMonstre, yMonstre - 1) && !dejaDeplace && !(this.estEnColision(m, 0, -1))){
+
+            // on calcule la nouvelle distance
+            int nouvYmonstre = yMonstre - 1;
+            int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+
+            // si on est plus proche on bouge
+            if(nouvDistance < premiereDistance){
+                m.deplacer(0, -1);
+                dejaDeplace = true;
+            }
+
+        }
+
+        // on tente le deplacement en bas
+        if(this.labyrinthe.estAccessible(xMonstre, yMonstre + 1) && !dejaDeplace && !(this.estEnColision(m, 0, 1))){
+
+            // on calcule la nouvelle distance
+            int nouvYmonstre = yMonstre + 1;
+            int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+
+            // si on est plus proche on bouge
+            if(nouvDistance < premiereDistance){
+                m.deplacer(0, 1);
+                dejaDeplace = true;
+            }
+
+        }
+
+    }
+
+    /**
+     * methode privee qui permet de savoir si une entite est en 
      * colision avec une autre entite
      * 
-     * @param m = le monstre a verifier
+     * @param e = l entite dont on veut savoir si elle va etre en colision
      * @param dx = le deplacement sur x
      * @param dy = le deplacement sur y
      * @return vrai que si le monstre entre en colision
      */
-    private boolean monstreEnColision(Monstre m, int dx, int dy){
+    private boolean estEnColision(Entite e, int dx, int dy){
 
         // prepa de variables
         boolean res = false;
         int i = 0;
 
-        // on recupere les coordonnees du monstre
-        int xMonstre = m.getX();
-        int yMonstre = m.getY();
+        // on recupere les coordonnees de l entite
+        int xEntite = e.getX();
+        int yEntite = e.getY();
 
         // on parcours la liste de monstre pour voir si le monstre n entrerait
         // pas en colision avec un autre monstre
@@ -355,7 +452,7 @@ public class JeuZ implements Jeu {
             // c est qu il y a colision
             // (pas besoin de verifier que l on ne compare pas le meme monstre, car si il y a deplacement
             // les coordonnees seront forcement differentes)
-            if(xMonstre + dx == monstre.getX() && yMonstre + dy == monstre.getY()){
+            if(xEntite + dx == monstre.getX() && yEntite + dy == monstre.getY()){
                 res = true;
             }
 
@@ -363,8 +460,10 @@ public class JeuZ implements Jeu {
         }
 
         // enfin on s assure que le monstre n entre pas en colision avec le personnage
+        // si c est le personnage qui est passe en parametre cette conditionnelle renvoie 
+        // forcement faux car si le perso se deplace il ne peut pas etre en colision avec lui meme
         if(!res){
-            if(xMonstre + dx == this.aventurier.getX() && yMonstre + dy == this.aventurier.getY()){
+            if(xEntite + dx == this.aventurier.getX() && yEntite + dy == this.aventurier.getY()){
                 res = true;
             }
 
@@ -386,70 +485,30 @@ public class JeuZ implements Jeu {
         int xPerso = this.aventurier.getX();
         int yPerso = this.aventurier.getY();
 
-        // on verifie que l aventurier puisse bien aller a la case souhaitee
-        boolean ok = true;
-
         if(commande.gauche){
 
-            if(xPerso > 0 && this.labyrinthe.estAccessible(xPerso - 1, yPerso)){
+            if(this.labyrinthe.estAccessible(xPerso - 1, yPerso) && !(this.estEnColision(this.aventurier, -1, 0))){
                 
-                for(int i = 0; i < listDeMonstres.size(); i++){
+                this.aventurier.deplacer(-1, 0);
 
-                    if((xPerso - 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY())){
-                        ok = false;
-                    }
-                }
-
-                if(ok){
-                    this.aventurier.deplacer(-1, 0);
-                }
             }
         } 
         else if(commande.droite){
 
-            if(xPerso < this.labyrinthe.getTailleX() - 1 && this.labyrinthe.estAccessible(xPerso + 1, yPerso)){
-                
-                for(int i = 0; i < listDeMonstres.size(); i++){
-
-                    if((xPerso + 1 == listDeMonstres.get(i).getX() && yPerso == listDeMonstres.get(i).getY())){
-                        ok = false;
-                    }
-                }
-
-                if(ok){
-                    this.aventurier.deplacer(1, 0);
-                }
+            if(this.labyrinthe.estAccessible(xPerso + 1, yPerso) && !(this.estEnColision(this.aventurier, 1, 0))){
+                this.aventurier.deplacer(1, 0);
             }
         } 
         else if(commande.haut){
 
-            if(yPerso > 0 && this.labyrinthe.estAccessible(xPerso, yPerso - 1)){
-                for(int i = 0; i < listDeMonstres.size(); i++){
-
-                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso - 1 == listDeMonstres.get(i).getY())){
-                        ok = false;
-                    }
-                }
-
-                if(ok){
-                    this.aventurier.deplacer(0, -1);
-                }
+            if(this.labyrinthe.estAccessible(xPerso, yPerso - 1) && !(this.estEnColision(this.aventurier, 0, -1))){
+                this.aventurier.deplacer(0, -1);
             }
         } 
         else if(commande.bas){
 
-            if(yPerso < this.labyrinthe.getTailleY() - 1 && this.labyrinthe.estAccessible(xPerso, yPerso + 1)){
-
-                for(int i = 0; i < listDeMonstres.size(); i++){
-
-                    if ((xPerso == listDeMonstres.get(i).getX() && yPerso + 1 == listDeMonstres.get(i).getY())){
-                        ok = false;
-                    }
-                }
-
-                if(ok){
-                    this.aventurier.deplacer(0, 1);
-                }
+            if(this.labyrinthe.estAccessible(xPerso, yPerso + 1) && !(this.estEnColision(this.aventurier, 0, 1))){
+                this.aventurier.deplacer(0, 1);
             }
         }
 
@@ -567,19 +626,25 @@ public class JeuZ implements Jeu {
 
         // on gagne si on atteint une extremite du labyrinthe
         if(this.listDeMonstres.size() == 0 && this.aventurier.getY() == 0){
-            res = true;
+
+            // si on a atteint la fin d un niveau et que l on peut encore en charger un on continue le jeu
+            // en chargant un nouveau niveau
+            if(this.numNiveau != 3){
+
+                // on augmente de niveau
+                this.numNiveau ++;
+                String fichier = "niveaux/lab" + this.numNiveau + ".txt";
+
+                // on refait le labyrinthe en prenant soin de replacer tout le monde
+                this.labyrinthe = new Labyrinthe(fichier);
+                this.placerPersonnage();
+                this.placerMonstres();
+            }
+            else{
+                res = true;
+            }
         }
 
-        // si on a atteint la fin d un niveau et que l on peut encore en charger un on continue le jeu
-        // en chargant un nouveau niveau
-        if(res && this.numNiveau != 3){
-            res = false;
-            this.numNiveau ++;
-            String fichier = "niveaux/lab" + this.numNiveau + ".txt";
-            this.labyrinthe = new Labyrinthe(fichier);
-            this.placerPersonnage();
-            this.placerMonstres();
-        }
 
         return(res);
     }
