@@ -260,7 +260,7 @@ public class JeuZ implements Jeu {
 
         // on recupere le type de monstre a gerer
         // pour savoir si il passe ou non a travers les murs
-        boolean passeMur = (m.getAd() == 1 && m.getPortee() == 1);
+        boolean passeMur = m.getType().equals("fantome");
 
         /**
          * si le monstre peut passer dans les murs on 
@@ -358,67 +358,133 @@ public class JeuZ implements Jeu {
         // on prepare un boolean pour savoir si on s est deja deplace ou non
         boolean dejaDeplace = false;
 
-        // a partir d ici on cherche le chemin qui nous permet de nous rapprocher
-        // de l aventurier
-        // on tente d abord une approche par la gauche
-        if(this.labyrinthe.estAccessible(xMonstre - 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, -1, 0))){
+        if(m.getType().equals("fantome")){
 
-            // on calcule la nouvelle distance
-            int nouvXmonstre = xMonstre - 1;
-            int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+            // on tente d abord une approche par la gauche
+            if(xMonstre > 0 && !dejaDeplace && !(this.estEnColision(m, -1, 0))){
+    
+                // on calcule la nouvelle distance
+                int nouvXmonstre = xMonstre - 1;
+                int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(-1, 0);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement a droite
+            if(xMonstre < this.labyrinthe.getTailleX() && !dejaDeplace && !(this.estEnColision(m, 1, 0))){
+    
+                // on calcule la nouvelle distance
+                int nouvXmonstre = xMonstre + 1;
+                int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(1, 0);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement en haut
+            if(yMonstre > 0 && !dejaDeplace && !(this.estEnColision(m, 0, -1))){
+    
+                // on calcule la nouvelle distance
+                int nouvYmonstre = yMonstre - 1;
+                int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(0, -1);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement en bas
+            if(yMonstre < this.labyrinthe.getTailleY() && !dejaDeplace && !(this.estEnColision(m, 0, 1))){
+    
+                // on calcule la nouvelle distance
+                int nouvYmonstre = yMonstre + 1;
+                int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(0, 1);
+                    dejaDeplace = true;
+                }
+    
+            }
 
-            // si on est plus proche on bouge
-            if(nouvDistance < premiereDistance){
-                m.deplacer(-1, 0);
-                dejaDeplace = true;
+        }
+        else{
+            // si le monstre n est pas un fantome on s assure que l on va bien sur un sol et qu on se rapproche
+            // on tente d abord une approche par la gauche
+            if(this.labyrinthe.estAccessible(xMonstre - 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, -1, 0))){
+    
+                // on calcule la nouvelle distance
+                int nouvXmonstre = xMonstre - 1;
+                int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(-1, 0);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement a droite
+            if(this.labyrinthe.estAccessible(xMonstre + 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, 1, 0))){
+    
+                // on calcule la nouvelle distance
+                int nouvXmonstre = xMonstre + 1;
+                int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(1, 0);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement en haut
+            if(this.labyrinthe.estAccessible(xMonstre, yMonstre - 1) && !dejaDeplace && !(this.estEnColision(m, 0, -1))){
+    
+                // on calcule la nouvelle distance
+                int nouvYmonstre = yMonstre - 1;
+                int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(0, -1);
+                    dejaDeplace = true;
+                }
+    
+            }
+    
+            // on tente le deplacement en bas
+            if(this.labyrinthe.estAccessible(xMonstre, yMonstre + 1) && !dejaDeplace && !(this.estEnColision(m, 0, 1))){
+    
+                // on calcule la nouvelle distance
+                int nouvYmonstre = yMonstre + 1;
+                int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
+    
+                // si on est plus proche on bouge
+                if(nouvDistance < premiereDistance){
+                    m.deplacer(0, 1);
+                    dejaDeplace = true;
+                }
+    
             }
 
         }
 
-        // on tente le deplacement a droite
-        if(this.labyrinthe.estAccessible(xMonstre + 1, yMonstre) && !dejaDeplace && !(this.estEnColision(m, 1, 0))){
-
-            // on calcule la nouvelle distance
-            int nouvXmonstre = xMonstre + 1;
-            int nouvDistance = Math.abs(nouvXmonstre - xPerso) + Math.abs(yMonstre - yPerso);
-
-            // si on est plus proche on bouge
-            if(nouvDistance < premiereDistance){
-                m.deplacer(1, 0);
-                dejaDeplace = true;
-            }
-
-        }
-
-        // on tente le deplacement en haut
-        if(this.labyrinthe.estAccessible(xMonstre, yMonstre - 1) && !dejaDeplace && !(this.estEnColision(m, 0, -1))){
-
-            // on calcule la nouvelle distance
-            int nouvYmonstre = yMonstre - 1;
-            int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
-
-            // si on est plus proche on bouge
-            if(nouvDistance < premiereDistance){
-                m.deplacer(0, -1);
-                dejaDeplace = true;
-            }
-
-        }
-
-        // on tente le deplacement en bas
-        if(this.labyrinthe.estAccessible(xMonstre, yMonstre + 1) && !dejaDeplace && !(this.estEnColision(m, 0, 1))){
-
-            // on calcule la nouvelle distance
-            int nouvYmonstre = yMonstre + 1;
-            int nouvDistance = Math.abs(nouvYmonstre - yPerso) + Math.abs(xMonstre - xPerso);
-
-            // si on est plus proche on bouge
-            if(nouvDistance < premiereDistance){
-                m.deplacer(0, 1);
-                dejaDeplace = true;
-            }
-
-        }
 
     }
 
