@@ -13,7 +13,7 @@ public class Fantome extends Monstre {
      */
     public Fantome(int x, int y){
         // un fantome a 5 pv 1 de portee et fais 1 point de degats
-        super(x, y, 5, 1, 1);
+        super(x, y, 5, 1, 1, "fantome");
     }
     
 }

@@ -108,17 +108,18 @@ public class DessinZ implements DessinJeu {
                     if(labyrinthe.getArmeCase(i, j) != null){
 
                         Arme a = labyrinthe.getArmeCase(i, j);
+                        String typeArme = a.getType();
 
                         // si la portee est de 1 c est une epee
-                        if(a.getPortee() == 1 && a.getDegats() == 3){
+                        if(typeArme.equals("epee")){
                             g.drawImage(this.epee, i * lon, j * haut, lon, haut, null);
                         }
-                        else if (a.getPortee() == 2 && a.getDegats() == 2){
+                        else if(typeArme.equals("lance")){
 
                             // si la portee est de 2 c est une lance
                             g.drawImage(this.lance, i * lon, j * haut, lon, haut, null);
                         }
-                        else if(a.getPortee() == 1 && a.getDegats() == 1){
+                        else if(typeArme.equals("ceste")){
                             g.drawImage(this.ceste, i * lon, j * haut, lon, haut, null);
                         }
 
@@ -174,11 +175,10 @@ public class DessinZ implements DessinJeu {
              * g.setColor(Color.MAGENTA); g.fillArc(xMonstre * lon, yMonstre * haut, lon,
              * haut, 0, 360);
              */
-            int portMsontre = m.getPortee();
-            int atkMonstre = m.getAd();
+            String typeMonstre = m.getType();
 
             // si les donnes correspondent a celle d un troll on dessine un troll
-            if(portMsontre == 1 && atkMonstre == 3){
+            if(typeMonstre.equals("troll")){
                 g.drawImage(this.troll, xMonstre * lon, yMonstre * haut, lon, haut, null);
 
                 // on dessine une barre de vie pour le troll
@@ -186,7 +186,7 @@ public class DessinZ implements DessinJeu {
                 g.setColor(Color.RED);
                 g.fillRect(m.getX() * lon, (m.getY() + 1) * haut - haut/8, longueurBarreVie, haut/8);
             }
-            else if(portMsontre == 1 && atkMonstre == 1){
+            else if(typeMonstre.equals("fantome")){
                 // de meme si elles correspondent a celle d un fantome
                 g.drawImage(this.fant, xMonstre * lon, yMonstre * haut, lon, haut, null);
 

@@ -12,7 +12,7 @@ public class Troll extends Monstre {
      * @param o ordonnee
      */
     public Troll(int a, int o) {
-        super(a, o, 5, 3, 1);
+        super(a, o, 5, 3, 1, "troll");
     }
 
 }
